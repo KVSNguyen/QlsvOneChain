@@ -10,25 +10,7 @@ function Home(props) {
     return (
         <div className='home_page'>
             <Header />
-                <div className="container flex">
-                    <div className="option">
-                        <h2>Tùy chọn</h2>
-                        <div className="searchById">
-                            <input type="text" />
-                            <button>Tìm kiếm</button>
-                        </div>
-
-                    <div className="filterByMajor">
-                        <select name="" id="">
-                            <option value="">Chọn Khóa</option>
-                            <option value="">CNTT</option>
-                            <option value="">Du lịch ngoại ngữ</option>
-                            <option value="">Dược</option>
-                            <option value="">Ngôn ngữ Anh</option>
-                        </select>
-                    </div>
-                    </div>
-
+                <div className="container flex">       
                     <form action="">
                         <div className="title">
                             <h2>
@@ -62,6 +44,23 @@ function Home(props) {
                             </tbody>
                         </table>
                     </form>
+                    <div className="option">
+                        <h2>Tùy chọn</h2>
+                        <div className="searchById">
+                            <input type="text" placeholder='Nhập mã sinh viên'/>
+                            <button>Tìm kiếm</button>
+                        </div>
+
+                        <div className="filterByMajor">
+                            <select name="" id="">
+                                <option value="">Chọn ngành học</option>
+                                <option value="">CNTT</option>
+                                <option value="">Du lịch ngoại ngữ</option>
+                                <option value="">Dược</option>
+                                <option value="">Ngôn ngữ Anh</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             <Footer />
         </div>

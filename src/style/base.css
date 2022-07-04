@@ -10,6 +10,11 @@
     box-sizing: border-box;
 }
 
+body {
+    background: linear-gradient(to right, rgb(67, 252, 138), rgb(72, 249, 255));
+
+}
+
 .flex {
     display: flex;
     justify-content: space-between;

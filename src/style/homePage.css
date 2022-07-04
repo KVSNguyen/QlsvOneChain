@@ -1,5 +1,5 @@
 .home_page {
-    background-color: rgb(241, 241, 241);
+    background: linear-gradient(to right, rgb(67, 252, 138), rgb(72, 249, 255));
     height: 100vh;
 }
 
@@ -14,26 +14,42 @@
     padding: 20px;
 }
 
-.home_page .option button, .home_page .option input {
-    border: none;
-    outline: none;
+.home_page .option {
+    width: 300px;
+    box-shadow: 1px 1px 5px;
 }
 
 .home_page .option button {
     padding: 7px 10px;
+    border: 1px solid gray;
+    border: none;
+    margin-left: 10px;
+    outline: none;
 }
 
-.home_page .searchById {
-    border: 1px solid grey;
-}
-
-.home_page input, .home_page select,
+.home_page select,
 .home_page option {
     width: 200px;
     margin: 20px;
     height: 30px;
 }
 
+.home_page input {
+    border: none;
+}
+
+.home_page h2 {
+    margin-bottom: 10px;
+}
+
+.home_page .option input {
+    outline: none;
+    border-bottom: 1px solid grey;
+}
+
+.home_page form {
+    box-shadow: 1px 1px 5px;
+}
 
 .home_page table {
     border: 1px solid gray;
