@@ -1,0 +1,73 @@
+.home_page {
+    background-color: rgb(241, 241, 241);
+    height: 100vh;
+}
+
+.home_page .container {
+    padding: 20px; 
+    margin-top: 50px;
+    margin-bottom: 20px;
+}
+
+.home_page .option, form {
+    background-color: #ffffff;
+    padding: 20px;
+}
+
+.home_page .option button, .home_page .option input {
+    border: none;
+    outline: none;
+}
+
+.home_page .option button {
+    padding: 7px 10px;
+}
+
+.home_page .searchById {
+    border: 1px solid grey;
+}
+
+.home_page input, .home_page select,
+.home_page option {
+    width: 200px;
+    margin: 20px;
+    height: 30px;
+}
+
+
+.home_page table {
+    border: 1px solid gray;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.home_page thead {
+    background: linear-gradient(to right, rgb(30, 255, 131), rgb(72, 249, 255));
+}
+
+.home_page th,
+.home_page td {
+    border: 1px solid gray;
+    padding: 15px 25px;
+}
+
+.home_page tbody {
+    font-weight: 400;
+}
+
+.home_page td button {
+    padding: 7px 15px;
+    color: #ffffff;
+    margin-left: 5px;
+    border: 1px solid var(--primary-color);
+    cursor: pointer;
+    transition: 0.3s;
+    background-color: var(--primary-color);
+    border-radius: 10px;
+}
+
+.home_page td button:hover {
+    background-color: transparent;
+    color: #333;
+}
+

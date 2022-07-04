@@ -1,0 +1,53 @@
+
+.sign_up {
+    width: 400px;
+    margin: 100px auto;
+    border: 1px solid gray;
+    padding: 20px;
+    position: relative;
+    text-align: center;
+}
+
+.sign_up .close {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+}
+
+.sign_up h2 {
+    color: rgb(87, 87, 250);
+    margin-bottom: 20px;
+}
+
+.sign_up input, .sign_up button {
+    width: 100%;
+    border: none;
+    border-radius: 5px;
+    padding: 7px 10px;
+    margin: 5px 0px;
+    outline: none;
+    border: 1px solid gray;
+}
+
+.sign_up input:focus {
+    border: 1px solid blue;
+}
+
+.sign_up button {
+    width: 100px;
+    cursor: pointer;
+    margin: 10px;
+    border: none;
+    background-color:  rgb(87, 87, 250);
+    color: var(--white-color);
+}
+
+
+.sign_up button:hover {
+    opacity: 0.8;
+}
+
+.sign_up span {
+    margin: 5px;
+}

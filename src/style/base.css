@@ -1,0 +1,32 @@
+:root {
+    --primary-color: rgb(73, 121, 252);
+    --white-color: #fff;
+    --text-color: #333;
+}
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+
+.m-auto{
+    margin: auto;
+}
+
+.no_underline {
+    text-decoration: none;
+}
+
+.b_1_solid_grey {
+    border: 1px solid grey;
+}
+
+.center {
+    text-align: center;
+}
