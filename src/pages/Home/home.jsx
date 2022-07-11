@@ -2,66 +2,13 @@ import React from 'react';
 import Header from '../../components/header';
 import Footer from '../../components/footer';
 import '../../style/homePage.css'
-import { Link } from 'react-router-dom';
-import Login from '../Login/login';
-import SignUp from '../register/signup';
+import ListStudent from '../Student/listStudent';
 
 function Home(props) {
     return (
         <div className='home_page'>
             <Header />
-                <div className="container flex">       
-                    <form action="">
-                        <div className="title">
-                            <h2>
-                            Danh sách sinh viên
-                            </h2>
-                        </div>
-                        <table >
-                            <thead>
-                                <tr>
-                                    <th>Số thứ tự</th>
-                                    <th>Mã sinh viên</th>
-                                    <th>Họ và tên</th>
-                                    <th>Ngành học</th>
-                                    <th>Số điện thoại</th>
-                                    <th>Tùy chọn</th>
-                                </tr>
-                            </thead>
-
-                            <tbody className='list_student'>
-                                <tr>
-                                        <td>1</td>
-                                        <td>1900142</td>
-                                        <td>Nguyễn Đình Sơn</td>
-                                        <td>CNTT</td>
-                                        <td>0382226541</td>
-                                        <td>
-                                            <button type='button' className='b_1_solid_grey'>Sửa</button>
-                                            <button type='button' className='b_1_solid_grey'>Xóa</button>
-                                        </td>
-                                    </tr>
-                            </tbody>
-                        </table>
-                    </form>
-                    <div className="option">
-                        <h2>Tùy chọn</h2>
-                        <div className="searchById">
-                            <input type="text" placeholder='Nhập mã sinh viên'/>
-                            <button>Tìm kiếm</button>
-                        </div>
-
-                        <div className="filterByMajor">
-                            <select name="" id="">
-                                <option value="">Chọn ngành học</option>
-                                <option value="">CNTT</option>
-                                <option value="">Du lịch ngoại ngữ</option>
-                                <option value="">Dược</option>
-                                <option value="">Ngôn ngữ Anh</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
+                <ListStudent />
             <Footer />
         </div>
     );

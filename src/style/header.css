@@ -12,10 +12,12 @@
     background-color: var(--primary-color);
     color: var(--white-color);
     border-radius: 20px;
+    border: 1px solid var(--primary-color);
     margin-left: 10px;
     transition: 0.3s;
 }
 
 .header span:hover {
-    background-color: orange;
+    color: #333;
+    background-color: transparent;
 }

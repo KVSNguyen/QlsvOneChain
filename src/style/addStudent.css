@@ -1,22 +1,31 @@
-
-.login {
+.addStudent {
     width: 400px;
     margin: auto;
     background-color: #fff;
     margin-top: 100px;
     border: 1px solid gray;
-    padding: 20px;
     position: relative;
     box-shadow: 1px 1px 5px;
     text-align: center;
     border-radius: 5px;
 }
 
-.login span {
+.addStudent span {
     display: block;
 }
 
-.login h2 {
+[type='number']::-webkit-inner-spin-button, [type='number']::-webkit-outer-spin-button {
+    display:  none;
+}
+
+.addStudent small {
+    text-align: left;
+    color: red;
+    display: block;
+    margin-left: 10px;
+}
+
+.addStudent h2 {
     background-color: var(--primary-color);
     color: #fff;
     width: 150px;
@@ -26,24 +35,23 @@
     text-align: center;
 }
 
-.login input, .login button {
-    width: 100%;
+.addStudent input, .addStudent button,
+.addStudent select {
+    width: 98%;
     border: none;
     border-radius: 5px;
+    margin: 5px;
+    margin-bottom: 0;
     padding: 7px 10px;
-    margin: 5px 0px;
     outline: none;
-}
-
-.login input {
     border-bottom:1px solid grey ;
 }
 
-.login input:focus {
+.addStudent input:focus {
     border-bottom: 1px solid blue;
 }
 
-.login button {
+.addStudent button {
     width: 100px;
     cursor: pointer;
     margin: 10px;
@@ -52,15 +60,15 @@
     color: var(--white-color);
 }
 
-.login p {
+.addStudent p {
     text-align: right;
     cursor: pointer;
 }
 
-.login p:hover {
+.addStudent p:hover {
     color: blue;
 }
 
-.login button:hover {
+.addStudent button:hover {
     opacity: 0.8;
 }

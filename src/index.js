@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom/client';
 import {BrowserRouter} from 'react-router-dom';
 import '../src/style/base.css'
 import App from './App';
+import 'antd/dist/antd.css';
 import reportWebVitals from './reportWebVitals';
 
 

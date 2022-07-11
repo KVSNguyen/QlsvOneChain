@@ -20,6 +20,10 @@ body {
     justify-content: space-between;
 }
 
+.p_20 {
+    padding: 20px;
+}
+
 .m-auto{
     margin: auto;
 }
@@ -35,3 +39,4 @@ body {
 .center {
     text-align: center;
 }
+

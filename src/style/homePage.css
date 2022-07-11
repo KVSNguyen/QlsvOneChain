@@ -1,12 +1,14 @@
 .home_page {
     background: linear-gradient(to right, rgb(67, 252, 138), rgb(72, 249, 255));
     height: 100vh;
+    position: relative;
 }
 
 .home_page .container {
-    padding: 20px; 
+    padding: 20px;
     margin-top: 50px;
     margin-bottom: 20px;
+    background-color: #fff;
 }
 
 .home_page .option, form {
@@ -22,16 +24,21 @@
 .home_page .option button {
     padding: 7px 10px;
     border: 1px solid gray;
-    border: none;
     margin-left: 10px;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+    color: #fff;
+    cursor: pointer;
+    border: 1px solid var(--primary-color);
     outline: none;
+    transition: 0.3s;
 }
 
 .home_page select,
 .home_page option {
     width: 200px;
-    margin: 20px;
     height: 30px;
+    outline: none;
 }
 
 .home_page input {
@@ -44,6 +51,7 @@
 
 .home_page .option input {
     outline: none;
+    padding-bottom: 5px;
     border-bottom: 1px solid grey;
 }
 
@@ -71,7 +79,17 @@
     font-weight: 400;
 }
 
-.home_page td button {
+.home_page .filterStudent {
+    text-align: right;
+}
+
+.home_page .filterStudent select {
+    width: 150px;
+    border-radius: 5px;
+    margin-left: 10px;
+}
+
+.home_page form button {
     padding: 7px 15px;
     color: #ffffff;
     margin-left: 5px;
@@ -82,8 +100,127 @@
     border-radius: 10px;
 }
 
-.home_page td button:hover {
+.home_page button:hover {
     background-color: transparent;
-    color: #333;
+    color: var(--primary-color)
 }
 
+.deleteStudent, .updateStudent {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+}
+
+.updateStudent .modal_content {
+    padding: 20px;
+}
+
+.modal_content {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #fff;
+    border: 1px solid gray;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.home_page .deleteStudent h2 {
+    width: 200px;
+    color: var(--primary-color);
+    background-color: transparent;
+}
+
+.updateStudent span {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    right: 0;
+}
+
+.home_page .deleteStudent button{
+    margin-top: 30px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    transition: 0.3s;
+}
+.home_page .deleteStudent button:hover {
+    background-color: transparent;
+}
+.updateStudent span {
+    display: block;
+}
+
+[type='number']::-webkit-inner-spin-button, [type='number']::-webkit-outer-spin-button {
+    display:  none;
+}
+
+.updateStudent small {
+    text-align: left;
+    color: red;
+    display: block;
+    margin-left: 10px;
+}
+
+.updateStudent h2, .deleteStudent h2 {
+    background-color: var(--primary-color);
+    color: #fff;
+    width: 150px;
+    margin: auto;
+    border-radius: 50%;
+    padding: 20px 10px;
+    text-align: center;
+}
+
+.updateStudent input, .updateStudent button,
+.deleteStudent button,
+.updateStudent select {
+    width: 98%;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    margin-bottom: 0;
+    padding: 7px 10px;
+    outline: none;
+    border-bottom:1px solid grey ;
+}
+
+.updateStudent select {
+    padding-bottom: unset ;
+    margin: 7px;
+}
+
+.updateStudent input:focus {
+    border-bottom: 1px solid blue;
+}
+
+.updateStudent button {
+    width: 100px;
+    cursor: pointer;
+    margin: 10px;
+    margin-bottom: 0;
+    border: none;
+    transition: 0.3s;
+    border: 1px solid var(--primary-color);
+    background-color:  rgb(87, 87, 250);
+    color: var(--white-color);
+}
+
+.updateStudent p {
+    text-align: right;
+    cursor: pointer;
+}
+
+.updateStudent p:hover {
+    color: blue;
+}
+
+.updateStudent button:hover {
+    opacity: 0.8;
+}
