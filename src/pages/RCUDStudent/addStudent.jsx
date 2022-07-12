@@ -4,7 +4,7 @@ import '../../style/addStudent.css'
 import db from '../../firebase/firebase';
 
 function AddStudent(props) {
-    const [studentID, setstudentID] = useState('')
+    const [studentCode, setstudentCode] = useState('')
     const [studentName, setStudentName] = useState('')
     const [gender, setgender] = useState('')
     const [studentEmail, setstudentEmail]= useState('')
@@ -41,19 +41,25 @@ function AddStudent(props) {
     }
  
     const submit = () => {
-        const result =  students.filter(student => {
-            return student.code === studentID
+        const checkIdSimilar =  students.filter(student => {
+            return student.code === studentCode
         })
-        if(result.length > 0) {
+        const checkEmailSimilar = students.filter(student => {
+            return student.email === studentEmail
+        })
+        if(checkIdSimilar.length > 0) {
             alert('Sinh viên đã tồn tại')
         }
-        if(result.length === 0 && errorID === '' && errorName === ''&& errorAge === ''
+        if(checkEmailSimilar.length > 0) {
+            alert('Email đã bị trùng')
+        }
+        if(checkIdSimilar.length === 0 && checkEmailSimilar.length ===0 && errorID === '' && errorName === ''&& errorAge === ''
         && errorClass === ''&& errorMajor === ''&& errorGender === ''&& errorPhoneNumber === '' 
-        && errorHomeTown ==='' &&studentID !== '' && studentName!== ''&& gender!== ''
+        && errorHomeTown ==='' &&studentCode !== '' && studentName!== ''&& gender!== ''
         && studentAge!== ''&& studentClass!== ''&& studentMajor!== ''&& phoneNumber!== ''&& studentHomeTown!== ''){
-            alert('Thêm sinh viên thành công')
+            alert('Thêm sinh viên thành công');
             db.collection("student").add({
-            code: studentID,
+            code: studentCode,
             name: studentName,
             gender: gender,
             email: studentEmail,
@@ -63,17 +69,23 @@ function AddStudent(props) {
             phoneNumber: phoneNumber,
             homeTown: studentHomeTown
             })
+            getData()
         }
-         if(studentID === '' || studentName=== ''|| gender=== ''
+        if(errorID !== '' || errorName !== ''|| errorAge !== ''
+        || errorClass !== ''|| errorMajor !== ''|| errorGender !== ''|| errorPhoneNumber !== '' 
+        || errorHomeTown !=='') {
+            alert('vui lòng kiểm tra lại thông tin')
+        }
+         if( studentCode === '' || studentName=== ''|| gender=== ''
             || studentAge=== ''|| studentClass=== ''|| studentMajor=== ''|| phoneNumber=== ''|| studentHomeTown=== '') {
             alert('Vui lòng nhập đẩy đủ thông tin')
-        }
+        } 
     }
 
     const checkID = () => {
-        if(studentID === '') {
+        if(studentCode === '') {
             seterrorID('Không được để trống')
-        } else if(studentID.length > 10) {
+        } else if(studentCode.length > 10) {
             seterrorID('Không nhập quá 10 kí tự')
         } 
         else {
@@ -82,17 +94,15 @@ function AddStudent(props) {
     }
 
     const checkEmail= () => {
-//         const re =
-//             /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-//   console.log(re);
-//         if(studentEmail === '') {
-//             seterrorEmail('Không được để trống')
-//         } else if(!re) {
-//             seterrorEmail('Email không hợp lệ')
-//         } 
-//         else {
-//             seterrorEmail('')
-//         }
+        const regexEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(studentEmail)
+        if(studentEmail === '') {
+            seterrorEmail('Không được để trống')
+        } else if(!regexEmail) {
+            seterrorEmail('Email không hợp lệ')
+        } 
+        else {
+            seterrorEmail('')
+        }
     }
     const checkName = () => {
         let result = /^[a-zA-Z ]+$/.test(studentName);
@@ -140,6 +150,8 @@ function AddStudent(props) {
     const checkPhoneNumber = () => {
         if(phoneNumber === '') {
             seterrorPhoneNumber('Không được để trống')
+        } else if(phoneNumber.length <10 || phoneNumber.length > 11) {
+            seterrorPhoneNumber('Số điện thoại không hợp lệ')
         } else {
             seterrorPhoneNumber('')
         }
@@ -163,6 +175,7 @@ function AddStudent(props) {
     const handleChangeClass = ((e) => {
         setstudentClass(e.target.value)
     })
+      
     return (
         <div className='addStudent'>
             <h2 className='p_20'>Thêm Sinh Viên</h2>
@@ -171,11 +184,11 @@ function AddStudent(props) {
                     <div>
                          <input 
                             type="text" 
-                            className='studentID' 
+                            className='studentCode' 
                             placeholder='Mã sinh viên'
-                            value={studentID}
+                            value={studentCode}
                             onBlur = {checkID}
-                            onChange={(e) => setstudentID(e.target.value)}
+                            onChange={(e) => setstudentCode(e.target.value)}
                             /> <small>{errorID}</small>
                         <input 
                             type="text" 
@@ -183,8 +196,6 @@ function AddStudent(props) {
                             placeholder='Tên sinh viên'
                             value={studentName}
                             onBlur = {checkName}
-                            pattern ="[a-z]"
-                            title='Tên người dùng không được để kiểu số'
                             onChange={(e) => setStudentName(e.target.value)}
                             /> <small>{errorName}</small>
                      <input 
@@ -196,8 +207,7 @@ function AddStudent(props) {
                             onChange={(e) => setstudentAge(e.target.value)}
                             /> <small>{errorAge}</small>
                     </div>
-
-                    
+                
                    <div>   
                         <select value={gender} onBlur = {checkGender} onChange = {(e)=> handleChangeGender(e)}>
                             <option value="">Chọn giới tính</option>

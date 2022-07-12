@@ -7,7 +7,7 @@ import {UserOutlined} from "@ant-design/icons"
 
 function Login(props) {
     const events = db.collection('user'); 
-    const [userNameLogin, setUserNameLogin] = useState('');
+    const [userNameEmail, setuserNameEmail] = useState('');
     const [passwordLogin, setPasswordLogin] = useState('')
     const [admin, setAdmin] = useState([])
     const [showPassword, setShowPassword] = useState(false)
@@ -24,16 +24,22 @@ function Login(props) {
         })
     },[])
 
+    console.log(admin);
     const togglePassword = () => {
-        setShowPassword(!showPassword)
+        if(passwordLogin === '') {
+            setShowPassword(showPassword)
+        }else {
+            setShowPassword(!showPassword)
+        }
     }
 
-    const submit = (e) => {
-        const result = admin.filter((element, index) => {
-            if(element.name === userNameLogin) {
+    const submit = () => {
+        const result = admin.filter(element => {
+            if(element.email === userNameEmail) {
                 localStorage.setItem('id', element.id)
             }
-            return element.name === userNameLogin && element.password === passwordLogin 
+            console.log(element.email, element.password);
+            return element.email === userNameEmail && element.password === passwordLogin 
         })
         if(result.length > 0 ) {
             navigate('/Home')
@@ -47,11 +53,11 @@ function Login(props) {
         <div className='login'>
             <h2> <UserOutlined /> Đăng Nhập</h2>
             <input 
-                type="text" 
+                type="email" 
                 className='userName_Login' 
-                placeholder='Tên đăng nhập'
-                value={userNameLogin}
-                onChange={(e) => setUserNameLogin(e.target.value)}
+                placeholder='Nhập tài khoản Email'
+                value={userNameEmail}
+                onChange={(e) => setuserNameEmail(e.target.value)}
             />
             <input 
                 type= {showPassword ? "text" : "password"} 
@@ -59,7 +65,6 @@ function Login(props) {
                 placeholder='Mật khẩu'
                 value={passwordLogin}
                 onChange={(e) => setPasswordLogin(e.target.value)}/>
-
             <p onClick={togglePassword}>Hiện mật khẩu</p>
             <button onClick={submit}>Đăng nhập</button>
             <span>Chưa có tài khoản? <Link className='no_underline' to = '/SignUp'> Đăng ký</Link></span>

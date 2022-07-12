@@ -1,7 +1,9 @@
 import Home from './pages/Home/home';
-import SignUp from './pages/register/signup';
+import SignUp from './pages/register/signupEmail';
 import Login from './pages/Login/login';
 import AddStudent from './pages/RCUDStudent/addStudent';
+import SignUpPassword from './pages/register/signUpPassword';
+
 import { Route, Routes } from 'react-router-dom';
 
 
@@ -15,6 +17,7 @@ function App() {
           <Route path="/SignUp" element={<SignUp/>}></Route>
           <Route path='/Home' element={<Home />}></Route>
           <Route path='/Add' element={<AddStudent/>}></Route>
+          <Route path='/SignUpPassword' element = {<SignUpPassword />}></Route>
         </Routes>
       }
     </div>

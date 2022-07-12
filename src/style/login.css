@@ -44,9 +44,9 @@
 }
 
 .login button {
-    width: 100px;
+    width: 150px;
     cursor: pointer;
-    margin: 10px;
+    margin-top: 0;
     border: none;
     background-color:  rgb(87, 87, 250);
     color: var(--white-color);

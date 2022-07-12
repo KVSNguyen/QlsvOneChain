@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../style/header.css'
 import { Link } from 'react-router-dom';
+import {PlusCircleOutlined} from '@ant-design/icons'
 import db from '../firebase/firebase';
 import {LogoutOutlined} from "@ant-design/icons"
 
@@ -33,6 +34,9 @@ function Header(props) {
                             {user.length !== 0 ? user[0].name :' ' }
                         </p>
                     </h3>
+                    <div className="infor">
+                        <span> Cập nhật trang cá nhân</span><PlusCircleOutlined />
+                    </div>
                 </div>
             </div>
             <h1>Quản lý sinh viên</h1>
