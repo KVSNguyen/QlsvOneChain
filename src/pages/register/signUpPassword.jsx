@@ -37,6 +37,11 @@ function SignUpPassword(props) {
            await db.collection("user").doc(userAccount[0].id).set({
                 email: userAccount[0].email,
                 password: userPassword,
+                name: 'chưa có',
+                gender: 'chưa có',
+                age: 'chưa có',
+                phoneNumber: 'chưa có',
+                homeTown: 'chưa có'
             });   
             alert('Bạn đã đăng ký thành công')
             setuserPassword("");

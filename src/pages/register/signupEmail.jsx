@@ -2,10 +2,10 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import db from '../../firebase/firebase.js';
 import { useCookies } from 'react-cookie';
+import {UserOutlined} from '@ant-design/icons'
 import { Link, Navigate } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import {FacebookOutlined, GoogleOutlined,GithubOutlined} from '@ant-design/icons'
-import Login from '../Login/login.jsx';
 import '../../style/sign-up.css'
 
 function SignUp(props) {
@@ -77,21 +77,23 @@ function SignUp(props) {
     }
 
      return (
-        <div className='sign_up'>
-            <h2>Đăng Ký</h2>
-            <input 
-                type="text" 
-                className='userName_signUp' 
-                placeholder='Nhập email của bạn'
-                value={userEmail}
-                onChange={(e) => setuserEmail(e.target.value)}/>
-                <small>{errorUser}</small>
+        <div>
+            <div className='sign_up'>
+                <h2> <UserOutlined  style={{display: 'block'}}/> Đăng Ký </h2>
+                <input 
+                    type="text" 
+                    className='userName_signUp' 
+                    placeholder='Nhập email của bạn'
+                    value={userEmail}
+                    onChange={(e) => setuserEmail(e.target.value)}/>
+                    <small>{errorUser}</small>
 
 
-            <Link className='no_underline' to = '/'>
-            <button >Trở lại đăng nhập</button>
-             </Link>
-            <button onClick={submit} >Tiếp tục </button>
+                <Link className='no_underline' to = '/'>
+                <button >Trở lại đăng nhập</button>
+                </Link>
+                <button onClick={submit} >Tiếp tục </button>
+            </div>
         </div>
     );
 }

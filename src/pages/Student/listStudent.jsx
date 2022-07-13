@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import db from '../../firebase/firebase';
-import { collection, query, where } from "firebase/firestore";
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {ReloadOutlined} from '@ant-design/icons'
@@ -17,13 +16,13 @@ function ListStudent(props) {
     const [studentEmailUpdate, setstudentEmailUpdate] = useState('')
     const [genderUpdate, setgenderUpdate] = useState('')
     const [studentAgeUpdate, setstudentAgeUpdate] = useState('')
-    const [studentClassUpdate, setstudentClassUpdate] = useState('')
+    const [studentStatusUpdate, setstudentStatusUpdate] = useState('')
     const [studentMajorUpdate, setstudentMajorUpdate] = useState('')
     const [phoneNumberUpdate, setphoneNumberUpdate] = useState('')
     const [studentHomeTownUpdate, setstudentHomeTownUpdate] = useState('')
     const [errorIDUpdate, seterrorIDUpdate] = useState('')
     const [errorNameUpdate, seterrorNameUpdate] = useState('')
-    const [errorClassUpdate, seterrorClassUpdate] = useState('')
+    const [errorStatusUpdate, seterrorStatusUpdate] = useState('')
     const [errorEmail, seterrorEmail] = useState('')
     const [errorMajorUpdate, seterrorMajorUpdate] = useState('')
     const [errorAgeUpdate, seterrorAgeUpdate] = useState('')
@@ -31,18 +30,24 @@ function ListStudent(props) {
     const [errorPhoneNumberUpdate, seterrorPhoneNumberUpdate] = useState('')
     const [errorHometownUpdate, seterrorHometownUpdate] = useState('')
     const [currentIdUpdate, setcurrentIdUpdate] = useState('')
-    const [fillterClass, setfillterClass] = useState('')
+    const [filterStatus, setfilterStatus] = useState('')
     const [fillterMajor, setfillterMajor] = useState('')
     const [searchData, setSearchData] = useState('')
     const [reload, setreload] = useState('')
     const [inforStudent, setInforStudent] = useState(false)
+    const [displayTable, setDisplayTable] = useState(true)
+    const [displayGrid, setDisplayGrid] = useState(false)
+
+    const showTable =  () => {
+        setDisplayTable(!displayTable)
+    }
 
     const showModalUpdate = (element) => {
         setcurrentIdUpdate(element.id)
         setstudentIDUpdate(element.code)
         setStudentNameUpdate(element.name)
         setstudentAgeUpdate(element.age)
-        setstudentClassUpdate(element.class)
+        setstudentStatusUpdate(element.class)
         setstudentMajorUpdate(element.major)
         setstudentEmailUpdate(element.email)
         setgenderUpdate(element.gender)
@@ -81,13 +86,13 @@ function ListStudent(props) {
             alert('Sinh viên đã tồn tại')
         }
         if(result.length === 0 && errorIDUpdate === '' && errorNameUpdate === ''&& errorAgeUpdate === ''
-        && errorClassUpdate === ''&& errorMajorUpdate === ''&& errorGenderUpdate === ''&& errorPhoneNumberUpdate === '' 
+        && errorStatusUpdate === ''&& errorMajorUpdate === ''&& errorGenderUpdate === ''&& errorPhoneNumberUpdate === '' 
         && errorHometownUpdate ==='' &&studentIDUpdate !== '' && studentNameUpdate!== ''&& genderUpdate!== ''
-        && studentAgeUpdate!== ''&& studentClassUpdate!== ''&& studentMajorUpdate!== ''&& phoneNumberUpdate!== ''&& studentHomeTownUpdate!== ''){
+        && studentAgeUpdate!== ''&& studentStatusUpdate!== ''&& studentMajorUpdate!== ''&& phoneNumberUpdate!== ''&& studentHomeTownUpdate!== ''){
             alert('Sửa thành công')
                 db.collection("student").doc(currentIdUpdate).update({
                 age: studentAgeUpdate,
-                class: studentClassUpdate,
+                status: studentStatusUpdate,
                 code: studentIDUpdate,
                 email: studentEmailUpdate,
                 gender: genderUpdate,
@@ -100,7 +105,7 @@ function ListStudent(props) {
             setDisplayModalUpdate(false)
         }
          if(studentIDUpdate === '' && studentNameUpdate=== ''&& genderUpdate=== ''
-            && studentAgeUpdate=== ''&& studentClassUpdate=== ''&& studentMajorUpdate=== ''&& phoneNumberUpdate=== ''&& studentHomeTownUpdate=== '') {
+            && studentAgeUpdate=== ''&& studentStatusUpdate=== ''&& studentMajorUpdate=== ''&& phoneNumberUpdate=== ''&& studentHomeTownUpdate=== '') {
             alert('Vui lòng nhập đẩy đủ thông tin')
         }
     }
@@ -130,12 +135,12 @@ function ListStudent(props) {
         }
     }
     const checkClass = () => {
-        if(studentClassUpdate.length === 0) {
-            seterrorClassUpdate('Không được để trống')
-        }else if(studentClassUpdate.length > 10) {
-            seterrorClassUpdate('Không nhập quá 10 kí tự')
+        if(studentStatusUpdate.length === 0) {
+            seterrorStatusUpdate('Không được để trống')
+        }else if(studentStatusUpdate.length > 10) {
+            seterrorStatusUpdate('Không nhập quá 10 kí tự')
         }else {
-            seterrorClassUpdate('')
+            seterrorStatusUpdate('')
         }
     }
     const checkGenderUpdate = () => {
@@ -199,15 +204,15 @@ function ListStudent(props) {
         setstudentMajorUpdate(e.target.value)
     })
 
-    const handleChangeClass = ((e) => {
-        setstudentClassUpdate(e.target.value)
+    const handleChangeStatus = ((e) => {
+        setstudentStatusUpdate(e.target.value)
     })
 
     const setEmtyErrorValueUpdate = () => {
         seterrorIDUpdate('')
         seterrorNameUpdate('')
         seterrorAgeUpdate('')
-        seterrorClassUpdate('')
+        seterrorStatusUpdate('')
         seterrorGenderUpdate('')
         seterrorHometownUpdate('')
         seterrorMajorUpdate('')
@@ -215,8 +220,8 @@ function ListStudent(props) {
     }
 
     //fillter Student
-    const handleChangeGenderFilter = async (e) => { 
-       const result = await fillterStudent('gender', e.target.value)
+    const handleChangeStatusFilter = async (e) => { 
+       const result = await fillterStudent('status', e.target.value)
        setstudent(result)
        setInforStudent(false)
     }
@@ -230,9 +235,14 @@ function ListStudent(props) {
 
     // s
     const searchStudent = async () => {
-        const  result = await fillterStudent('code', searchData)
-        setstudent(result)
-        setInforStudent(true)
+        if(searchData === '') {
+            getData()
+            setInforStudent(false)
+        }else {
+            const  result = await fillterStudent('code', searchData)
+            setstudent(result)
+            setInforStudent(true)
+        }
     }
        
     //load lại data trong database
@@ -258,10 +268,29 @@ function ListStudent(props) {
           return tempDoc;
     }
 
+    const showGridStudent = () => {
+        setDisplayTable(false)
+        setDisplayGrid(true)
+    }
+
+    const showTableStudent = () => {
+        setDisplayGrid(false)
+        setDisplayTable(true)
+    }
+
     return (
         <div className="container flex">              
                     <div className="option">
-                        <h2>Tùy chọn</h2>
+                        <h2>Tùy chọn 
+                        </h2>
+                            <div className='theme'>
+                                <div onClick={showGridStudent}>
+                                    Student Grid
+                                </div>
+                                <div onClick={showTableStudent}>
+                                    Student Table
+                                </div>
+                                </div>
                         <div >
                             <input 
                                 className="searchByCode"
@@ -270,20 +299,24 @@ function ListStudent(props) {
                              type="text" placeholder='Nhập mã sinh viên'/>
                             <button onClick={searchStudent}>Tìm kiếm</button>
                         </div>
-                        <h3 style={{marginTop: '10px', }}>Thông tin chi tiết</h3>
+
                         <div>
                           {
-                           inforStudent && student.map(element=> {
+                           inforStudent && student.map((element, index)=> {
                                 return (         
-                                    <>   
-                                    <div><strong>Mã sinh viên: </strong>  {element.code}</div>
-                                    <div><strong>Họ tên: </strong>  {element.name}</div>
-                                    <div><strong>Tuổi: </strong>  {element.age}</div>
-                                    <div><strong>Lớp: </strong>{element.class}</div>
-                                    <div><strong>Email:  </strong> {element.email}</div>
-                                    <div><strong>Ngành học: </strong> {element.major}</div>
-                                    <div><strong>Số điện thoại: </strong>  {element.phoneNumber}</div>
-                                    <div><strong> Quên quán: </strong> {element.homeTown}</div>
+                                    <> 
+                                    <div className='studentDetail' key={index}>
+                                       <h3 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h3>
+                                        <div><strong>Mã sinh viên: </strong>  {element.code}</div>
+                                        <div><strong>Họ tên: </strong>  {element.name}</div>
+                                        <div><strong>Tuổi: </strong>  {element.age}</div>
+                                        <div><strong>Trạng thái: </strong>{element.status}</div>
+                                        <div><strong>Email:  </strong> {element.email}</div>
+                                        <div><strong>Ngành học: </strong> {element.major}</div>
+                                        <div><strong>Số điện thoại: </strong>  {element.phoneNumber}</div>
+                                        <div><strong>Quên quán: </strong> {element.homeTown}</div>
+                                    </div>
+                                    
                                     </>
                                 )
                             })
@@ -305,17 +338,20 @@ function ListStudent(props) {
                         </div>
                         <div className="filterStudent ">
                             <select
-                                value={fillterClass} 
-                                onChange={(e) => handleChangeGenderFilter(e)}>
-                                <option value="">Tìm theo giới tính</option>
-                                <option value="Nam">Nam</option>
-                                <option value="Nữ">Nữ</option>
+                                value={filterStatus} 
+                                onChange={(e) => handleChangeStatusFilter(e)}>
+                                <option value="">Chọn trạng thái</option>
+                                <option value="Đang học">Đang học</option>
+                                <option value="Đã học xong">Đã học xong</option>
+                                <option value="Đã nghỉ học">Đã nghỉ học</option>
+                                <option value="Đình chỉ">Đình chỉ</option>
+                                <option value="Bảo lưu">Bảo lưu</option>
                             </select>
 
                             <select
                                 value={fillterMajor}
                                 onChange={(e) => handleChangeMajorFilter(e)} name="" id="">
-                                <option value="">Tìm theo ngành học</option>
+                                <option value="">Chọn ngành học</option>
                                 <option value="CNTT">CNTT</option>
                                 <option value="Dược">Dược</option>
                                 <option value="Ngôn ngữ Anh">Ngôn ngữ Anh</option>
@@ -324,43 +360,69 @@ function ListStudent(props) {
                                 <option value="Công nghệ ô tô">Công nghệ ô tô</option>
                             </select>
                         </div>
-                        <table >
-                            <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Mã sinh viên</th>
-                                    <th>Họ và tên</th>
-                                    <th>Tuổi</th>
-                                    <th>Ngành học</th>
-                                    <th>Email</th>
-                                    <th>Tùy chọn</th>
-                                </tr>
-                            </thead>
+                       { displayTable && 
+                                    <table >
+                                        <thead>
+                                            <tr>
+                                                <th>STT</th>
+                                                <th>Mã sinh viên</th>
+                                                <th>Họ và tên</th>
+                                                <th>Trạng thái</th>
+                                                <th>Ngành học</th>
+                                                <th>Email</th>
+                                                <th>Tùy chọn</th>
+                                            </tr>
+                                        </thead>
 
-                            <tbody className='list_student'>
-                                { 
-                                    student.map((element, index) => {
-                                        return (     
-                                            <tr key={index}>
-                                            <td>{index +1}</td>
-                                            <td>{element.code}</td>
-                                            <td>{element.name}</td>
-                                            <td>{element.age}</td>
-                                            <td>{element.major}</td>
-                                            <td>{element.email}</td>
-                                            <td>
-                                                <button onClick={() => showModalUpdate(element)} type='button' className='b_1_solid_grey'>Sửa</button>
-                                                <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
-                                            </td>
-                                        </tr>  
+                                        <tbody className='list_student'>
+                                            { 
+                                                student.map((element, index) => {
+                                                    return (     
+                                                        <tr key={index}>
+                                                        <td>{index +1}</td>
+                                                        <td>{element.code}</td>
+                                                        <td>{element.name}</td>
+                                                        <td>{element.status}</td>
+                                                        <td>{element.major}</td>
+                                                        <td>{element.email}</td>
+                                                        <td>
+                                                            <button onClick={() => showModalUpdate(element)} type='button' className='b_1_solid_grey'>Sửa</button>
+                                                            <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
+                                                        </td>
+                                                    </tr>  
+                                                    )
+                                                
+                                                })  
+                                            }
+                                            
+                                        </tbody>
+                                    </table>
+                       } 
+
+                        {
+                            displayGrid && 
+                            <div className='gridStudent flex'>
+                                {
+                                    student.map(element => {
+                                        return (
+                                            <div className='item'>
+                                                <div><b>MSV: </b>{element.code}</div>
+                                                <div><b>Họ và tên: </b>{element.name}</div>
+                                                <div><b>Trạng thái: </b>{element.status}</div>
+                                                <div><b>Ngành học: </b>{element.major}</div>
+                                                <div><b>Số điện thoại: </b>{element.email}</div>
+                                                <div><b>Quê quán: </b>{element.email}</div>
+                                            </div>
+                                           
                                         )
-                                      
-                                    })  
+                                        
+                                    })
                                 }
                                 
-                            </tbody>
-                        </table>
-                    </form>      
+                            </div>
+                        }
+                    </form>     
+                    
                     {/* Modal Delete */}
                     {
                         displayModalDelete && currentIdDelete && (
@@ -419,21 +481,20 @@ function ListStudent(props) {
                                                 </select> <small>{errorGenderUpdate}</small>
                                                 
                                                 <select 
-                                                    className='studentClassUpdate' 
-                                                    value={studentClassUpdate} 
+                                                    className='studentStatusUpdate' 
+                                                    value={studentStatusUpdate} 
                                                     onBlur={
                                                         checkClass
                                                     }
-                                                    onChange = {(e)=> handleChangeClass(e)}>
-                                                    <option value="">Chọn lớp</option>
-                                                    <option value="D101">D101</option>
-                                                    <option value="D102">D102</option>
-                                                    <option value="D103">D103</option>
-                                                    <option value="D104">D104</option>
-                                                    <option value="D105">D105</option>
-                                                    <option value="D106">D106</option>
+                                                    onChange = {(e)=> handleChangeStatus(e)}>
+                                                        <option value="">Chọn trạng thái</option>
+                                                        <option value="Đang học">Đang học</option>
+                                                        <option value="Đã học xong">Đã học xong</option>
+                                                        <option value="Đã nghỉ học">Đã nghỉ học</option>
+                                                        <option value="Đình chỉ">Đình chỉ</option>
+                                                        <option value="Bảo lưu">Bảo lưu</option>
                                                 </select>
-                                                <small>{errorClassUpdate}</small>
+                                                <small>{errorStatusUpdate}</small>
 
                                                 <select 
                                                     className='studentMajorUpdate' 

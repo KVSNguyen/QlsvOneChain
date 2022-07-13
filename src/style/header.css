@@ -8,26 +8,43 @@
     position: relative;
 }
 
+.header h3 {
+    margin-top: 10px;
+}
+
+.header img {
+    margin-left: 50px;
+    width: 100px;
+    height: 100px;
+}
+
 .header span {
     padding: 5px 8px;
     background-color: var(--primary-color);
     color: var(--white-color);
     border-radius: 20px;
+    margin-top: 10px;
     border: 1px solid var(--primary-color);
     margin-left: 10px;
     transition: 0.3s;
 }
 
+.header .homeTown {
+    margin-bottom: 10px;
+}
+
 .header .infor {
     position: absolute;
-    top: 60px;
+    top: 55px;
     padding: 20px;
-    left: 10px;
-    border: 1px solid grey;
+    left: 20px;
+    border-radius: 5px;
+    border: 1px solid var(--primary-color);
     display: none;
-    box-shadow: 1px 1px 3px;
+    /* box-shadow: 1px 1px 3px; */
     width: 250px;
-    background-color: #fff;
+    background-color: rgb(236, 249, 250);
+    animation: showInfor 0.3s ease-in-out;
 }
 
 .header .inforAdmin:hover .infor{
@@ -35,6 +52,17 @@
 }
 
 .header span:hover {
-    color: #333;
+    color: var(--primary-color);
     background-color: transparent;
+}
+
+@keyframes showInfor{
+    from {
+        opacity: 0;
+        top: 100px;
+    }
+    to {
+        opacity: 1;
+        top: 55px;
+    }
 }

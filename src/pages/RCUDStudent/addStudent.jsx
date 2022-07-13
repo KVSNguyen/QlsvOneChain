@@ -9,13 +9,13 @@ function AddStudent(props) {
     const [gender, setgender] = useState('')
     const [studentEmail, setstudentEmail]= useState('')
     const [studentAge, setstudentAge] = useState('')
-    const [studentClass, setstudentClass] = useState('')
+    const [studentStatus, setstudentStatus] = useState('')
     const [studentMajor, setstudentMajor] = useState('')
     const [phoneNumber, setphoneNumber] = useState('')
     const [studentHomeTown, setstudentHomeTown] = useState('')
     const [errorID, seterrorID] = useState('')
     const [errorName, seterrorName] = useState('')
-    const [errorClass, seterrorClass] = useState('')
+    const [errorStatus, seterrorStatus] = useState('')
     const [errorMajor, seterrorMajor] = useState('')
     const [errorGender, seterrorGender] = useState('')
     const [errorAge, seterrorAge] = useState('')
@@ -54,9 +54,9 @@ function AddStudent(props) {
             alert('Email đã bị trùng')
         }
         if(checkIdSimilar.length === 0 && checkEmailSimilar.length ===0 && errorID === '' && errorName === ''&& errorAge === ''
-        && errorClass === ''&& errorMajor === ''&& errorGender === ''&& errorPhoneNumber === '' 
+        && errorStatus === ''&& errorMajor === ''&& errorGender === ''&& errorPhoneNumber === '' 
         && errorHomeTown ==='' &&studentCode !== '' && studentName!== ''&& gender!== ''
-        && studentAge!== ''&& studentClass!== ''&& studentMajor!== ''&& phoneNumber!== ''&& studentHomeTown!== ''){
+        && studentAge!== ''&& studentStatus!== ''&& studentMajor!== ''&& phoneNumber!== ''&& studentHomeTown!== ''){
             alert('Thêm sinh viên thành công');
             db.collection("student").add({
             code: studentCode,
@@ -64,7 +64,7 @@ function AddStudent(props) {
             gender: gender,
             email: studentEmail,
             age: studentAge,
-            class: studentClass,
+            status: studentStatus,
             major: studentMajor,
             phoneNumber: phoneNumber,
             homeTown: studentHomeTown
@@ -72,12 +72,12 @@ function AddStudent(props) {
             getData()
         }
         if(errorID !== '' || errorName !== ''|| errorAge !== ''
-        || errorClass !== ''|| errorMajor !== ''|| errorGender !== ''|| errorPhoneNumber !== '' 
+        || errorStatus !== ''|| errorMajor !== ''|| errorGender !== ''|| errorPhoneNumber !== '' 
         || errorHomeTown !=='') {
             alert('vui lòng kiểm tra lại thông tin')
         }
          if( studentCode === '' || studentName=== ''|| gender=== ''
-            || studentAge=== ''|| studentClass=== ''|| studentMajor=== ''|| phoneNumber=== ''|| studentHomeTown=== '') {
+            || studentAge=== ''|| studentStatus=== ''|| studentMajor=== ''|| phoneNumber=== ''|| studentHomeTown=== '') {
             alert('Vui lòng nhập đẩy đủ thông tin')
         } 
     }
@@ -125,11 +125,11 @@ function AddStudent(props) {
             seterrorAge('')
         }
     }
-    const checkClass = () => {
-        if(studentClass === '') {
-            seterrorClass('Không được để trống')
+    const checkStatus = () => {
+        if(studentStatus === '') {
+            seterrorStatus('Không được để trống')
         } else {
-            seterrorClass('')
+            seterrorStatus('')
         }
     }
 
@@ -173,7 +173,7 @@ function AddStudent(props) {
     })
 
     const handleChangeClass = ((e) => {
-        setstudentClass(e.target.value)
+        setstudentStatus(e.target.value)
     })
       
     return (
@@ -217,19 +217,18 @@ function AddStudent(props) {
                         
 
                         <select 
-                            className='studentClass' 
-                            value={studentClass} 
-                            onBlur = {checkClass}
+                            className='studentStatus' 
+                            value={studentStatus} 
+                            onBlur = {checkStatus}
                             onChange = {(e)=> handleChangeClass(e)}>
-                            <option value="">Chọn lớp</option>
-                            <option value="D101">D101</option>
-                            <option value="D102">D102</option>
-                            <option value="D103">D103</option>
-                            <option value="D104">D104</option>
-                            <option value="D105">D105</option>
-                            <option value="D106">D106</option>
+                            <option value="">Chọn trạng thái</option>
+                            <option value="Đang học">Đang học</option>
+                            <option value="Đã học xong">Đã học xong</option>
+                            <option value="Đã nghỉ học">Đã nghỉ học</option>
+                            <option value="Đình chỉ">Đình chỉ</option>
+                            <option value="Bảo lưu">Bảo lưu</option>
                         </select>
-                        <small>{errorClass}</small>
+                        <small>{errorStatus}</small>
 
                         <select 
                             className='studentMajor' 

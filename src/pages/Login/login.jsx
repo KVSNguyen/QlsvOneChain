@@ -42,6 +42,7 @@ function Login(props) {
             return element.email === userNameEmail && element.password === passwordLogin 
         })
         if(result.length > 0 ) {
+            alert('Đăng nhập thành công')
             navigate('/Home')
         }
         if(result.length <= 0) {

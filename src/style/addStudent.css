@@ -10,7 +10,7 @@
     border-radius: 5px;
 }
 
-.addStudent span {
+.addStudent span, .updateUser span{
     display: block;
 }
 
@@ -18,14 +18,14 @@
     display:  none;
 }
 
-.addStudent small {
+.addStudent small, .updateUser small{
     text-align: left;
     color: red;
     display: block;
     margin-left: 10px;
 }
 
-.addStudent h2 {
+.addStudent h2, .updateUser h2 {
     background-color: var(--primary-color);
     color: #fff;
     width: 150px;
@@ -37,7 +37,7 @@
 }
 
 .addStudent input, .addStudent button,
-.addStudent select {
+.addStudent select, .updateUser input, .updateUser button, .updateUser select{
     width: 98%;
     border: none;
     border-radius: 5px;
@@ -48,28 +48,30 @@
     border-bottom:1px solid grey ;
 }
 
-.addStudent input:focus {
+.addStudent input:focus, .updateUser input:focus{
     border-bottom: 1px solid blue;
 }
 
-.addStudent button {
+.addStudent button, .updateUser button{
     width: 100px;
     cursor: pointer;
     margin: 10px;
-    border: none;
+    border: 1px solid var(--primary-color);
     background-color:  rgb(87, 87, 250);
     color: var(--white-color);
+    transition: 0.3s;
 }
 
-.addStudent p {
+.addStudent p, .updateUser p {
     text-align: right;
     cursor: pointer;
 }
 
-.addStudent p:hover {
+.addStudent p:hover, .updateUser p:hover{
     color: blue;
 }
 
-.addStudent button:hover {
-    opacity: 0.8;
+.addStudent button:hover, .updateUser button:hover{
+    background-color: transparent;
+    color: var(--primary-color);
 }
