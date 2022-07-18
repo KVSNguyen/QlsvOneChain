@@ -37,15 +37,15 @@ function ListStudent(props) {
     const [fillterMajor, setfillterMajor] = useState('')
     const [searchData, setSearchData] = useState('')
     const [reload, setreload] = useState('')
+    const [url, seturl] = useState('');
+    const [currentIdImage, setcurrentIdImage] = useState()
     const [inforStudent, setInforStudent] = useState(false)
     const [displayTable, setDisplayTable] = useState(true)
     const [displayGrid, setDisplayGrid] = useState(false)
-    const [image, setImage] = useState(null);
-    const [url, seturl] = useState('');
-    const [proccess, setProccess] = useState(0);
     const [displayImage, setdisplayImage] = useState(false);
-    const [currentIdImage, setcurrentIdImage] = useState()
-
+    const [detailStudent, setDetailStudent] = useState(false)
+    const [image, setImage] = useState(null);
+    const [proccess, setProccess] = useState(0);
 
     const showTable =  () => {
         setDisplayTable(!displayTable)
@@ -249,19 +249,26 @@ function ListStudent(props) {
         if(result.length === 0) {
             alert('Không tìm thấy sinh viên')
             getData()
-            setInforStudent(false)
         }
         else if(searchData === '') {
             getData()
-            setInforStudent(false)
         }else {
             setstudent(result)
-            setInforStudent(true)
         }
         setSearchData('')
+        setInforStudent(false)
     }
-       
-    //load lại data trong database
+
+    const showInforStudent = (id)=> {
+        const result = student.filter(element => {
+            return element.id === id
+        })
+        getData()
+        setDetailStudent(result)
+        setInforStudent(true)
+    }
+
+    //tải lại data trong database
     const reloadpage = () => {
         getData()
         setInforStudent(false)
@@ -287,11 +294,13 @@ function ListStudent(props) {
     const showGridStudent = () => {
         setDisplayTable(false)
         setDisplayGrid(true)
+         setInforStudent(false)
     }
 
     const showTableStudent = () => {
         setDisplayGrid(false)
         setDisplayTable(true)
+         setInforStudent(false)
     }
 
     const handleChangeFile = (event => {
@@ -301,6 +310,7 @@ function ListStudent(props) {
     })
 
     const handleUpload = () => {
+        console.log(currentIdImage);
         const upLoadTask = storage.ref(`images/${image.name}`).put(image);
         upLoadTask.on(
             "state_changed",
@@ -324,21 +334,10 @@ function ListStudent(props) {
                 });
             }
         )
-      
-    }
-
-    const toggleModalImage = (id) => {
-        console.log(id);
-        setcurrentIdImage(id)
-        setdisplayImage(!displayImage)
-    }
-    
-    const showDetailStudent = (id) => {
-        setInforStudent(!inforStudent)
     }
 
     const updateImage = async (url) => {
-            await db.collection("student").doc(currentIdImage).update({
+        await db.collection("student").doc(currentIdImage).update({
             image: url
         })
         getData()
@@ -346,6 +345,11 @@ function ListStudent(props) {
         setdisplayImage(false)
     }
     
+    const toggleModalImage = (id) => {
+        setInforStudent(false)
+        setcurrentIdImage(id)
+        setdisplayImage(!displayImage)
+    }
     return (
         <div className="container flex">              
                     <div className="option">
@@ -370,17 +374,13 @@ function ListStudent(props) {
 
                         <div>
                           {
-                           inforStudent && student.map((element, index)=> {
+                           inforStudent && detailStudent.map((element, index)=> {
                                 return (         
                                     <> 
                                     <div className='studentDetail userImage' key={index}>
                                        <h2 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h2>
                                        <img src= {element.image} alt="" />
-                                        <h3 onClick={toggleModalImage}
-                                            style={{
-                                                cursor: 'pointer'
-                                            }}>Thay đổi ảnh
-                                        </h3>
+                                        
                                         <div><strong>Mã sinh viên: </strong>  {element.code}</div>
                                         <div><strong>Họ tên: </strong>  {element.name}</div>
                                         <div><strong>Tuổi: </strong>  {element.age}</div>
@@ -389,6 +389,7 @@ function ListStudent(props) {
                                         <div><strong>Ngành học: </strong> {element.major}</div>
                                         <div><strong>Số điện thoại: </strong>  {element.phoneNumber}</div>
                                         <div><strong>Quên quán: </strong> {element.homeTown}</div>
+                                      
                                     </div>
                                     
                                     </>
@@ -466,7 +467,7 @@ function ListStudent(props) {
                                                 student.map((element, index) => {
                                                     return (     
                                                         <tr key={index} 
-                                                        // onClick={() => showDetailStudent(element.id) }
+                                                        onClick={() => showInforStudent(element.id) }
                                                         >
                                                             <td>{index +1}</td>
                                                             <td>{element.code}</td>
@@ -479,11 +480,9 @@ function ListStudent(props) {
                                                                 <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
                                                             </td>
                                                         </tr>  
-                                                    )
-                                                
+                                                    )   
                                                 })  
                                             }
-                                            
                                         </tbody>
                                     </table>
                        } 
@@ -494,7 +493,7 @@ function ListStudent(props) {
                                 {
                                     student.map((element, index) => {
                                         return (
-                                            <div className='item userImage'>
+                                            <div className='item userImage ' onClick={() => showInforStudent(element.id)}>
                                                 <img src= {element.image} alt="" />
                                                 <h3 onClick={() => toggleModalImage(element.id)}
                                                     style={{

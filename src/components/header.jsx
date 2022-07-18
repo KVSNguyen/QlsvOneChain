@@ -72,7 +72,7 @@ function Header(props) {
             alert('Vui lòng nhập đẩy đủ thông tin')
         } else { 
             db.collection("user").doc(user[0].id).set({
-                image: url,
+                image: user[0].image,
                 name: userName,
                 age: userAge,
                 gender: userGender,

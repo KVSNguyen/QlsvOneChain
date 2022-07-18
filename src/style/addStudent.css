@@ -8,6 +8,18 @@
     box-shadow: 1px 1px 5px;
     text-align: center;
     border-radius: 5px;
+    animation: showAddStudent 0.3s ease-in;
+}
+
+@keyframes showAddStudent {
+    from {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+    to{
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 .addStudent span, .updateUser span{

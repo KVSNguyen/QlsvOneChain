@@ -4,8 +4,19 @@
     border-bottom: 1px solid grey;
     padding: 10px 30px;
     background-color: #fff;
-    box-shadow: 1px 1px 4px ;
-    position: relative;
+    top: 0;
+    width: 100%;
+    position: fixed;
+    animation: moveHeader 0.3s ease-in;
+}
+
+@keyframes moveHeader {
+    from {
+      top: -50px;
+    }
+    to {
+      top: 0;
+    }
 }
 
 .header h3 {
