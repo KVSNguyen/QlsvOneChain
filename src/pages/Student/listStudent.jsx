@@ -2,8 +2,11 @@ import React, { useState } from 'react';
 import db from '../../firebase/firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {ReloadOutlined} from '@ant-design/icons'
+import {IdcardFilled, ReloadOutlined} from '@ant-design/icons'
+import { getStorage } from 'firebase/storage';
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {CloseOutlined} from '@ant-design/icons'
+import { storage } from '../../firebase/firebase';
 
 function ListStudent(props) {
     const [student, setstudent] = useState([])
@@ -37,12 +40,19 @@ function ListStudent(props) {
     const [inforStudent, setInforStudent] = useState(false)
     const [displayTable, setDisplayTable] = useState(true)
     const [displayGrid, setDisplayGrid] = useState(false)
+    const [image, setImage] = useState(null);
+    const [url, seturl] = useState('');
+    const [proccess, setProccess] = useState(0);
+    const [displayImage, setdisplayImage] = useState(false);
+    const [currentIdImage, setcurrentIdImage] = useState()
+
 
     const showTable =  () => {
         setDisplayTable(!displayTable)
     }
 
     const showModalUpdate = (element) => {
+        setInforStudent(false)
         setcurrentIdUpdate(element.id)
         setstudentIDUpdate(element.code)
         setStudentNameUpdate(element.name)
@@ -55,10 +65,10 @@ function ListStudent(props) {
         setstudentHomeTownUpdate(element.homeTown)
         setDisplayModalUpdate(!displayModalUpdate)
         setEmtyErrorValueUpdate()
-        console.log(element.id);
     }
 
     const showModalDelete = (id) => {
+        setInforStudent(false)
         setCurrentIdDelete(id)
         setDisplayModalDelete(!displayModalDelete)
     }
@@ -235,14 +245,20 @@ function ListStudent(props) {
 
     // s
     const searchStudent = async () => {
-        if(searchData === '') {
+        const  result = await fillterStudent('code', searchData)
+        if(result.length === 0) {
+            alert('Không tìm thấy sinh viên')
+            getData()
+            setInforStudent(false)
+        }
+        else if(searchData === '') {
             getData()
             setInforStudent(false)
         }else {
-            const  result = await fillterStudent('code', searchData)
             setstudent(result)
             setInforStudent(true)
         }
+        setSearchData('')
     }
        
     //load lại data trong database
@@ -278,6 +294,58 @@ function ListStudent(props) {
         setDisplayTable(true)
     }
 
+    const handleChangeFile = (event => {
+        if(event.target.files[0]) {
+            setImage(event.target.files[0]);
+        }
+    })
+
+    const handleUpload = () => {
+        const upLoadTask = storage.ref(`images/${image.name}`).put(image);
+        upLoadTask.on(
+            "state_changed",
+            snapshot => {
+                const proccess = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                setProccess(proccess)
+            },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                .ref('images')
+                .child(image.name)
+                .getDownloadURL()
+                .then(url => {
+                    // seturl(url)
+                    updateImage(url)
+                });
+            }
+        )
+      
+    }
+
+    const toggleModalImage = (id) => {
+        console.log(id);
+        setcurrentIdImage(id)
+        setdisplayImage(!displayImage)
+    }
+    
+    const showDetailStudent = (id) => {
+        setInforStudent(!inforStudent)
+    }
+
+    const updateImage = async (url) => {
+            await db.collection("student").doc(currentIdImage).update({
+            image: url
+        })
+        getData()
+        alert('Thay đổi ảnh thành công')
+        setdisplayImage(false)
+    }
+    
     return (
         <div className="container flex">              
                     <div className="option">
@@ -290,8 +358,8 @@ function ListStudent(props) {
                                 <div onClick={showTableStudent}>
                                     Student Table
                                 </div>
-                                </div>
-                        <div >
+                            </div>
+                    <div >
                             <input 
                                 className="searchByCode"
                                 value={searchData}
@@ -305,8 +373,14 @@ function ListStudent(props) {
                            inforStudent && student.map((element, index)=> {
                                 return (         
                                     <> 
-                                    <div className='studentDetail' key={index}>
-                                       <h3 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h3>
+                                    <div className='studentDetail userImage' key={index}>
+                                       <h2 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h2>
+                                       <img src= {element.image} alt="" />
+                                        <h3 onClick={toggleModalImage}
+                                            style={{
+                                                cursor: 'pointer'
+                                            }}>Thay đổi ảnh
+                                        </h3>
                                         <div><strong>Mã sinh viên: </strong>  {element.code}</div>
                                         <div><strong>Họ tên: </strong>  {element.name}</div>
                                         <div><strong>Tuổi: </strong>  {element.age}</div>
@@ -321,8 +395,21 @@ function ListStudent(props) {
                                 )
                             })
                         }
+                        {
+                            displayImage &&
+                                <div className='modalImage'>
+                                    <div className="modal_content" 
+                                    style={{
+                                        padding: '20px',
+                                        width: '300px'
+                                    }}> <progress value={proccess} max='100'/>
+                                        <input type="file" accept="image/*" onChange={(event) => handleChangeFile(event)}/>
+                                        <button onClick={ handleUpload}>Thay đổi</button>
+                                        <button onClick={toggleModalImage}>Thoát</button>
+                                    </div>
+                                </div>
+                        }
                         </div>
-                       
                     </div>
                     <form action="">
                         <div className="title flex">
@@ -342,7 +429,7 @@ function ListStudent(props) {
                                 onChange={(e) => handleChangeStatusFilter(e)}>
                                 <option value="">Chọn trạng thái</option>
                                 <option value="Đang học">Đang học</option>
-                                <option value="Đã học xong">Đã học xong</option>
+                                <option value="Đã học xong">Đã học xong ✔</option>
                                 <option value="Đã nghỉ học">Đã nghỉ học</option>
                                 <option value="Đình chỉ">Đình chỉ</option>
                                 <option value="Bảo lưu">Bảo lưu</option>
@@ -378,18 +465,20 @@ function ListStudent(props) {
                                             { 
                                                 student.map((element, index) => {
                                                     return (     
-                                                        <tr key={index}>
-                                                        <td>{index +1}</td>
-                                                        <td>{element.code}</td>
-                                                        <td>{element.name}</td>
-                                                        <td>{element.status}</td>
-                                                        <td>{element.major}</td>
-                                                        <td>{element.email}</td>
-                                                        <td>
-                                                            <button onClick={() => showModalUpdate(element)} type='button' className='b_1_solid_grey'>Sửa</button>
-                                                            <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
-                                                        </td>
-                                                    </tr>  
+                                                        <tr key={index} 
+                                                        // onClick={() => showDetailStudent(element.id) }
+                                                        >
+                                                            <td>{index +1}</td>
+                                                            <td>{element.code}</td>
+                                                            <td>{element.name}</td>
+                                                            <td>{element.status}</td>
+                                                            <td>{element.major}</td>
+                                                            <td>{element.email}</td>
+                                                            <td>
+                                                                <button onClick={() => showModalUpdate(element)} type='button' className='b_1_solid_grey'>Sửa</button>
+                                                                <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
+                                                            </td>
+                                                        </tr>  
                                                     )
                                                 
                                                 })  
@@ -403,17 +492,26 @@ function ListStudent(props) {
                             displayGrid && 
                             <div className='gridStudent flex'>
                                 {
-                                    student.map(element => {
+                                    student.map((element, index) => {
                                         return (
-                                            <div className='item'>
-                                                <div><b>MSV: </b>{element.code}</div>
+                                            <div className='item userImage'>
+                                                <img src= {element.image} alt="" />
+                                                <h3 onClick={() => toggleModalImage(element.id)}
+                                                    style={{
+                                                        cursor: 'pointer'
+                                                    }}>Thay đổi ảnh
+                                                </h3>
+                                                <div  style={{color: 'red'}}key={index}><b>MSV: </b>{element.code}</div>
                                                 <div><b>Họ và tên: </b>{element.name}</div>
                                                 <div><b>Trạng thái: </b>{element.status}</div>
                                                 <div><b>Ngành học: </b>{element.major}</div>
-                                                <div><b>Số điện thoại: </b>{element.email}</div>
+                                                <div><b>Số điện thoại: </b>{element.phoneNumber}</div>
                                                 <div><b>Quê quán: </b>{element.email}</div>
+                                                <div className='center'>
+                                                    <button onClick={() => showModalUpdate(element)} type='button' className='b_1_solid_grey'>Sửa</button>
+                                                    <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
+                                                </div>
                                             </div>
-                                           
                                         )
                                         
                                     })

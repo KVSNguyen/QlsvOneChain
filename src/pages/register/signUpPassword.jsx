@@ -35,6 +35,7 @@ function SignUpPassword(props) {
     const submit = async () => {  
         if( errorPassword === '' && errorConfirm ==='' && userPassword !== ''){
            await db.collection("user").doc(userAccount[0].id).set({
+                image: null,
                 email: userAccount[0].email,
                 password: userPassword,
                 name: 'chưa có',

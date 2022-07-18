@@ -10,12 +10,18 @@
 
 .header h3 {
     margin-top: 10px;
+    transition: 0.3s;
 }
 
-.header img {
-    margin-left: 50px;
+.userImage {
+    margin: auto;
+}
+
+ img {
     width: 100px;
+    border-radius: 50%;
     height: 100px;
+    border: 1px solid var(--primary-color);
 }
 
 .header span {
@@ -24,9 +30,13 @@
     color: var(--white-color);
     border-radius: 20px;
     margin-top: 10px;
+    margin-left: 5px;
     border: 1px solid var(--primary-color);
-    margin-left: 10px;
     transition: 0.3s;
+}
+
+.userImage h3 {
+    color: var(--primary-color);
 }
 
 .header .homeTown {
@@ -38,6 +48,7 @@
     top: 55px;
     padding: 20px;
     left: 20px;
+    text-align: center;
     border-radius: 5px;
     border: 1px solid var(--primary-color);
     display: none;

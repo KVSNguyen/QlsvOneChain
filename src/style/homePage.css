@@ -1,14 +1,31 @@
 .home_page {
-    background: linear-gradient(to right, rgb(67, 252, 166), rgb(72, 249, 255));
+    /* background: linear-gradient(to right, rgb(67, 252, 166), rgb(72, 249, 255)); */
+    height: 100vh;
+    background: linear-gradient(-45deg, #5552ee, #7ee021, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
     height: 100vh;
     position: relative;
     word-spacing: 1px;
     font-family: 'Times New Roman', Times, serif;
 }
 
+@keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+
+
 .home_page .container {
-    padding: 20px;
     margin-top: 50px;
+    padding: 20px;
     margin-bottom: 20px;
     background-color: #fff;
 }
@@ -98,6 +115,14 @@
     padding: 7px 15px;
 }
 
+.home_page tr:hover {
+    background-color: rgb(241, 233, 233);
+}
+
+.home_page thead tr:first-child:hover {
+    background: linear-gradient(to right, rgb(30, 255, 131), rgb(72, 249, 255))
+}
+
 .home_page tbody {
     font-weight: 400;
 }
@@ -129,7 +154,7 @@
     color: var(--primary-color)
 }
 
-.deleteStudent, .updateStudent, .updateUser {
+.deleteStudent, .updateStudent, .updateUser, .modalImage, .modal_logOut {
     position: fixed;
     display: flex;
     justify-content: center;
@@ -177,6 +202,46 @@
     text-align: center; 
     border-radius: 5px;
     animation: showModal 1s linear ;
+}
+
+.modal_logOut .modal_content {
+    padding: 20px;
+}
+
+.modal_logOut .modal_content button {
+    width: 80px;
+    height: 30px;
+    border-radius: 5px;
+    margin: 10px;
+    transition: 0.3s;
+    background-color: var(--primary-color);
+    color: #fff;
+    border: 1px solid var(--primary-color);
+}
+
+.modal_logOut .modal_content button:hover {
+    background-color: transparent;
+    color: var(--primary-color);
+}
+
+.modalImage input {
+    border-bottom: 1px solid grey;
+    margin-top: 20px;
+}
+
+.modalImage button {
+    background-color: var(--primary-color);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin: 15px;
+    transition: 0.3s;
+    border: 1px solid var(--primary-color);
+}
+
+.modalImage button:hover {
+    background-color: transparent;
+    color:var(--primary-color);
 }
 
 .home_page .deleteStudent h2 {
@@ -268,6 +333,10 @@
     cursor: pointer;
 }
 
+.center button {
+    width: 70px;
+    margin: 10px 10px 0 10px;
+}
 .updateStudent p:hover {
     color: blue;
 }
@@ -289,20 +358,24 @@
 
 .home_page .gridStudent {
     flex-wrap: wrap;
-    justify-content: unset;
+    justify-content: space-around;
 }
 
 .home_page .item {
-    padding: 10px;
+    padding: 20px;
     margin: 10px;
+    text-align: center;
     line-height: 1.8;
-    width: 290px;
+    border-radius: 5px;
+    width: 250px;
     border: 1px solid grey;
     box-shadow: 1px 1px 3px;
 }
 
-.home_page .item div:first-child {
-    background: linear-gradient(to right, rgb(67, 252, 166), rgb(72, 249, 255));;
-    padding: 10px 15px;
-    text-align: center;
+.home_page .item img {
+    border: 1px solid var(--primary-color);
+    width: 100px;
+    margin-bottom: 10px;
+    height: 100px;
+    margin: auto;
 }

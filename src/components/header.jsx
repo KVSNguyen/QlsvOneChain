@@ -5,6 +5,7 @@ import { useCookies } from 'react-cookie';
 import {PlusCircleOutlined} from '@ant-design/icons'
 import db from '../firebase/firebase';
 import {LogoutOutlined} from "@ant-design/icons"
+import { storage } from '../firebase/firebase';
 
 function Header(props) {
     const events = db.collection('user')
@@ -13,6 +14,7 @@ function Header(props) {
     const [userName, setuserName] = useState('')
     const [userAge, setuserAge] = useState('')
     const [userGender, setuserGender] = useState('')
+    const [userImage, setuserImage] = useState('')
     const [userHomeTown, setuserHomeTown]= useState('')
     const [phoneNumber, setphoneNumber] = useState('')
     const [errorUserAge, seterrorUserAge] = useState('')
@@ -21,10 +23,20 @@ function Header(props) {
     const [errorHomeTown, seterrorHomeTown] = useState('')
     const [errorPhoneNumber, seterrorPhoneNumber] = useState('')
     const [cookie, setCookie, removeCookie] = useCookies( ['user'])
+    const [image, setImage] = useState(null);
+    const [url, seturl] = useState('');
+    const [progress, setprogress] = useState(0);
+    const [displayImage, setdisplayImage] = useState(false);
+    const [displayModalLogOut, setdisplayModalLogOut] = useState(false);
+    
 
     useEffect(()=> {
         getData()
     },[])
+
+    const toggleModalLogOut = () => {
+        setdisplayModalLogOut(!displayModalLogOut)
+    }
 
     const getData = () => {
         events.get().then((querySnapshot) => {
@@ -38,6 +50,7 @@ function Header(props) {
 
     const showProfileUser = (element) => {
         setDisplayProfile(!displayProfile)
+        setuserImage(element.image)
         setuserName(element.name)
         setuserAge(element.age)
         setuserGender(element.gender)
@@ -46,11 +59,9 @@ function Header(props) {
         setEmtyValue()
     }
 
-    console.log(admin);
     const user = admin.filter(element => {
         return element.id === localStorage.getItem('id')
     })
-    console.log(user);
 
     const submit = () => {
         if(errorUserName !== ''|| errorUserAge !== ''
@@ -59,18 +70,19 @@ function Header(props) {
         }
          if( userName === '' || userAge=== ''|| phoneNumber=== ''|| userHomeTown=== '') {
             alert('Vui lòng nhập đẩy đủ thông tin')
-        } else {
+        } else { 
             db.collection("user").doc(user[0].id).set({
-            name: userName,
-            age: userAge,
-            gender: userGender,
-            email: user[0].email,
-            phoneNumber: phoneNumber,
-            homeTown: userHomeTown,
-            password: user[0].password
+                image: url,
+                name: userName,
+                age: userAge,
+                gender: userGender,
+                email: user[0].email,
+                phoneNumber: phoneNumber,
+                homeTown: userHomeTown,
+                password: user[0].password
             })
-            alert('Cập nhật thông tin người dùng thành công');
             getData()
+            alert('Cập nhật thông tin người dùng thành công');
             showProfileUser()
             setEmtyValue()
         }      
@@ -132,6 +144,52 @@ function Header(props) {
         setuserGender(e.target.value)
     }
 
+    const handleChangeFile = (event => {
+        if(event.target.files[0]) {
+            setImage(event.target.files[0]);
+        }
+    })
+
+    const handleUpload = async() => {
+        const upLoadTask = storage.ref(`images/${image.name}`).put(image);
+        upLoadTask.on(
+            "state_changed",
+            snapshot => {
+                const progress = Math.round(
+                    (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+                );
+                setprogress(progress)
+            },
+            error => {
+                console.log(error);
+            },
+            () => {
+                storage
+                .ref('images')
+                .child(image.name)
+                .getDownloadURL()
+                .then(url => {
+                    // seturl(url)
+                    updateImage(url)
+                });
+            }
+        )
+        
+    }
+
+    const updateImage = async (url) => {
+        await db.collection("user").doc(user[0].id).update({
+            image: url
+        })
+        getData()
+        alert('Thay đổi ảnh thành công')
+        setdisplayImage(false)
+    }
+
+    const toggleModalImage = () => {
+        setdisplayImage(!displayImage)
+    }
+
  return (
         <div className='header flex'>
             <div className='account'>
@@ -143,18 +201,41 @@ function Header(props) {
                         </p>
                     </h3>
                     {
-                        user.map(element => {
+                        user.map((element,index) => {
                             return (
                                  <div className="infor">
                                     <h3 style={{marginLeft:'30px', marginBottom:'15px', fontSize: '18px'}}>Thông tin người dùng</h3 >
-                                    <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="" /> 
-                                    <div style={{color: 'red', marginLeft: '30px', marginBottom: '15px'}}></div>
-                                    <div className="name"><b>Họ và tên: </b>{element.name}</div>
+                                    <div className='userImage'>
+                                        <img src=
+                                            {element.image} 
+                                        alt="" />
+                                        <h3 onClick={toggleModalImage}
+                                            style={{
+                                                cursor: 'pointer'
+                                            }}>Thay đổi ảnh
+                                        </h3>
+                                        {
+                                            displayImage &&
+                                                <div className='modalImage'>
+                                                    <div className="modal_content" 
+                                                    style={{
+                                                        padding: '20px',
+                                                        width: '300px'
+                                                    }}> <progress value={progress} max='100'/>
+                                                        <input type="file" accept="image/*" onChange={(event) => handleChangeFile(event)}/>
+                                                        <button onClick={handleUpload}>Thay đổi</button>
+                                                        <button onClick={toggleModalImage}>Thoát</button>
+                                                    </div>
+                                                </div>
+                                        }
+                                        
+                                    </div>
+                                    <div className="name" key={index}><b>Họ và tên: </b>{element.name}</div>
                                     <div className="age"><b>Tuổi:</b> {element.age}</div>
                                     <div className="gender"><b>Giới tính: </b>  {element.gender}</div>
                                     <div className="phoneNumber"><b>Số điện thoại:</b> {element.phoneNumber} </div>
                                     <div className="homeTown"><b> Quê quán:</b> {element.homeTown}</div>
-                                        <span style = {{marginLeft: '30px', cursor: 'pointer'}} onClick = {()=> showProfileUser(element)}> Sửa đổi thông tin</span>
+                                        <span style = {{cursor: 'pointer'}} onClick = {()=> showProfileUser(element)}> Sửa đổi thông tin</span>
                                 </div>
                             )
                         })
@@ -165,8 +246,10 @@ function Header(props) {
                     <>
                     <div className='updateUser'>
                         <div className="modal_content">
-                            <h2 className='p_20'>Sửa thông tin người dùng</h2>
                             <div className="p_20">
+                                <div className='userImage'>
+                                    <img src= {user[0].image} alt="" />
+                                </div>
                                 <div className='flex'>
                                     <div>
                                         <input 
@@ -222,10 +305,19 @@ function Header(props) {
                     </>
                 }
             </div>
+            {
+                displayModalLogOut && <div className='modal_logOut'>
+                    <div className="modal_content">
+                        <h2>Bạn có chắc muốn đăng xuất?</h2>
+                        <Link to='/'>   
+                            <button>Có</button>
+                        </Link>
+                        <button onClick={toggleModalLogOut}>Không</button>
+                    </div>
+                </div>
+            }
             <h1>Quản lý sinh viên</h1>
-            <Link to='/'>
-            <p> Đăng xuất<LogoutOutlined /></p>
-            </Link>
+            <p onClick={toggleModalLogOut}> Đăng xuất<LogoutOutlined /></p>
         </div> 
     );
    

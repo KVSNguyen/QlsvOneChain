@@ -59,6 +59,7 @@ function AddStudent(props) {
         && studentAge!== ''&& studentStatus!== ''&& studentMajor!== ''&& phoneNumber!== ''&& studentHomeTown!== ''){
             alert('Thêm sinh viên thành công');
             db.collection("student").add({
+            image: null,
             code: studentCode,
             name: studentName,
             gender: gender,
