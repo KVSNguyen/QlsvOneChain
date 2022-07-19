@@ -5,6 +5,7 @@
     padding: 10px 30px;
     background-color: #fff;
     top: 0;
+    z-index: 10;
     width: 100%;
     position: fixed;
     animation: moveHeader 0.3s ease-in;
@@ -22,6 +23,7 @@
 .header h3 {
     margin-top: 10px;
     transition: 0.3s;
+    cursor: pointer;
 }
 
 .userImage {

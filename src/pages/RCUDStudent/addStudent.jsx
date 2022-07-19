@@ -23,6 +23,7 @@ function AddStudent(props) {
     const [errorPhoneNumber, seterrorPhoneNumber] = useState('')
     const [students, setStudent] =useState([])
     const [errorEmail, seterrorEmail] = useState('')
+    const [dateJoin, setDateJoin] = useState()
     const events = db.collection('student')
 
     useEffect(()=> {
@@ -67,6 +68,7 @@ function AddStudent(props) {
             age: studentAge,
             status: studentStatus,
             major: studentMajor,
+            dateJoin: dateJoin,
             phoneNumber: phoneNumber,
             homeTown: studentHomeTown
             })
@@ -216,7 +218,6 @@ function AddStudent(props) {
                             <option value="Nữ">Nữ</option>
                         </select> <small>{errorGender}</small>
                         
-
                         <select 
                             className='studentStatus' 
                             value={studentStatus} 
@@ -273,6 +274,8 @@ function AddStudent(props) {
                         value={studentHomeTown}
                         onChange={(e) => setstudentHomeTown(e.target.value)}/>
                         <small>{errorHomeTown}</small>
+                    
+                    <input type="date" onChange={(e) => setDateJoin(e.target.value)} />
 
                     <button onClick={submit}>Thêm</button>
                 <Link to='/Home'>

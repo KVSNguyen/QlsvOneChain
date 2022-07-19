@@ -46,6 +46,8 @@ function ListStudent(props) {
     const [detailStudent, setDetailStudent] = useState(false)
     const [image, setImage] = useState(null);
     const [proccess, setProccess] = useState(0);
+    const [dateJoinUpdate, setDateJoinUpdate] = useState()
+
 
     const showTable =  () => {
         setDisplayTable(!displayTable)
@@ -56,9 +58,11 @@ function ListStudent(props) {
         setcurrentIdUpdate(element.id)
         setstudentIDUpdate(element.code)
         setStudentNameUpdate(element.name)
+        setstudentStatusUpdate(element.status)
         setstudentAgeUpdate(element.age)
         setstudentStatusUpdate(element.class)
         setstudentMajorUpdate(element.major)
+        setDateJoinUpdate(element.dateJoin)
         setstudentEmailUpdate(element.email)
         setgenderUpdate(element.gender)
         setphoneNumberUpdate(element.phoneNumber)
@@ -92,26 +96,27 @@ function ListStudent(props) {
         const result =  student.filter(element => {
             return element.code === studentIDUpdate
         })
-        if(result.length > 0) {
-            alert('Sinh viên đã tồn tại')
-        }
-        if(result.length === 0 && errorIDUpdate === '' && errorNameUpdate === ''&& errorAgeUpdate === ''
+        // if(result.length > 0) {
+        //     alert('Sinh viên đã tồn tại')
+        // }
+        if( errorIDUpdate === '' && errorNameUpdate === ''&& errorAgeUpdate === ''
         && errorStatusUpdate === ''&& errorMajorUpdate === ''&& errorGenderUpdate === ''&& errorPhoneNumberUpdate === '' 
         && errorHometownUpdate ==='' &&studentIDUpdate !== '' && studentNameUpdate!== ''&& genderUpdate!== ''
         && studentAgeUpdate!== ''&& studentStatusUpdate!== ''&& studentMajorUpdate!== ''&& phoneNumberUpdate!== ''&& studentHomeTownUpdate!== ''){
-            alert('Sửa thành công')
                 db.collection("student").doc(currentIdUpdate).update({
                 age: studentAgeUpdate,
                 status: studentStatusUpdate,
                 code: studentIDUpdate,
                 email: studentEmailUpdate,
                 gender: genderUpdate,
+                dateJoin: dateJoinUpdate,
                 homeTown: studentHomeTownUpdate,
                 major: studentMajorUpdate,
                 name: studentNameUpdate,
                 phoneNumber: phoneNumberUpdate,
             })
             getData()
+            alert('Sửa thành công')
             setDisplayModalUpdate(false)
         }
          if(studentIDUpdate === '' && studentNameUpdate=== ''&& genderUpdate=== ''
@@ -144,11 +149,9 @@ function ListStudent(props) {
             seterrorNameUpdate('')
         }
     }
-    const checkClass = () => {
+    const checkStatus = () => {
         if(studentStatusUpdate.length === 0) {
             seterrorStatusUpdate('Không được để trống')
-        }else if(studentStatusUpdate.length > 10) {
-            seterrorStatusUpdate('Không nhập quá 10 kí tự')
         }else {
             seterrorStatusUpdate('')
         }
@@ -163,7 +166,7 @@ function ListStudent(props) {
     const checkPhoneNumberUpdate = () => {
         if(phoneNumberUpdate.length === 0) {
             seterrorPhoneNumberUpdate('Không được để trống')
-        }else if(phoneNumberUpdate < 10 || phoneNumberUpdate > 11) {
+        }else if(phoneNumberUpdate.length < 10 || phoneNumberUpdate.length > 11) {
             seterrorPhoneNumberUpdate('Số điện thoại không hợp lệ')
         }else {
             seterrorPhoneNumberUpdate('')
@@ -263,7 +266,6 @@ function ListStudent(props) {
         const result = student.filter(element => {
             return element.id === id
         })
-        getData()
         setDetailStudent(result)
         setInforStudent(true)
     }
@@ -336,20 +338,20 @@ function ListStudent(props) {
         )
     }
 
+    const toggleModalImage = (id) => {
+        setcurrentIdImage(id)
+        setdisplayImage(!displayImage)
+    }
+    
     const updateImage = async (url) => {
         await db.collection("student").doc(currentIdImage).update({
             image: url
         })
-        getData()
         alert('Thay đổi ảnh thành công')
+        getData()
         setdisplayImage(false)
     }
     
-    const toggleModalImage = (id) => {
-        setInforStudent(false)
-        setcurrentIdImage(id)
-        setdisplayImage(!displayImage)
-    }
     return (
         <div className="container flex">              
                     <div className="option">
@@ -380,7 +382,11 @@ function ListStudent(props) {
                                     <div className='studentDetail userImage' key={index}>
                                        <h2 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h2>
                                        <img src= {element.image} alt="" />
-                                        
+                                       <h3 onClick={() => toggleModalImage(element.id)}
+                                            style={{
+                                                cursor: 'pointer'
+                                            }}>Thay đổi ảnh
+                                        </h3>                                      
                                         <div><strong>Mã sinh viên: </strong>  {element.code}</div>
                                         <div><strong>Họ tên: </strong>  {element.name}</div>
                                         <div><strong>Tuổi: </strong>  {element.age}</div>
@@ -388,6 +394,7 @@ function ListStudent(props) {
                                         <div><strong>Email:  </strong> {element.email}</div>
                                         <div><strong>Ngành học: </strong> {element.major}</div>
                                         <div><strong>Số điện thoại: </strong>  {element.phoneNumber}</div>
+                                        <div><strong>Ngày tham gia: </strong>  {element.dateJoin}</div>
                                         <div><strong>Quên quán: </strong> {element.homeTown}</div>
                                       
                                     </div>
@@ -581,7 +588,7 @@ function ListStudent(props) {
                                                     className='studentStatusUpdate' 
                                                     value={studentStatusUpdate} 
                                                     onBlur={
-                                                        checkClass
+                                                        checkStatus
                                                     }
                                                     onChange = {(e)=> handleChangeStatus(e)}>
                                                         <option value="">Chọn trạng thái</option>
@@ -632,12 +639,20 @@ function ListStudent(props) {
                                                 value={studentHomeTownUpdate}
                                                 onChange={(e) => setstudentHomeTownUpdate(e.target.value)}/>
                                                 <small>{errorHometownUpdate}</small>
+
+                                            <input 
+                                                type= "date" 
+                                                className='studentHomeTownUpdate' 
+                                                value={dateJoinUpdate}
+                                                onChange={(e) => setDateJoinUpdate(e.target.value)}/>
+
+
                                             <button onClick={()=>{updateData()}}>Sửa</button>
                                 </div>
                             </div>
                         )
                     }
-            </div>
+        </div>
     );
 }
 

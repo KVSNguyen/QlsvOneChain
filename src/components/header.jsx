@@ -194,7 +194,7 @@ function Header(props) {
         <div className='header flex'>
             <div className='account'>
                 <div className="inforAdmin">
-                    <h3>Người dùng: 
+                    <h3>Xin chào: 
                         <p 
                             style={{color: 'red'}}>
                             {user.length > 0 ? user[0].email :' ' }

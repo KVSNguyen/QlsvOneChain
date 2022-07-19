@@ -11,7 +11,7 @@
 }
 
 body {
-    background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934');
+    background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934') no-repeat content-box;
     position: relative;
 }
 
