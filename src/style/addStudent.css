@@ -74,6 +74,11 @@
     transition: 0.3s;
 }
 
+.updateUser button {
+    margin-top: 10px;
+    width:90px ;
+}
+
 .addStudent p, .updateUser p {
     text-align: right;
     cursor: pointer;
@@ -86,4 +91,19 @@
 .addStudent button:hover, .updateUser button:hover{
     background-color: transparent;
     color: var(--primary-color);
+}
+
+.modal_content button {
+    width: 150px;
+}
+
+@media (max-width: 740px){
+    .addStudent{
+        width: 90%;
+    }
+
+    .updateUser {
+        width: 100%;
+    }
+
 }

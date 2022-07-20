@@ -73,7 +73,6 @@
     color: var(--white-color);
 }
 
-
 .sign_up button:hover {
     opacity: 0.8;
 }
@@ -89,3 +88,23 @@
 .social_signUp span:last-child() {
     color: yellow;
 } 
+
+.modal_content button {
+    border: none;
+    border-radius: 5px;
+    padding: 7px 10px;
+    margin: 5px 0px;
+    outline: none;
+    width: 150px;
+    cursor: pointer;
+    margin: 10px;
+    border: none;
+    background-color:  rgb(87, 87, 250);
+    color: var(--white-color);
+}
+
+@media (max-width: 740px){
+    .sign_up{
+        width: 90%;
+    }
+}

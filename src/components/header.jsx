@@ -50,7 +50,6 @@ function Header(props) {
 
     const showProfileUser = (element) => {
         setDisplayProfile(!displayProfile)
-        setuserImage(element.image)
         setuserName(element.name)
         setuserAge(element.age)
         setuserGender(element.gender)

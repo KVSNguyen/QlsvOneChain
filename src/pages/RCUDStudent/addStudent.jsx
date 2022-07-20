@@ -25,6 +25,8 @@ function AddStudent(props) {
     const [errorEmail, seterrorEmail] = useState('')
     const [dateJoin, setDateJoin] = useState()
     const events = db.collection('student')
+    const [displayAddSuccess, setDisplayAddSuccess] = useState(false)
+    const [displayAddError, setDisplayAddError] = useState(false)
 
     useEffect(()=> {
         getData()
@@ -49,16 +51,15 @@ function AddStudent(props) {
             return student.email === studentEmail
         })
         if(checkIdSimilar.length > 0) {
-            alert('Sinh viên đã tồn tại')
+            seterrorID('Mã sinh viên đẫ tồn tại')
         }
         if(checkEmailSimilar.length > 0) {
-            alert('Email đã bị trùng')
+            seterrorEmail('Email đã tồn tại')
         }
         if(checkIdSimilar.length === 0 && checkEmailSimilar.length ===0 && errorID === '' && errorName === ''&& errorAge === ''
         && errorStatus === ''&& errorMajor === ''&& errorGender === ''&& errorPhoneNumber === '' 
         && errorHomeTown ==='' &&studentCode !== '' && studentName!== ''&& gender!== ''
         && studentAge!== ''&& studentStatus!== ''&& studentMajor!== ''&& phoneNumber!== ''&& studentHomeTown!== ''){
-            alert('Thêm sinh viên thành công');
             db.collection("student").add({
             image: null,
             code: studentCode,
@@ -73,15 +74,16 @@ function AddStudent(props) {
             homeTown: studentHomeTown
             })
             getData()
+            setDisplayAddSuccess(true)
         }
         if(errorID !== '' || errorName !== ''|| errorAge !== ''
         || errorStatus !== ''|| errorMajor !== ''|| errorGender !== ''|| errorPhoneNumber !== '' 
         || errorHomeTown !=='') {
-            alert('vui lòng kiểm tra lại thông tin')
+            setDisplayAddError(true)
         }
          if( studentCode === '' || studentName=== ''|| gender=== ''
             || studentAge=== ''|| studentStatus=== ''|| studentMajor=== ''|| phoneNumber=== ''|| studentHomeTown=== '') {
-            alert('Vui lòng nhập đẩy đủ thông tin')
+                setDisplayAddError(true)
         } 
     }
 
@@ -281,7 +283,28 @@ function AddStudent(props) {
                 <Link to='/Home'>
                     <button >Thoát</button>
                 </Link>
+            </div>
+            {
+                displayAddSuccess && 
+                <div className='modalAdd'>
+                    <div className='modal_content'>
+                        <h2>Thêm Sinh viên thành công</h2>
+                        <Link to ='/Home'>
+                            <button>Vào trang chủ</button>
+                        </Link>
+                        <button onClick={() => setDisplayAddSuccess(false)}>Ở lại</button>
+                    </div>
                 </div>
+            }
+            {
+                displayAddError && 
+                <div className='modalAdd'>
+                    <div className='modal_content'>
+                        <h2>Vui lòng kiểm tra lại thông tin</h2>
+                        <button onClick={() => setDisplayAddError(false)}>Đồng ý</button>
+                    </div>
+                </div>
+            }
         </div>
     );
 }

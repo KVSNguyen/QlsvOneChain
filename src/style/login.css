@@ -1,4 +1,3 @@
-
 .login {
     width: 400px;
     margin: auto;
@@ -12,6 +11,7 @@
     border-radius: 5px;
     animation: showAddStudent 0.3s ease-in;
 }
+
 
 @keyframes showAddStudent {
     from {
@@ -75,4 +75,14 @@
 
 .login button:hover {
     opacity: 0.8;
+}
+
+.modal_content button {
+    margin-top: 10px;
+}
+
+@media (max-width: 740px){
+    .login{
+        width: 90%;
+    }
 }

@@ -11,10 +11,11 @@ import '../../style/sign-up.css'
 function SignUp(props) {
     const events = db.collection('user'); 
     const [userEmail, setuserEmail] = useState("");
-    const [errorUser, SetErrorUser] = useState('')
+    const [errorEmail, SeterrorEmail] = useState('')
     const [cookie, setCookie] = useCookies(['user'])
     const [user, setuser] = useState([])
     const navigate = useNavigate();
+    const [displaySiginEmailError, setDisplaySiginEmailError] = useState(false)
 
     useEffect(()=> {
         getData()
@@ -32,17 +33,17 @@ function SignUp(props) {
 
    //Check email invailid in database
     const submit = async (e) => { 
-        if(userEmail !=='' && errorUser === '') {
+        if(userEmail !=='' && errorEmail === '') {
             const result = user.filter(element => {
                 return element.email === userEmail
             }) 
             if(result.length > 0) {
-                alert('Email đã tồn tại')
+                setDisplaySiginEmailError(true)
             }else {
                await db.collection('user').add({
                     email: userEmail
                 });
-                setuserEmail('')
+                SeterrorEmail('')
                 navigate('/SignUpPassword')
             }
         }
@@ -53,7 +54,6 @@ function SignUp(props) {
     user.map(element => {
         if(element.email === userEmail) {
             setCookies('id', element.id, 3)
-            console.log(cookie);
         }
     })
 
@@ -67,12 +67,12 @@ function SignUp(props) {
     const checkuserEmail = () => {
         const regexEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(userEmail)
         if(userEmail.length === 0) {
-            SetErrorUser('Không được để trống')
+            SeterrorEmail('Không được để trống')
         } else if(!regexEmail) {
-            SetErrorUser('Email không hợp lệ')
+            SeterrorEmail('Email không hợp lệ')
         }
          else {
-            SetErrorUser('')
+            SeterrorEmail('')
         }
     }
 
@@ -86,7 +86,7 @@ function SignUp(props) {
                     placeholder='Nhập email của bạn'
                     value={userEmail}
                     onChange={(e) => setuserEmail(e.target.value)}/>
-                    <small>{errorUser}</small>
+                    <small>{errorEmail}</small>
 
 
                 <Link className='no_underline' to = '/'>
@@ -94,6 +94,18 @@ function SignUp(props) {
                 </Link>
                 <button onClick={submit} >Tiếp tục </button>
             </div>
+            {
+                displaySiginEmailError &&
+                <div className='modalSiginErrorEmail'>
+                    <div className='modal_content'>
+                        <h2>Email đã tồn tại</h2>
+                        <Link to='/'>
+                        <button>Đi tới đăng nhập</button>
+                        </Link>
+                        <button onClick={()=> setDisplaySiginEmailError(false)}>Thoát</button>
+                    </div>
+                </div> 
+            }
         </div>
     );
 }

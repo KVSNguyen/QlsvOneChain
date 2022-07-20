@@ -17,6 +17,7 @@ function SignUpPassword(props) {
     const [cookie, setCookie, removeCookie] = useCookies( ['user'])
     const [showPassword, setShowPassword] = useState(false)
     const navigateLogin = useNavigate();
+    const [displaySiginSuccess, setDisplaySiginSuccess] = useState(false)
 
     useEffect(()=> {
         events.get().then((querySnapshot) => {
@@ -44,10 +45,9 @@ function SignUpPassword(props) {
                 phoneNumber: 'chưa có',
                 homeTown: 'chưa có'
             });   
-            alert('Bạn đã đăng ký thành công')
+            setDisplaySiginSuccess(true)
             setuserPassword("");
             document.querySelector('.confirmPassword_signUp').value = '' 
-            navigateLogin('/')
         };
     }
 
@@ -106,6 +106,18 @@ function SignUpPassword(props) {
             <button >Trở lại</button>
              </Link>
             <button onClick={submit} >Tiếp tục </button>
+
+            {
+                displaySiginSuccess && 
+                <div className='modalSiginErrorEmail'>
+                    <div className='modal_content'>
+                        <h2>Bạn đã đăng ký thành công</h2>
+                        <Link to ='/'>
+                            <button>Đi tới đăng nhập</button>  
+                        </Link>
+                    </div>
+                </div>
+            }
         </div>
     );
 }

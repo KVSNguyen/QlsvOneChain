@@ -44,6 +44,7 @@ function ListStudent(props) {
     const [displayGrid, setDisplayGrid] = useState(false)
     const [displayImage, setdisplayImage] = useState(false);
     const [detailStudent, setDetailStudent] = useState(false)
+    const [displayDeTailStudentMobile, setdisplayDeTailStudentMobile] = useState(false)
     const [image, setImage] = useState(null);
     const [proccess, setProccess] = useState(0);
     const [dateJoinUpdate, setDateJoinUpdate] = useState()
@@ -51,6 +52,10 @@ function ListStudent(props) {
 
     const showTable =  () => {
         setDisplayTable(!displayTable)
+    }
+
+    const showInforStudentMobile =() => {
+        setdisplayDeTailStudentMobile(true)
     }
 
     const showModalUpdate = (element) => {
@@ -149,6 +154,7 @@ function ListStudent(props) {
             seterrorNameUpdate('')
         }
     }
+
     const checkStatus = () => {
         if(studentStatusUpdate.length === 0) {
             seterrorStatusUpdate('Không được để trống')
@@ -156,6 +162,7 @@ function ListStudent(props) {
             seterrorStatusUpdate('')
         }
     }
+
     const checkGenderUpdate = () => {
         if(genderUpdate.length === 0) {
             seterrorGenderUpdate('Không được để trống')
@@ -270,7 +277,6 @@ function ListStudent(props) {
         setInforStudent(true)
     }
 
-    //tải lại data trong database
     const reloadpage = () => {
         getData()
         setInforStudent(false)
@@ -412,8 +418,11 @@ function ListStudent(props) {
                                         width: '300px'
                                     }}> <progress value={proccess} max='100'/>
                                         <input type="file" accept="image/*" onChange={(event) => handleChangeFile(event)}/>
-                                        <button onClick={ handleUpload}>Thay đổi</button>
-                                        <button onClick={toggleModalImage}>Thoát</button>
+                                        <div className='flex'>
+                                              <button onClick={ handleUpload}>Thay đổi</button>
+                                            <button onClick={toggleModalImage}>Thoát</button>
+                                        </div>
+                                      
                                     </div>
                                 </div>
                         }
@@ -431,6 +440,7 @@ function ListStudent(props) {
                                 <button className='btnAdd' type='button'>Thêm mới +</button>
                             </Link>
                         </div>
+
                         <div className="filterStudent ">
                             <select
                                 value={filterStatus} 
@@ -455,50 +465,47 @@ function ListStudent(props) {
                                 <option value="Công nghệ ô tô">Công nghệ ô tô</option>
                             </select>
                         </div>
-                       { displayTable &&  
-                                <div style={{
-                                    overflowY: 'scroll',
-                                    height: '400px'
-                                }}>
-                                    <table >  
-                                        <thead>
-                                            <tr>
-                                                <th>Số thứ tự</th>
-                                                <th>Mã sinh viên</th>
-                                                <th>Họ và tên</th>
-                                                <th>Trạng thái</th>
-                                                <th>Ngành học</th>
-                                                <th>Email</th>
-                                                <th>Tùy chọn</th>
-                                            </tr>
-                                        </thead>
 
-                                      
-                                           <tbody className='list_student' >
-                                            { 
-                                                student.map((element, index) => {
-                                                    return (     
-                                                        <tr key={index} 
-                                                        onClick={() => showInforStudent(element.id) }
-                                                        >
-                                                            <td>{index +1}</td>
-                                                            <td>{element.code}</td>
-                                                            <td>{element.name}</td>
-                                                            <td>{element.status}</td>
-                                                            <td>{element.major}</td>
-                                                            <td>{element.email}</td>
-                                                            <td>
-                                                                <button onClick={() => showModalUpdate(element)} type='button' className='b_1_solid_grey'>Sửa</button>
-                                                                <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
-                                                            </td>
-                                                        </tr>  
-                                                    )   
-                                                })  
-                                            }
-                                            </tbody>  
-                                    </table>
-                                </div>
-                                       
+                       {    displayTable &&                    
+                            <table >  
+                                <thead>
+                                    <tr>
+                                        <th>Số thứ tự</th>
+                                        <th>Mã sinh viên</th>
+                                        <th>Họ và tên</th>
+                                        <th>Trạng thái</th>
+                                        <th>Ngành học</th>
+                                        {/* <th>Email</th> */}
+                                        <th>Tùy chọn</th>
+                                    </tr>
+                                </thead>
+
+                                
+                                    <tbody className='list_student' >
+                                    { 
+                                        student.map((element, index) => {
+                                            return (     
+                                                <tr key={index} 
+                                                
+                                                >
+                                                    <td>{index +1}</td>
+                                                    <td style={{
+                                                        cursor: 'pointer'
+                                                    }} onClick={() => showInforStudent(element.id) }>{element.code}</td>
+                                                    <td>{element.name}</td>
+                                                    <td>{element.status}</td>
+                                                    <td>{element.major}</td>
+                                                    {/* <td>{element.email}</td> */}
+                                                    <td>
+                                                        <button onClick={() => showModalUpdate(element)} type='button' className='b_1_solid_grey'>Sửa</button>
+                                                        <button onClick={() => showModalDelete(element.id)} type='button' className='b_1_solid_grey'>Xóa</button>
+                                                    </td>
+                                                </tr>  
+                                            )   
+                                        })  
+                                    }
+                                    </tbody>  
+                            </table>             
                        } 
 
                         {
@@ -511,14 +518,16 @@ function ListStudent(props) {
                                 {
                                     student.map((element, index) => {
                                         return (
-                                            <div className='item userImage ' onClick={() => showInforStudent(element.id)}>
+                                            <div className='item userImage ' >
                                                 <img src= {element.image} alt="" />
                                                 <h3 onClick={() => toggleModalImage(element.id)}
                                                     style={{
                                                         cursor: 'pointer'
                                                     }}>Thay đổi ảnh
                                                 </h3>
-                                                <div  style={{color: 'red'}}key={index}><b>MSV: </b>{element.code}</div>
+                                                <div 
+                                                    onClick={() => showInforStudent(element.id)} 
+                                                    style={{color: 'red', cursor: 'pointer'}}key={index}><b>MSV: </b>{element.code}</div>
                                                 <div><b>Họ và tên: </b>{element.name}</div>
                                                 <div><b>Trạng thái: </b>{element.status}</div>
                                                 <div><b>Ngành học: </b>{element.major}</div>
@@ -533,10 +542,8 @@ function ListStudent(props) {
                                         
                                     })
                                 }
-                                
                             </div> 
                             </div>
-                           
                         }
                     </form>     
                     
@@ -545,7 +552,7 @@ function ListStudent(props) {
                         displayModalDelete && currentIdDelete && (
                             <div className='deleteStudent'>
                                 <div className="modal_content p_20">
-                                        <h2>Xóa {studentIDUpdate} khỏi danh sách?</h2>
+                                        <h2>Xóa khỏi danh sách?</h2>
                                         <div className="flex">
                                             <button type='button' onClick={() => {deleteStudent(currentIdDelete)}}>Có</button>
                                             <button type='button' onClick={showModalDelete}>Không</button>
@@ -553,6 +560,36 @@ function ListStudent(props) {
                                 </div>
                             </div>
                         )
+                    }
+
+                    {  inforStudent && detailStudent.map((element, index) => {
+                            return (
+                                <div className="modalDeltailStudent">
+                                    <div className="modal_content">
+                                    <h2 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h2>
+                                       <img src= {element.image} alt="" />
+                                       {/* <h3 onClick={() => toggleModalImage(element.id)}
+                                            style={{
+                                                cursor: 'pointer'
+                                            }}>Thay đổi ảnh
+                                        </h3>              */}
+                                        <div key={index}><b>Mã Sinh viên: </b>{element.code}</div>
+                                        <div><b>Họ và tên: </b>{element.name}</div>
+                                        <div><b>Ngành học: : </b>{element.major}</div>
+                                        <div><b>Tuổi: </b>{element.age}</div>
+                                        <div><b>Trạng Thái: </b>{element.status}</div>
+                                        <div><b>Email: </b>{element.email}</div>
+                                        <div><b>Ngày tham gia: </b>{element.dateJoin}</div>
+                                        <div><b>Số điện thoại: </b>{element.phoneNumber}</div>
+                                        <div><b>Quê Quán: </b>{element.homeTown}</div>
+
+                                        <button onClick={() => setInforStudent(false)}>Đóng</button>
+                                    </div>
+                                </div>
+                            )
+                            
+                    })
+                        
                     }
 
                     {/* Modal Update */}
@@ -566,7 +603,7 @@ function ListStudent(props) {
                                             <div>
                                                 <input 
                                                     type="text" 
-                                                    className='studentIDUpdate' 
+                                                    className='studentIDUpdate'
                                                     placeholder='Mã sinh viên'
                                                     value={studentIDUpdate}
                                                     onBlur={checkID}

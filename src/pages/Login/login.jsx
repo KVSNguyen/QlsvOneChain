@@ -12,6 +12,8 @@ function Login(props) {
     const [admin, setAdmin] = useState([])
     const [showPassword, setShowPassword] = useState(false)
     const navigate = useNavigate()
+    const [displayLoginSuccess, setDisplayLoginSuccess] = useState(false)
+    const [displayLoginError, setDisplayLoginError] = useState(false)
 
     useEffect(()=> {
         events.get().then((querySnapshot) => {
@@ -24,7 +26,6 @@ function Login(props) {
         })
     },[])
 
-    console.log(admin);
     const togglePassword = () => {
         if(passwordLogin === '') {
             setShowPassword(showPassword)
@@ -38,15 +39,13 @@ function Login(props) {
             if(element.email === userNameEmail) {
                 localStorage.setItem('id', element.id)
             }
-            console.log(element.email, element.password);
             return element.email === userNameEmail && element.password === passwordLogin 
         })
         if(result.length > 0 ) {
-            alert('Đăng nhập thành công')
-            navigate('/Home')
+            setDisplayLoginSuccess(true)
         }
         if(result.length <= 0) {
-            alert('Tài khoản hoặc mật khẩu không chính xác')
+            setDisplayLoginError(true)
         }
     }
 
@@ -69,6 +68,27 @@ function Login(props) {
             <p onClick={togglePassword}>Hiện mật khẩu</p>
             <button onClick={submit}>Đăng nhập</button>
             <span>Chưa có tài khoản? <Link className='no_underline' to = '/SignUp'> Đăng ký</Link></span>
+            {
+                displayLoginSuccess && 
+                <div className='modalLoginSuccess'>
+                    <div className='modal_content'>
+                        <h2>Bạn đã đăng nhập thành công</h2>
+                        <Link to='/Home'>
+                        <button onClick={()=> setDisplayLoginSuccess(false)}>Vào trang chủ</button>
+                        </Link>
+                    </div>
+                </div>
+            }
+
+            {
+                displayLoginError && 
+                <div className="modalLoginError">
+                    <div className='modal_content'>
+                        <h2>Vui lòng kiểm tra lại tài khoản</h2>
+                        <button onClick={()=> setDisplayLoginError(false)}>Đồng ý</button>
+                    </div>
+                </div>
+            }
         </div>
     );
 }
