@@ -134,7 +134,7 @@
 .home_page th,
 .home_page td {
     border: 1px solid gray;
-    padding: 7px 15px;
+    padding: 0.7% 1.5%;
 }
 
 .home_page td {
@@ -436,15 +436,15 @@
 
 /* Tablet */
 @media (min-width: 768px) and (max-width: 1350px){
-
-    .home_page th,
-    .home_page td {
-        border: 1px solid gray;
-        padding: 4px 10px;
-    }
     
+    .home_page .option {
+        width: 30%;
+    }
+
+    .home_page form {
+        width: 68%;
+    }
     .home_page option {
-        width: 100%;
         height: 20px;
         padding: 3px;
         font-size: 14px;
@@ -455,8 +455,8 @@
     }
     
     .home_page .option button {
-        margin-top: 5px;
-        margin-left: 40%;
+        margin: 5px auto;
+        float: right;
     }
 
     .home_page form button {
@@ -516,6 +516,12 @@
     .studentDetail div {
         color: #333;
     }
+
+    .home_page form button {
+        padding: 4px 7px;
+        margin-top: 5px;
+    }
+    
     .home_page form {
         width: 100%;
         height: 600px;
@@ -530,11 +536,6 @@
         height: auto;
     }
 
-    .home_page th,
-    .home_page td {
-        border: 1px solid gray;
-        padding: 2px 5px;
-    }
 
     .home_page .btnAdd {
         width: 100px;

@@ -463,7 +463,7 @@ function ListStudent(props) {
                                     <table >  
                                         <thead>
                                             <tr>
-                                                <th>STT</th>
+                                                <th>Số thứ tự</th>
                                                 <th>Mã sinh viên</th>
                                                 <th>Họ và tên</th>
                                                 <th>Trạng thái</th>
@@ -503,7 +503,11 @@ function ListStudent(props) {
 
                         {
                             displayGrid && 
-                            <div className='gridStudent flex'>
+                            <div style={{
+                                overflowY: 'scroll',
+                                height: '400px'
+                            }}>
+                                <div className='gridStudent flex'>
                                 {
                                     student.map((element, index) => {
                                         return (
@@ -530,7 +534,9 @@ function ListStudent(props) {
                                     })
                                 }
                                 
+                            </div> 
                             </div>
+                           
                         }
                     </form>     
                     
@@ -653,8 +659,8 @@ function ListStudent(props) {
                                                 value={dateJoinUpdate}
                                                 onChange={(e) => setDateJoinUpdate(e.target.value)}/>
 
-
                                             <button onClick={()=>{updateData()}}>Sửa</button>
+                                            <button onClick={() => setDisplayModalUpdate(false)}>Thoát</button>
                                 </div>
                             </div>
                         )
