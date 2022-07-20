@@ -333,6 +333,7 @@ function ListStudent(props) {
                 .then(url => {
                     // seturl(url)
                     updateImage(url)
+                    getData()
                 });
             }
         )
@@ -359,10 +360,10 @@ function ListStudent(props) {
                         </h2>
                             <div className='theme'>
                                 <div onClick={showGridStudent}>
-                                    Student Grid
+                                    Dạng thẻ
                                 </div>
                                 <div onClick={showTableStudent}>
-                                    Student Table
+                                    Dạng bảng
                                 </div>
                             </div>
                     <div >
@@ -395,8 +396,7 @@ function ListStudent(props) {
                                         <div><strong>Ngành học: </strong> {element.major}</div>
                                         <div><strong>Số điện thoại: </strong>  {element.phoneNumber}</div>
                                         <div><strong>Ngày tham gia: </strong>  {element.dateJoin}</div>
-                                        <div><strong>Quên quán: </strong> {element.homeTown}</div>
-                                      
+                                        <div><strong>Quên quán: </strong> {element.homeTown}</div>      
                                     </div>
                                     
                                     </>
@@ -455,8 +455,12 @@ function ListStudent(props) {
                                 <option value="Công nghệ ô tô">Công nghệ ô tô</option>
                             </select>
                         </div>
-                       { displayTable && 
-                                    <table >
+                       { displayTable &&  
+                                <div style={{
+                                    overflowY: 'scroll',
+                                    height: '400px'
+                                }}>
+                                    <table >  
                                         <thead>
                                             <tr>
                                                 <th>STT</th>
@@ -469,7 +473,8 @@ function ListStudent(props) {
                                             </tr>
                                         </thead>
 
-                                        <tbody className='list_student'>
+                                      
+                                           <tbody className='list_student' >
                                             { 
                                                 student.map((element, index) => {
                                                     return (     
@@ -490,8 +495,10 @@ function ListStudent(props) {
                                                     )   
                                                 })  
                                             }
-                                        </tbody>
+                                            </tbody>  
                                     </table>
+                                </div>
+                                       
                        } 
 
                         {
