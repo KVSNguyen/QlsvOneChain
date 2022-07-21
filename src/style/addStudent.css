@@ -6,6 +6,7 @@
     border: 1px solid gray;
     position: relative;
     box-shadow: 1px 1px 5px;
+    padding: 20px;
     text-align: center;
     border-radius: 5px;
     animation: showAddStudent 0.3s ease-in;
@@ -24,6 +25,8 @@
 
 .addStudent span, .updateUser span{
     display: block;
+    text-align: left;
+    margin-left: 5px;
 }
 
 [type='number']::-webkit-inner-spin-button, [type='number']::-webkit-outer-spin-button {
@@ -53,9 +56,10 @@
     width: 98%;
     border: none;
     border-radius: 5px;
+    margin-top: 0;
+    margin-bottom: 10px;
     margin: 5px;
-    margin-bottom: 0;
-    padding: 7px 10px;
+    padding: 5px 7px;
     outline: none;
     border-bottom:1px solid grey ;
 }

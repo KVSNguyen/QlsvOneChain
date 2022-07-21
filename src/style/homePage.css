@@ -38,16 +38,6 @@
     border-radius: 20px;
 }
 
-button {
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color) !important;
-    transition: 0.3s;
-}
-
-button:hover {
-    background-color: transparent;
-}
-
 .home_page .option, form {
     background-color: #f0f5f5;
     background-color: rgba(255, 255, 244, 0.8);
@@ -167,7 +157,7 @@ button:hover {
 }
 
 .home_page thead tr:first-child:hover {
-    background: linear-gradient(to right, rgb(30, 255, 131), rgb(72, 249, 255))
+    background:  rgb(117, 247, 252);
 }
 
 .home_page tbody {
@@ -438,6 +428,14 @@ button:hover {
     display: none;
 }
 
+.modal_content input {
+    margin-top: 0;
+    margin-bottom: 10px;
+}
+
+.modal_content span {
+    text-align: left;
+}
 /* Tablet */
 @media (min-width: 741px) and (max-width: 1350px){
     

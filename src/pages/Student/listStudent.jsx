@@ -90,9 +90,9 @@ function ListStudent(props) {
         const result =  student.filter(element => {
             return element.code === studentIDUpdate
         })
-        if(result.length > 0) {
-            setdisplayUpdateError(true)
-        }
+        // if(result.length > 0) {
+        //     setdisplayUpdateError(true)
+        // }
         if( errorIDUpdate === '' && errorNameUpdate === ''&& errorAgeUpdate === ''
         && errorStatusUpdate === ''&& errorMajorUpdate === ''&& errorGenderUpdate === ''&& errorPhoneNumberUpdate === '' 
         && errorHometownUpdate ==='' &&studentIDUpdate !== '' && studentNameUpdate!== ''&& genderUpdate!== ''
