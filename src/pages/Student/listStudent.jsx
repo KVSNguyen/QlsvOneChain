@@ -2,9 +2,6 @@ import React, { useState } from 'react';
 import db from '../../firebase/firebase';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import {IdcardFilled, ReloadOutlined} from '@ant-design/icons'
-import { getStorage } from 'firebase/storage';
-import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import {CloseOutlined} from '@ant-design/icons'
 import { storage } from '../../firebase/firebase';
 
@@ -33,30 +30,22 @@ function ListStudent(props) {
     const [errorPhoneNumberUpdate, seterrorPhoneNumberUpdate] = useState('')
     const [errorHometownUpdate, seterrorHometownUpdate] = useState('')
     const [currentIdUpdate, setcurrentIdUpdate] = useState('')
-    const [filterStatus, setfilterStatus] = useState('')
-    const [fillterMajor, setfillterMajor] = useState('')
+    const filterStatus = '';
+    const fillterMajor = '';
     const [searchData, setSearchData] = useState('')
-    const [reload, setreload] = useState('')
-    const [url, seturl] = useState('');
     const [currentIdImage, setcurrentIdImage] = useState()
     const [inforStudent, setInforStudent] = useState(false)
     const [displayTable, setDisplayTable] = useState(true)
     const [displayGrid, setDisplayGrid] = useState(false)
     const [displayImage, setdisplayImage] = useState(false);
     const [detailStudent, setDetailStudent] = useState(false)
-    const [displayDeTailStudentMobile, setdisplayDeTailStudentMobile] = useState(false)
+    const [displayUpdateSuccess, setdisplayUpdateSuccess] = useState(false)
+    const [displayUpdateError, setdisplayUpdateError] = useState(false)
+    const [displayChangeImage, setdisplayChangeImage] = useState(false)
+    const [displayDontFindStudent, setdisplayDontFindStudent] = useState(false)
     const [image, setImage] = useState(null);
     const [proccess, setProccess] = useState(0);
     const [dateJoinUpdate, setDateJoinUpdate] = useState()
-
-
-    const showTable =  () => {
-        setDisplayTable(!displayTable)
-    }
-
-    const showInforStudentMobile =() => {
-        setdisplayDeTailStudentMobile(true)
-    }
 
     const showModalUpdate = (element) => {
         setInforStudent(false)
@@ -101,9 +90,9 @@ function ListStudent(props) {
         const result =  student.filter(element => {
             return element.code === studentIDUpdate
         })
-        // if(result.length > 0) {
-        //     alert('Sinh viên đã tồn tại')
-        // }
+        if(result.length > 0) {
+            setdisplayUpdateError(true)
+        }
         if( errorIDUpdate === '' && errorNameUpdate === ''&& errorAgeUpdate === ''
         && errorStatusUpdate === ''&& errorMajorUpdate === ''&& errorGenderUpdate === ''&& errorPhoneNumberUpdate === '' 
         && errorHometownUpdate ==='' &&studentIDUpdate !== '' && studentNameUpdate!== ''&& genderUpdate!== ''
@@ -121,12 +110,12 @@ function ListStudent(props) {
                 phoneNumber: phoneNumberUpdate,
             })
             getData()
-            alert('Sửa thành công')
+            setdisplayUpdateSuccess(true)
             setDisplayModalUpdate(false)
         }
          if(studentIDUpdate === '' && studentNameUpdate=== ''&& genderUpdate=== ''
             && studentAgeUpdate=== ''&& studentStatusUpdate=== ''&& studentMajorUpdate=== ''&& phoneNumberUpdate=== ''&& studentHomeTownUpdate=== '') {
-            alert('Vui lòng nhập đẩy đủ thông tin')
+            setdisplayUpdateError(true)
         }
     }
 
@@ -257,7 +246,7 @@ function ListStudent(props) {
     const searchStudent = async () => {
         const  result = await fillterStudent('code', searchData)
         if(result.length === 0) {
-            alert('Không tìm thấy sinh viên')
+            setdisplayDontFindStudent(true)
             getData()
         }
         else if(searchData === '') {
@@ -354,10 +343,18 @@ function ListStudent(props) {
         await db.collection("student").doc(currentIdImage).update({
             image: url
         })
-        alert('Thay đổi ảnh thành công')
+        setdisplayChangeImage(true)
         getData()
         setdisplayImage(false)
     }
+
+    const modal = document.querySelectorAll('.modal_content')
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+
     
     return (
         <div className="container flex">              
@@ -378,7 +375,7 @@ function ListStudent(props) {
                                 value={searchData}
                                 onChange = {(e) => {setSearchData(e.target.value)}}
                              type="text" placeholder='Nhập mã sinh viên'/>
-                            <button onClick={searchStudent}>Tìm kiếm</button>
+                            <button className='btnSearchByCode' onClick={searchStudent}>Tìm kiếm</button>
                         </div>
 
                         <div>
@@ -386,8 +383,8 @@ function ListStudent(props) {
                            inforStudent && detailStudent.map((element, index)=> {
                                 return (         
                                     <> 
-                                    <div className='studentDetail userImage' key={index}>
-                                       <h2 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h2>
+                                    <div className='studentDetail userImage'  key={index}>
+                                       <h2  style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h2>
                                        <img src= {element.image} alt="" />
                                        <h3 onClick={() => toggleModalImage(element.id)}
                                             style={{
@@ -486,7 +483,6 @@ function ListStudent(props) {
                                         student.map((element, index) => {
                                             return (     
                                                 <tr key={index} 
-                                                
                                                 >
                                                     <td>{index +1}</td>
                                                     <td style={{
@@ -518,7 +514,7 @@ function ListStudent(props) {
                                 {
                                     student.map((element, index) => {
                                         return (
-                                            <div className='item userImage ' >
+                                            <div className='item userImage ' key={index}>
                                                 <img src= {element.image} alt="" />
                                                 <h3 onClick={() => toggleModalImage(element.id)}
                                                     style={{
@@ -527,7 +523,7 @@ function ListStudent(props) {
                                                 </h3>
                                                 <div 
                                                     onClick={() => showInforStudent(element.id)} 
-                                                    style={{color: 'red', cursor: 'pointer'}}key={index}><b>MSV: </b>{element.code}</div>
+                                                    style={{color: 'red', cursor: 'pointer'}} ><b>MSV: </b>{element.code}</div>
                                                 <div><b>Họ và tên: </b>{element.name}</div>
                                                 <div><b>Trạng thái: </b>{element.status}</div>
                                                 <div><b>Ngành học: </b>{element.major}</div>
@@ -565,7 +561,7 @@ function ListStudent(props) {
                     {  inforStudent && detailStudent.map((element, index) => {
                             return (
                                 <div className="modalDeltailStudent">
-                                    <div className="modal_content">
+                                    <div className="modal_content"key={index}>
                                     <h2 style={{marginTop: '10px', fontSize: '19px'}}>Thông tin sinh viên</h2>
                                        <img src= {element.image} alt="" />
                                        {/* <h3 onClick={() => toggleModalImage(element.id)}
@@ -573,7 +569,7 @@ function ListStudent(props) {
                                                 cursor: 'pointer'
                                             }}>Thay đổi ảnh
                                         </h3>              */}
-                                        <div key={index}><b>Mã Sinh viên: </b>{element.code}</div>
+                                        <div ><b>Mã Sinh viên: </b>{element.code}</div>
                                         <div><b>Họ và tên: </b>{element.name}</div>
                                         <div><b>Ngành học: : </b>{element.major}</div>
                                         <div><b>Tuổi: </b>{element.age}</div>
@@ -702,6 +698,43 @@ function ListStudent(props) {
                             </div>
                         )
                     }
+                    {
+                        displayUpdateSuccess && 
+                        <div className='modalUpdateSuccess'>
+                            <div className='modal_content'>
+                                <h2>Sửa thành công</h2>
+                                <button onClick={() => setdisplayUpdateSuccess(false)}>Đồng ý</button>
+                            </div>
+                        </div>
+                    }
+                    {
+                        displayUpdateError && 
+                        <div className='modalUpdateSuccess'>
+                            <div className='modal_content'>
+                                <h2>Vui lòng kiểm tra lại thông tin</h2>
+                                <button onClick={() => setdisplayUpdateError(false)}>Đồng ý</button>
+                            </div>
+                        </div>
+                    }
+                    {
+                        displayDontFindStudent && 
+                        <div className='modalUpdateSuccess'>
+                            <div className='modal_content'>
+                                <h2>Không tìm thấy sinh viên</h2>
+                                <button onClick={() => setdisplayDontFindStudent(false)}>Đồng ý</button>
+                            </div>
+                        </div>
+                    }
+                    {
+                        displayChangeImage && 
+                        <div className='modalUpdateSuccess'>
+                            <div className='modal_content'>
+                                <h2>Thay đổi ảnh thành công</h2>
+                                <button onClick={() => setdisplayChangeImage(false)}>Đồng ý</button>
+                            </div>
+                        </div>
+                    }
+                   
         </div>
     );
 }

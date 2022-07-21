@@ -1,18 +1,15 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
 import db from '../../firebase/firebase.js';
-import { useCookies } from 'react-cookie';
 import {UserOutlined} from '@ant-design/icons'
-import { Link, Navigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import {FacebookOutlined, GoogleOutlined,GithubOutlined} from '@ant-design/icons'
 import '../../style/sign-up.css'
 
 function SignUp(props) {
     const events = db.collection('user'); 
     const [userEmail, setuserEmail] = useState("");
     const [errorEmail, SeterrorEmail] = useState('')
-    const [cookie, setCookie] = useCookies(['user'])
     const [user, setuser] = useState([])
     const navigate = useNavigate();
     const [displaySiginEmailError, setDisplaySiginEmailError] = useState(false)
@@ -89,10 +86,13 @@ function SignUp(props) {
                     <small>{errorEmail}</small>
 
 
-                <Link className='no_underline' to = '/'>
-                <button >Trở lại đăng nhập</button>
-                </Link>
                 <button onClick={submit} >Tiếp tục </button>
+
+                <p>Bạn đã có tài khoản? 
+                    <Link className='no_underline' to = '/'>
+                        <p> Đăng nhập tại đây </p>
+                    </Link>
+                </p>
             </div>
             {
                 displaySiginEmailError &&

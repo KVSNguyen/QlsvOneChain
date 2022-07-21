@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import '../style/header.css'
 import { Link } from 'react-router-dom';
 import { useCookies } from 'react-cookie';
-import {PlusCircleOutlined} from '@ant-design/icons'
+import {HomeOutlined} from '@ant-design/icons'
 import db from '../firebase/firebase';
 import {LogoutOutlined} from "@ant-design/icons"
 import { storage } from '../firebase/firebase';
@@ -14,7 +14,6 @@ function Header(props) {
     const [userName, setuserName] = useState('')
     const [userAge, setuserAge] = useState('')
     const [userGender, setuserGender] = useState('')
-    const [userImage, setuserImage] = useState('')
     const [userHomeTown, setuserHomeTown]= useState('')
     const [phoneNumber, setphoneNumber] = useState('')
     const [errorUserAge, seterrorUserAge] = useState('')
@@ -22,11 +21,12 @@ function Header(props) {
     const [errorGender, seterrorGender] = useState('')
     const [errorHomeTown, seterrorHomeTown] = useState('')
     const [errorPhoneNumber, seterrorPhoneNumber] = useState('')
-    const [cookie, setCookie, removeCookie] = useCookies( ['user'])
     const [image, setImage] = useState(null);
-    const [url, seturl] = useState('');
     const [progress, setprogress] = useState(0);
     const [displayImage, setdisplayImage] = useState(false);
+    const [displayChangeImage, setdisplayChangeImage] = useState(false);
+    const [displayUpdateSuccess, setdisplayUpdateSuccess] = useState(false);
+    const [displayUpdateError, setdisplayUpdateError] = useState(false);
     const [displayModalLogOut, setdisplayModalLogOut] = useState(false);
     
 
@@ -65,10 +65,10 @@ function Header(props) {
     const submit = () => {
         if(errorUserName !== ''|| errorUserAge !== ''
         ||errorPhoneNumber !== '' || errorHomeTown !=='') {
-            alert('vui lòng kiểm tra lại thông tin')
+            setdisplayUpdateError(true)
         }
          if( userName === '' || userAge=== ''|| phoneNumber=== ''|| userHomeTown=== '') {
-            alert('Vui lòng nhập đẩy đủ thông tin')
+            setdisplayUpdateError(true)
         } else { 
             db.collection("user").doc(user[0].id).set({
                 image: user[0].image,
@@ -81,7 +81,7 @@ function Header(props) {
                 password: user[0].password
             })
             getData()
-            alert('Cập nhật thông tin người dùng thành công');
+            setdisplayUpdateSuccess(true)
             showProfileUser()
             setEmtyValue()
         }      
@@ -173,7 +173,6 @@ function Header(props) {
                 });
             }
         )
-        
     }
 
     const updateImage = async (url) => {
@@ -181,7 +180,7 @@ function Header(props) {
             image: url
         })
         getData()
-        alert('Thay đổi ảnh thành công')
+        setdisplayChangeImage(true)
         setdisplayImage(false)
     }
 
@@ -204,7 +203,7 @@ function Header(props) {
                         {
                             user.map((element,index) => {
                                 return (
-                                    <div className="infor">
+                                    <div key={index}className="infor">
                                         <h3 style={{marginLeft:'30px', marginBottom:'15px', fontSize: '18px'}}>Thông tin người dùng</h3 >
                                         <div className='userImage'>
                                             <img src=
@@ -231,7 +230,7 @@ function Header(props) {
                                             }
                                             
                                         </div>
-                                        <div className="name" key={index}><b>Họ và tên: </b>{element.name}</div>
+                                        <div className="name" ><b>Họ và tên: </b>{element.name}</div>
                                         <div className="age"><b>Tuổi:</b> {element.age}</div>
                                         <div className="gender"><b>Giới tính: </b>  {element.gender}</div>
                                         <div className="phoneNumber"><b>Số điện thoại:</b> {element.phoneNumber} </div>
@@ -296,7 +295,6 @@ function Header(props) {
                                             value={userHomeTown}
                                             onChange={(e) => setuserHomeTown(e.target.value)}/>
                                             <small>{errorHomeTown}</small>
-                                        
                                         <button onClick={submit}>Cập nhật</button>
                                         <button onClick={showProfileUser} >Thoát</button>
                                 </div>
@@ -317,12 +315,20 @@ function Header(props) {
                         </div>
                     </div>
                 }
-                <h1>Quản lý sinh viên</h1>
+                <h1>Quản lý sinh viên
+                </h1>
                 <p onClick={toggleModalLogOut}> Đăng xuất<LogoutOutlined /></p>
             </div>             
 
             <div className='header_mobile flex'>
-                <h1>Quản lý sinh viên</h1>
+                <h1><HomeOutlined style={{
+                    backgroundColor: 'transparent',
+                    color: 'orange',
+                    border: 'none',
+                    fontSize: '30px',
+                    margin: '0',
+                    padding: '0'
+                }}/><p>Trang chủ</p></h1>
                 <div className='account'>
                     <div className="inforAdmin">
                         <h3>Xin chào: 
@@ -334,7 +340,7 @@ function Header(props) {
                         {
                             user.map((element,index) => {
                                 return (
-                                    <div className="infor">
+                                    <div  key={index}className="infor">
                                         <h3 style={{marginLeft:'30px', marginBottom:'15px', fontSize: '18px'}}>Thông tin người dùng</h3 >
                                         <div className='userImage'>
                                             <img src=
@@ -361,7 +367,7 @@ function Header(props) {
                                             }
                                             
                                         </div>
-                                        <div className="name" key={index}><b>Họ và tên: </b>{element.name}</div>
+                                        <div className="name" ><b>Họ và tên: </b>{element.name}</div>
                                         <div className="age"><b>Tuổi:</b> {element.age}</div>
                                         <div className="gender"><b>Giới tính: </b>  {element.gender}</div>
                                         <div className="phoneNumber"><b>Số điện thoại:</b> {element.phoneNumber} </div>
@@ -447,7 +453,34 @@ function Header(props) {
                             <button onClick={toggleModalLogOut}>Không</button>
                         </div>
                     </div>
-                }         
+                }        
+                {
+                     displayUpdateSuccess && 
+                     <div className='modalUpdateSuccess'>
+                         <div className='modal_content'>
+                             <h2>Sửa thành công</h2>
+                             <button onClick={() => setdisplayUpdateSuccess(false)}>Đồng ý</button>
+                         </div>
+                     </div>
+                } 
+                  {
+                        displayUpdateError && 
+                        <div className='modalUpdateSuccess'>
+                            <div className='modal_content'>
+                                <h2>Vui lòng kiểm tra lại thông tin</h2>
+                                <button onClick={() => setdisplayUpdateError(false)}>Đồng ý</button>
+                            </div>
+                        </div>
+                    }
+                    {
+                        displayChangeImage && 
+                        <div className='modalUpdateSuccess'>
+                            <div className='modal_content'>
+                                <h2>Thay đổi ảnh thành công</h2>
+                                <button onClick={() => setdisplayChangeImage(false)}>Đồng ý</button>
+                            </div>
+                        </div>
+                    }
             </div>
         </div>
     </div>

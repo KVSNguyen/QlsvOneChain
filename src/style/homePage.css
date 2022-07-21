@@ -138,7 +138,7 @@ button:hover {
 }
 
 .home_page thead {
-    background: linear-gradient(to right, rgb(30, 255, 131), rgb(72, 249, 255));
+    background: rgb(117, 247, 252)
 }
 
 .home_page th,
@@ -202,13 +202,10 @@ button:hover {
 }
 
 .deleteStudent, .updateStudent,
-.updateUser,
-.modalLoginSuccess,
-.modalLoginError,
-.modalImage, .modal_logOut,
-.modalAdd,
-.modalSiginErrorEmail,
-.modalDeltailStudent{
+.updateUser, .modalLoginSuccess,
+.modalLoginError, .modalImage, .modal_logOut,
+.modalAdd, .modalSiginErrorEmail,
+.modalDeltailStudent, .modalUpdateSuccess{
     position: fixed;
     display: flex;
     justify-content: center;
@@ -486,6 +483,20 @@ button:hover {
     .home_page .modalImage button {
         margin-left: unset;
     }
+
+    .home_page .item {
+        width: 200px;
+        padding: 10px;
+    }
+
+    .home_page .option .btnSearchByCode {
+        float: right;
+        margin-top: 10px;  
+    }
+
+    .studentDetail h2{
+        margin-top: 50px !important;
+    }
 }
 
 /* Mobile */
@@ -558,12 +569,10 @@ button:hover {
     .updateStudent .modal_content {
         width: 90%;
     }
-    
+
     .modalDeltailStudent .modal_content {
         width: 300px;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%,-50%);
+        top: 25%;
+        left: 12%;
     }
-
 }

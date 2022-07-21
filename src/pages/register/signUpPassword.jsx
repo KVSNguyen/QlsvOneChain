@@ -2,9 +2,7 @@ import React, { useEffect } from 'react';
 import { useState } from 'react';
 import { useCookies } from 'react-cookie';
 import db from '../../firebase/firebase.js';
-import { Link, Navigate } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
-import {FacebookOutlined, GoogleOutlined,GithubOutlined} from '@ant-design/icons'
+import { Link } from 'react-router-dom';
 import '../../style/sign-up.css'
 import Password from 'antd/lib/input/Password.js';
 
@@ -14,24 +12,28 @@ function SignUpPassword(props) {
     const [errorPassword, SetErrorPassword] = useState('')
     const [errorConfirm, SetErrorConFirm] = useState('')
     const [userSignUp, setUserSignUp] = useState([])
-    const [cookie, setCookie, removeCookie] = useCookies( ['user'])
+    const [cookie] = useCookies( ['user'])
     const [showPassword, setShowPassword] = useState(false)
-    const navigateLogin = useNavigate();
     const [displaySiginSuccess, setDisplaySiginSuccess] = useState(false)
 
     useEffect(()=> {
-        events.get().then((querySnapshot) => {
+        getData()
+    },[])
+
+    const getData = () => {
+         events.get().then((querySnapshot) => {
         const tempDoc = [];
         querySnapshot.forEach((doc) => {
           tempDoc.push({ id: doc.id, ...doc.data() });
                 setUserSignUp(tempDoc)    
             });
         })
-    },[])
+    }
 
     const userAccount = userSignUp.filter(element => {
         return element.id === cookie.id
     })
+
 
     const submit = async () => {  
         if( errorPassword === '' && errorConfirm ==='' && userPassword !== ''){
@@ -39,11 +41,11 @@ function SignUpPassword(props) {
                 image: null,
                 email: userAccount[0].email,
                 password: userPassword,
-                name: 'chưa có',
-                gender: 'chưa có',
-                age: 'chưa có',
-                phoneNumber: 'chưa có',
-                homeTown: 'chưa có'
+                name: '',
+                gender: '',
+                age: '',
+                phoneNumber: '',
+                homeTown: ''
             });   
             setDisplaySiginSuccess(true)
             setuserPassword("");
@@ -55,8 +57,8 @@ function SignUpPassword(props) {
     const checkPassword = () => {
         if(userPassword.length === 0) {
             SetErrorPassword('Không được để trống')
-        } else if(userPassword.length < 4 || userPassword.length > 20) {
-            SetErrorPassword('Nhập 4-20 kí tự')
+        } else if(userPassword.length < 6 || userPassword.length > 20) {
+            SetErrorPassword('Nhập 6-20 kí tự')
         }
          else {
             SetErrorPassword('')
@@ -102,10 +104,10 @@ function SignUpPassword(props) {
                 <small>{errorConfirm}</small>
                 <p style={{textAlign:'right', cursor:'pointer', marginBottom: '0'}} onClick={togglePassword}>Hiện mật khẩu</p>
 
+            <button onClick={submit} > Đăng Ký </button>
             <Link className='no_underline' to = '/SignUp'>
-            <button >Trở lại</button>
+            <button >Quay lại</button>
              </Link>
-            <button onClick={submit} >Tiếp tục </button>
 
             {
                 displaySiginSuccess && 
