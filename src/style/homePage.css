@@ -1,21 +1,14 @@
 .home_page {
-    height: 100vh;
+    height: auto;
     position: relative;
     word-spacing: 1px;
     font-family: 'Times New Roman', Times, serif;
+    background-color: rgb(233, 231, 231);
 }
 
 .home_page .container {
-    margin-top: 90px;
-    padding: 2%;
-    width: auto;
+    width: 100%;
     margin-bottom: 2%;
-}
-
-.home_page form {
-    animation:  moveRightIn 0.5s ease-in;
-    width: 75%;
-    box-shadow: 1px 1px 5px;
 }
 
 @keyframes moveRightIn {
@@ -23,6 +16,7 @@
         opacity: 0;
         margin-right: -300px;
     }
+
     to {
         opacity: 1;
         margin-right: unset;
@@ -38,41 +32,86 @@
     border-radius: 20px;
 }
 
-.home_page .option, form {
+.home_page .option,
+form {
     background-color: #f0f5f5;
-    background-color: rgba(255, 255, 244, 0.8);
     padding: 20px;
+    width: 100%;
     height: auto;
 }
 
-.home_page .option {
-    width: 23%;
-    box-shadow: 1px 1px 5px;
-    animation: moveLeftIn 0.5s ease-in;
+.home_page .searchByCode {
+    border-bottom: 1px solid grey;
 }
 
-@keyframes moveLeftIn {
-    from {
-        opacity: 0;
-        margin-left: -100px;
-    }
-    to{
-        opacity: 1;
-        margin-left: unset;
-    }
+.home_page .searchByCode:focus {
+    border-bottom: 1px solid var(--primary-color);
 }
 
-.home_page .option button {
-    padding: 7px 10px;
-    border: 1px solid gray;
-    margin-left: 10px;
-    background-color: var(--primary-color);
+.home_page .option .LogOut {
+    margin-bottom: 0;
+}
+
+.home_page form {
+    box-shadow: #fff 1px 1px 5px 2px;
+    position: relative;
+    width: auto;
+    height: 470px;
+    padding: 20px;
+}
+
+.home_page form nav {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.home_page .btnSearchByCode {
+    padding: 5px 7px;
     border-radius: 5px;
-    color: #fff;
+    color: white;
+    margin-left: 10px;
+}
+
+.home_page .option {
+    height: 60px;
+    margin-bottom: 20px;
+    align-items: center;
+}
+
+.home_page .userImage h2 {
+    border-left: none;
+}
+
+.home_page .option span {
+    margin-bottom: 0;
+    background-color: var(--primary-color);
     cursor: pointer;
-    border: 1px solid var(--primary-color);
-    outline: none;
+    padding: 5px 7px;
+    border-radius: 10px;
+    color: #fff;
     transition: 0.3s;
+    border: 1px solid var(--primary-color);
+}
+
+.home_page .option span:hover {
+    color: var(--primary-color);
+    background-color: transparent;
+}
+
+.home_page .updateUser button {
+    width: 100px;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    color: rgba(0, 0, 0, 0);
+    opacity: 0;
+    display: block;
+    /* background: url(https://mywildalberta.ca/images/GFX-MWA-Parks-Reservations.png) no-repeat; */
+    width: 20px;
+    height: 20px;
+    border-width: thin;
 }
 
 .home_page select,
@@ -119,10 +158,9 @@
     border-bottom: 1px solid grey;
 }
 
-
 .home_page table {
-    border: 1px solid gray;
     width: 100%;
+    height: auto;
     margin-bottom: 20px;
     border-collapse: collapse;
 }
@@ -133,31 +171,43 @@
 
 .home_page th,
 .home_page td {
-    border: 1px solid gray;
+    /* border: 1px solid var(--primary-color); */
+    text-align: left;
     padding: 0.7% 1.5%;
 }
 
 .home_page td {
-    animation: showTable 0.5s ease-in;
+    animation: showTable 0.3s ease-in;
+}
+
+.home_page .pagination span:active {
+    background-color: var(--primary-color);
+    color: white;
 }
 
 @keyframes showTable {
-    from{
-        padding: 0 15px;
+    from {
+        padding: 0 1.5%;
         opacity: 0;
     }
-    to{
-        padding: 7px 15px;
+
+    to {
+        padding: 0.7% 1.5%;
+        ;
         opacity: 1;
     }
 }
 
+.home_page tr {
+    transition: 0.3s;
+}
+
 .home_page tr:hover {
-    background-color: rgb(241, 233, 233);
+    background-color: #fff;
 }
 
 .home_page thead tr:first-child:hover {
-    background:  rgb(117, 247, 252);
+    background: rgb(117, 247, 252);
 }
 
 .home_page tbody {
@@ -171,7 +221,8 @@
 .home_page .filterStudent select {
     width: 150px;
     border-radius: 5px;
-    margin:10px;
+    border: 1px solid rgb(189, 188, 188);
+    margin: 10px;
 }
 
 .home_page form button {
@@ -182,7 +233,6 @@
     border: 1px solid var(--primary-color);
     cursor: pointer;
     transition: 0.3s;
-    background-color: var(--primary-color);
     border-radius: 10px;
 }
 
@@ -191,47 +241,12 @@
     color: var(--primary-color)
 }
 
-.deleteStudent, .updateStudent,
-.updateUser, .modalLoginSuccess,
-.modalLoginError, .modalImage, .modal_logOut,
-.modalAdd, .modalSiginErrorEmail,
-.modalDeltailStudent, .modalUpdateSuccess{
-    position: fixed;
-    display: flex;
-    justify-content: center;
-    top: 0;
-    z-index: 11;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100vh;
-    text-align: center;
-    align-items: center;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
-.modalDeltailStudent {
-    display: none;
-}
-
-.updateStudent h2, .deleteStudent h2 {
-    animation: unset;
-}
-
-.updateStudent .modal_content {
-    width: 400px;
-}
-
-.deleteStudent .modal_content {
-    width: 250px;
-}
 .home_page .theme {
     display: flex;
     margin-bottom: 20px;
 }
 
-.home_page .theme div{
+.home_page .theme div {
     padding: 4px 7px;
     text-align: center;
     font-size: 15px;
@@ -247,10 +262,9 @@
     color: #fff;
 }
 
-.updateStudent .modal_content {
-    padding: 20px;
+.modalImage .modal_content button {
+    width: 100px;
 }
-
 
 .modal_logOut .modal_content {
     padding: 20px;
@@ -286,97 +300,16 @@
     width: 100%;
 }
 
-.home_page .deleteStudent h2 {
-    width: 200px;
-    color: var(--primary-color);
-    background-color: transparent;
-}
 
-.updateStudent span {
-    position: absolute;
-    cursor: pointer;
-    top: 2px;
-    font-size: 20px;
-    right: 2px;
-}
 
-.home_page .deleteStudent button{
-    margin-top: 30px;
-    background-color: var(--primary-color);
-    border: 1px solid var(--primary-color);
-    transition: 0.3s;
-}
-
-.updateStudent span {
-    display: block;
-}
-
-[type='number']::-webkit-inner-spin-button, [type='number']::-webkit-outer-spin-button {
-    display:  none;
-}
-
-.updateStudent small {
-    text-align: left;
-    color: red;
-    display: block;
-    margin-left: 10px;
-}
-
-.updateStudent h2, .deleteStudent h2 {
-    background-color: var(--primary-color);
-    color: #fff;
-    width: 150px;
-    margin: auto;
-    border-radius: 50%;
-    padding: 20px 10px;
-    text-align: center;
-}
-
-.updateStudent input, .updateStudent button,
-.deleteStudent button,
-.updateStudent select {
-    width: 98%;
-    border: none;
-    border-radius: 5px;
-    margin: 5px;
-    margin-bottom: 0;
-    padding: 7px 10px;
-    outline: none;
-    border-bottom:1px solid grey ;
-}
-
-.updateStudent select {
-    padding-bottom: unset ;
-    margin: 7px;
-}
-
-.updateStudent input:focus {
-    border-bottom: 1px solid blue;
-}
-
-.updateStudent button {
-    width: 100px;
-    cursor: pointer;
-    margin: 10px;
-    margin-bottom: 0;
-    border: none;
-    transition: 0.3s;
-    border: 1px solid var(--primary-color);
-    background-color:  rgb(87, 87, 250);
-    color: var(--white-color);
-}
-
-.updateStudent p {
-    text-align: right;
-    cursor: pointer;
+[type='number']::-webkit-inner-spin-button,
+[type='number']::-webkit-outer-spin-button {
+    display: none;
 }
 
 .center button {
     width: 70px;
     margin: 10px 10px 0 10px;
-}
-.updateStudent p:hover {
-    color: blue;
 }
 
 @keyframes showModal {
@@ -384,6 +317,7 @@
         opacity: 0;
         transform: scale(0.7);
     }
+
     25% {
         opacity: 1;
         transform: scale(1);
@@ -393,23 +327,33 @@
 .home_page .gridStudent {
     flex-wrap: wrap;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .home_page .item {
-    padding: 20px;
+    padding: 10px;
     margin: 10px;
     text-align: center;
-    line-height: 1.8;
+    line-height: 1.5;
     border-radius: 5px;
-    width: 250px;
-    border: 1px solid grey;
-    box-shadow: 1px 1px 4px 1px;
+    width: 190px;
+    border: 1px solid rgb(228, 224, 224);
+    box-shadow: 1px 1px 3px;
     animation: showModal 1.5s ease-in;
     transition: 0.3s;
 }
 
 .home_page .item:hover {
-    box-shadow: 1px 1px 2px 1px;
+    background-color: #fff;
+}
+
+.home_page .item img {
+    width: 70px;
+    height: 70px;
+}
+
+.home_page .item button {
+    width: 60px;
 }
 
 .home_page img {
@@ -428,149 +372,170 @@
     display: none;
 }
 
-.modal_content input {
-    margin-top: 0;
-    margin-bottom: 10px;
+.deleteStudent,
+.updateStudent,
+.updateUser,
+.modalLoginSuccess,
+.modalLoginError,
+.modalImage,
+.modal_logOut,
+.modalAdd,
+.modalSiginErrorEmail,
+.addStudent,
+.studentDetail,
+.modalUpdateSuccess {
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    z-index: 11;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100vh;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.6);
 }
 
-.modal_content span {
+
+/* Modal Add Student */
+.addStudent .modal_content {
+    width: 400px;
+}
+
+.addStudent .modal_content input,
+.addStudent .modal_content select,
+.addStudent .modal_content option {
+    border-bottom: 1px solid grey;
+    border-radius: 5px;
+    padding: 5px 10px;
+    outline: none;
+    width: 100%;
+}
+
+.addStudent .modal_content select {
+    margin: 5px;
+}
+
+.addStudent .modal_content h2 {
+    color: var(--primary-color);
+    border-left: none;
+    cursor: unset;
+    margin-bottom: 20px
+}
+
+.addStudent .modal_content select:first-child {
+    margin-top: 10px;
+}
+
+.addStudent .modal_content small {
+    color: red;
+}
+
+/* Modal Update Student */
+.updateStudent h2,
+.deleteStudent h2 {
+    animation: unset;
+    background-color: transparent;
+    border-left: none;
+    color: var(--primary-color);
+}
+
+.updateStudent .modal_content {
+    width: 400px;
+    padding: 20px;
+}
+
+.updateStudent span {
+    position: absolute;
+    cursor: pointer;
+    top: 2px;
+    font-size: 20px;
+    right: 2px;
+    display: block;
+}
+
+.updateStudent small {
     text-align: left;
+    color: red;
+    display: block;
+    margin-left: 10px;
 }
+
+.updateStudent input,
+.updateStudent button,
+.updateStudent select {
+    width: 98%;
+    border: none;
+    border-radius: 5px;
+    margin: 5px;
+    margin-bottom: 0;
+    padding: 7px 10px;
+    outline: none;
+    border-bottom: 1px solid grey;
+}
+
+.updateStudent select {
+    padding-bottom: unset;
+    margin: 7px;
+}
+
+.updateStudent input:focus {
+    border-bottom: 1px solid blue;
+}
+
+.updateStudent button {
+    width: 100px;
+    cursor: pointer;
+    margin: 10px;
+    margin-bottom: 0;
+    border: none;
+    transition: 0.3s;
+    border: 1px solid var(--primary-color);
+    background-color: rgb(87, 87, 250);
+    color: var(--white-color);
+}
+
+.updateStudent p {
+    text-align: right;
+    cursor: pointer;
+}
+
+.updateStudent p:hover {
+    color: blue;
+}
+
+/* Modal Delete student */
+.deleteStudent .modal_content {
+    width: 250px;
+}
+
+.deleteStudent .modal_content button:hover {
+    background-color: transparent;
+}
+
+.deleteStudent h2 {
+    width: 200px;
+    color: var(--primary-color);
+    background-color: transparent;
+}
+
+.deleteStudent button {
+    margin-top: 30px;
+    background-color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    transition: 0.3s;
+}
+
+.footer {
+    background-color: rgb(233, 231, 231);
+}
+
+
 /* Tablet */
-@media (min-width: 741px) and (max-width: 1350px){
-    
-    .home_page .option {
-        width: 30%;
-    }
-
-    .home_page form {
-        width: 68%;
-    }
-    .home_page option {
-        height: 20px;
-        padding: 3px;
-        font-size: 14px;
-    }
-    
-    .home_page .option input {
-        width: 100%
-    }
-
-    .home_page form button {
-        margin-top: 5px;
-    }
-
-    .home_page td {
-        animation: unset;
-    }
-
-    ::-webkit-scrollbar {
-        width: 5px;
-    }
-    
-    ::-webkit-scrollbar-thumb {
-        background-color: rgb(233, 233, 233);
-        border-radius: 10px;
-        margin-right: 5px;
-    }
-    
-    .home_page .modalImage input {
-        width: 100%;
-    }
-    
-    .home_page .modalImage button {
-        margin-left: unset;
-    }
-
-    .home_page .item {
-        width: 200px;
-        padding: 10px;
-    }
-
-    .home_page .option .btnSearchByCode {
-        float: right;
-        margin-top: 10px;  
-    }
-
-    .studentDetail h2{
-        margin-top: 50px !important;
-    }
-}
+@media (min-width: 741px) and (max-width: 1350px) {}
 
 /* Mobile */
-@media (max-width: 740px){
-    .home_page .container {
-        margin-top: 80px;
-        display: block;
-    }
-
-    .modalDeltailStudent {
-       display: block;
-       
-   }
-
-    .studentDetail {
-        display: none;
-    }
-
-    .home_page .option {
-        width: 100%;
-        height: auto;
-        background-color: unset;
-        box-shadow: unset;
-        color: #fff;
-        padding: 10px;
-        margin-bottom: 10px;
-    }
-
-    .home_page .option  input {
-        color: #fff;
-        border-bottom: 1px solid #fff;
-    }
-
-    ::placeholder {
-        color: white;
-    }
-
-    .studentDetail div {
-        color: #333;
-    }
-
-    .home_page form button {
-        padding: 4px 7px;
-        margin-top: 5px;
-    }
-
-    .home_page form {
-        width: 100%;
-        height: 600px;
-        padding: 10px;
-    }
-
-    .home_page .theme div {
-        color: #fff;
-        border: 1px solid #fff;
-    }
-
-    .home_page form {
-        height: auto;
-    }
-
-    .home_page .btnAdd {
-        width: 100px;
-    }
-
-    .home_page .filterStudent{
-        display: flex;
-    }
-
-    .updateStudent .modal_content {
-        width: 90%;
-    }
-
-    .modalDeltailStudent .modal_content {
-        width: 300px;
-        top: 25%;
-        left: 12%;
-    }
-}
+@media (max-width: 740px) {}

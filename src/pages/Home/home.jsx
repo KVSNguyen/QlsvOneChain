@@ -7,8 +7,10 @@ import ListStudent from '../Student/listStudent';
 function Home(props) {
     return (
         <div className='home_page'>
-            <Header />
+            <div className='flex'>
+                <Header />
                 <ListStudent />
+            </div>
             <Footer />
         </div>
     );

@@ -1,29 +1,15 @@
-
 .header {
-    height: 80px;
-    border-top: 1px solid grey;
+    height: 700px;
     align-items: center;
-    border-bottom: 1px solid grey;
-    padding: 10px 2%;
+    padding: 20px 2%;
     background-color: #fff;
-    top: 0;
-    z-index: 10;
-    width: 100%;
-    position: fixed;
-    animation: moveHeader 0.3s ease-in;
+    border-right: 1px solid grey;
+    box-shadow: 1px 1px 5px;
+    width: 200px;
 }
 
 .header_mobile {
     display: none;
-}
-
-@keyframes moveHeader {
-    from {
-      top: -50px;
-    }
-    to {
-      top: 0;
-    }
 }
 
 .header h3 {
@@ -42,6 +28,7 @@ img {
     height: 100px;
     border: 1px solid var(--primary-color);
 }
+
 
 .header span {
     padding: 5px 8px;
@@ -62,29 +49,11 @@ img {
     margin-bottom: 10px;
 }
 
-.header .infor {
-    position: absolute;
-    top: 55px;
-    padding: 20px;
-    left: 20px;
-    text-align: center;
-    border-radius: 5px;
-    border: 1px solid var(--primary-color);
-    display: none;
-    /* box-shadow: 1px 1px 3px; */
-    width: 250px;
-    background-color: rgb(236, 249, 250);
-    animation: showInfor 0.3s ease-in-out;
-}
-
-.header .inforAdmin:hover .infor{
-    display: block;
-}
-
 .header span:hover {
     color: var(--primary-color);
     background-color: transparent;
 }
+
 
 @keyframes showInfor{
     from {
@@ -99,36 +68,5 @@ img {
 
 /* Moblie */
 @media (max-width: 740px){
-    .header_pc {
-        display: none;
-    }
-
-    .header_mobile {
-        display: flex;
-    }
-
-    .header .header_mobile  h1{
-        width: 27%;
-        font-size: 20px;
-    }
-
-    .header .infor {
-        position: absolute;
-        top: 60px;
-        padding: 10px;
-        left: unset;
-        right: 10px;
-        text-align: center;
-        border-radius: 5px;
-        border: 1px solid var(--primary-color);
-        display: none;
-        /* box-shadow: 1px 1px 3px; */
-        width: 200px;
-        background-color: rgb(236, 249, 250);
-        animation: showInfor 0.3s ease-in-out;
-    }
-
-    .header h3 {
-        margin-top: unset;
-    }
+    
 } 
