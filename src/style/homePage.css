@@ -40,6 +40,13 @@ form {
     height: auto;
 }
 
+.home_page .option {
+    height: 60px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--primary-color);
+    align-items: center;
+}
+
 .home_page .searchByCode {
     border-bottom: 1px solid grey;
 }
@@ -72,14 +79,9 @@ form {
     padding: 5px 10px;
     font-size: 18px;
     border-radius: 5px;
+    cursor: pointer;
     color: white;
     margin-left: 10px;
-}
-
-.home_page .option {
-    height: 60px;
-    margin-bottom: 20px;
-    align-items: center;
 }
 
 .home_page .userImage h2 {
@@ -542,6 +544,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: transparent;
 }
 
+.modalUpdateSuccess h2 {
+    animation: unset;
+    border-left: unset;
+}
+
 .deleteStudent button {
     margin-top: 30px;
     background-color: var(--primary-color);
@@ -578,6 +585,19 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .home_page .LogOut {
         display: none;
+    }
+
+    .home_page .option {
+        position: fixed;
+        z-index: 1;
+    }
+
+    .home_page .userImage h2 {
+        animation:  unset;
+    }
+
+    .home_page .theme {
+        margin-top: 80px;
     }
 
     .home_page .searchStudent {

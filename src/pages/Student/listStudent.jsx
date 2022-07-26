@@ -426,7 +426,6 @@ function ListStudent(props) {
         }}
       >
         <div>
-          <h2>Tùy chọn </h2>
           <div className="theme">
             {displayGrid ? (
               <div
