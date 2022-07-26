@@ -1,14 +1,9 @@
 import React from "react";
 import { EyeOutlined, EditOutlined, DeleteOutlined } from "@ant-design/icons";
 
-function TableStudent({
-  studentTable,
-  showInforStudent,
-  showModalUpdate,
-  showModalDelete,
-}) {
+function TableStudent(props) {
   return (
-    <table>
+    <table className="tablePC">
       <thead>
         <tr>
           <th>Số thứ tự</th>
@@ -21,7 +16,7 @@ function TableStudent({
         </tr>
       </thead>
       <tbody className="list_student">
-        {studentTable.map((element, index) => {
+        {props.studentTable.map((element, index) => {
           return (
             <tr key={index}>
               <td>{index + 1}</td>
@@ -35,14 +30,14 @@ function TableStudent({
                   style={{
                     cursor: "pointer",
                   }}
-                  onClick={() => showInforStudent(element.id)}
+                  onClick={() => props.showInforStudent(element.id)}
                   type="button"
                   className="b_1_solid_grey"
                 >
                   <EyeOutlined />
                 </button>
                 <button
-                  onClick={() => showModalUpdate(element)}
+                  onClick={() => props.showModalUpdate(element)}
                   type="button"
                   className="b_1_solid_grey"
                 >
@@ -50,7 +45,7 @@ function TableStudent({
                   <EditOutlined />
                 </button>
                 <button
-                  onClick={() => showModalDelete(element.id)}
+                  onClick={() => props.showModalDelete(element.id)}
                   type="button"
                   className="b_1_solid_grey"
                 >

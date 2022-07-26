@@ -2,12 +2,13 @@ import React, { useState } from "react";
 import db from "../../firebase/firebase";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CloseOutlined, LogoutOutlined } from "@ant-design/icons";
+import { CloseOutlined, LogoutOutlined,LeftCircleOutlined, SearchOutlined } from "@ant-design/icons";
 import { storage } from "../../firebase/firebase";
 import Paginaton from "../../components/Pagination";
 import TableStudent from "./TableStudent";
 import GridStudent from "./GridStudent";
 import AddStudent from "../RCUDStudent/addStudent";
+import TableMobile from "./TableMoble";
 
 function ListStudent(props) {
   const [student, setstudent] = useState([]);
@@ -53,8 +54,7 @@ function ListStudent(props) {
   const [proccess, setProccess] = useState(0);
   const [dateJoinUpdate, setDateJoinUpdate] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [studentPerPage, setstudentPerPage] = useState(5);
-  const [highLightPage, setHighLightPage] = useState("");
+  const [studentPerPage] = useState(5);
 
   const indexOfLastStudent = currentPage * studentPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentPerPage;
@@ -460,8 +460,10 @@ function ListStudent(props) {
               </div>
             )}
           </div>
+
+          {/* search StudentByCode */}
           <div className="flex" style={{}}>
-            <div>
+            <div className="searchStudent">
               <input
                 className="searchByCode"
                 style={{
@@ -476,7 +478,7 @@ function ListStudent(props) {
                 placeholder="Nhập mã sinh viên"
               />
               <button className="btnSearchByCode" onClick={searchStudent}>
-                Tìm kiếm
+                <SearchOutlined />
               </button>
             </div>
 
@@ -625,12 +627,23 @@ function ListStudent(props) {
           </div>
 
           {displayTable && (
-            <TableStudent
+            <>
+             <TableStudent
               studentTable={currentStudent}
               showInforStudent={showInforStudent}
               showModalUpdate={showModalUpdate}
               showModalDelete={showModalDelete}
             />
+
+            <TableMobile  
+              studentTable={currentStudent}
+              showInforStudent={showInforStudent}
+              showModalUpdate={showModalUpdate}
+              showModalDelete={showModalDelete} 
+              />
+            </>
+           
+
           )}
 
           {displayGrid && (
@@ -652,6 +665,9 @@ function ListStudent(props) {
           </div>
         </form>
       </div>
+      
+      {/* Modal Add */}
+      {displayModalAdd && <AddStudent toggleModalAdd={toggleModalAdd} />}
 
       {/* Modal Delete */}
       {displayModalDelete && currentIdDelete && (
@@ -838,7 +854,6 @@ function ListStudent(props) {
           </div>
         </div>
       )}
-      {displayModalAdd && <AddStudent toggleModalAdd={toggleModalAdd} />}
     </div>
   );
 }

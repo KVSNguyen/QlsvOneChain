@@ -3,13 +3,13 @@ import 'firebase/compat/firestore';
 import 'firebase/compat/storage'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCmoFsPOWBnO0NsWQ65YosfxJTB7CIqZSo",
-  authDomain: "onechain-c0e66.firebaseapp.com",
-  projectId: "onechain-c0e66",
-  storageBucket: "onechain-c0e66.appspot.com",
-  messagingSenderId: "777431754707",
-  appId: "1:777431754707:web:d8be21e2c5a7f6619f3126",
-  measurementId: "G-BJZ0PJ6LDW"
+  apiKey: "AIzaSyD-PzWjX55I8Ik91QLmdYK-Nxj2F_leZ0Y",
+  authDomain: "qlsvonechain-56845.firebaseapp.com",
+  projectId: "qlsvonechain-56845",
+  storageBucket: "qlsvonechain-56845.appspot.com",
+  messagingSenderId: "144384087280",
+  appId: "1:144384087280:web:340ba5efd7fddbdec6de35",
+  measurementId: "G-C1Q7Z4RYF7"
 };
 
 firebase.initializeApp(firebaseConfig);

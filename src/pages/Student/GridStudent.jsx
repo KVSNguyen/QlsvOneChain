@@ -56,7 +56,7 @@ function GridStudent({studentGrid, toggleModalImage, showInforStudent, showModal
                 {element.phoneNumber}
               </div>
               <div>
-                <b>Quê quán: </b>
+                <b>Email: </b>
                 {element.email}
               </div>
               <div className="center">

@@ -13,8 +13,6 @@ function Paginaton({ studentsPerPage, totalStudents, paginate }) {
         style={{
           display: "flex",
           textAlign: "center",
-          margin: "auto",
-          width: "200px",
           color:'var(--primary-color)'
         }}
       >

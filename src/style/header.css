@@ -2,14 +2,12 @@
     height: 700px;
     align-items: center;
     padding: 20px 2%;
+    display: block;
     background-color: #fff;
     border-right: 1px solid grey;
     box-shadow: 1px 1px 5px;
     width: 200px;
-}
-
-.header_mobile {
-    display: none;
+    max-width: 100%;
 }
 
 .header h3 {
@@ -28,7 +26,6 @@ img {
     height: 100px;
     border: 1px solid var(--primary-color);
 }
-
 
 .header span {
     padding: 5px 8px;
@@ -54,7 +51,6 @@ img {
     background-color: transparent;
 }
 
-
 @keyframes showInfor{
     from {
         opacity: 0;
@@ -66,7 +62,50 @@ img {
     }
 }
 
+.showUserInfo_Mobile {
+    position: absolute;
+    top: 10px;
+    font-size: 30px;
+    right: 5%;
+    display: none;
+}
+
+.header .infor div:first-child {
+    display: none;
+}
+
 /* Moblie */
 @media (max-width: 740px){
-    
+    .header {
+        height: 100vh;
+        box-shadow: unset;
+        position: absolute;
+        z-index: 1;
+        top: 0;
+        right: 0;
+        animation: showHeader 0.5s ease-in-out;
+    }
+
+     @keyframes showHeader {
+        from {
+            opacity: 0;
+            right: -50%;
+        }
+        to {
+            opacity: 1;
+            right: 0;
+        }
+    }
+
+    .showUserInfo_Mobile {
+        display: block;
+    }
+
+    .header h2 {
+        margin-top: 20px;
+    }
+
+    .header .infor div:first-child {
+        display: block;
+    }
 } 

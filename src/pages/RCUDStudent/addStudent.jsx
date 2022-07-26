@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 import db from "../../firebase/firebase";
 
 function AddStudent(props) {
@@ -29,8 +28,9 @@ function AddStudent(props) {
 
   useEffect(() => {
     getData();
-  }, []);
+  });
 
+  //Get Data from DB
   const getData = () => {
     events.get().then((querySnapshot) => {
       const tempDoc = [];
@@ -41,6 +41,7 @@ function AddStudent(props) {
     });
   };
 
+  //submit form
   const submit = () => {
     const checkIdSimilar = students.filter((student) => {
       return student.code === studentCode;
@@ -116,6 +117,7 @@ function AddStudent(props) {
     }
   };
 
+  //Validate Value
   const checkID = () => {
     if (studentCode === "") {
       seterrorID("Không được để trống");
@@ -125,7 +127,6 @@ function AddStudent(props) {
       seterrorID("");
     }
   };
-
   const checkEmail = () => {
     const regexEmail = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(
       studentEmail
@@ -148,7 +149,6 @@ function AddStudent(props) {
       seterrorName("");
     }
   };
-
   const checkAge = () => {
     if (studentAge === "") {
       seterrorAge("Không được để trống");
@@ -164,8 +164,7 @@ function AddStudent(props) {
     } else {
       seterrorStatus("");
     }
-  };
-
+  }
   const checkGender = () => {
     if (gender === "") {
       seterrorGender("Không được để trống");
@@ -201,6 +200,7 @@ function AddStudent(props) {
     }
   };
 
+  // change Value Select-Option
   const handleChangeGender = (e) => {
     setgender(e.target.value);
   };
@@ -323,8 +323,10 @@ function AddStudent(props) {
           <button onClick={submit}>Thêm</button>
           <button onClick={props.toggleModalAdd}>Thoát</button>
         </div>
+
+        {/* Add success */}
         {displayAddSuccess && (
-          <div className="modalAdd">
+          <div className="modalAddSuccess">
             <div className="modal_content">
               <h2>Thêm Sinh viên thành công</h2>
               <button onClick={props.toggleModalAdd}>Đồng ý</button>
@@ -332,8 +334,10 @@ function AddStudent(props) {
             </div>
           </div>
         )}
+
+        {/* Add Error */}
         {displayAddError && (
-          <div className="modalAdd">
+          <div className="modalAddSuccess">
             <div className="modal_content">
               <h2>Vui lòng kiểm tra lại thông tin</h2>
               <button onClick={() => setDisplayAddError(false)}>Đồng ý</button>

@@ -87,7 +87,8 @@ button:hover {
     background-color: transparent;
 }
 
-.highLight {
-    background-color: red;
-    color: red;
+@media (max-width: 740px){
+    .modal_content {
+        width: 90%;
+    }
 }

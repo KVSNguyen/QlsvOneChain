@@ -117,9 +117,9 @@ function SignUpPassword(props) {
       {displaySiginSuccess && (
         <div className="modalSiginErrorEmail">
           <div className="modal_content">
-            <h2>Bạn đã đăng ký thành công</h2>
+            <h2>Đăng ký tài khoản thành công</h2>
             <Link to="/">
-              <button>Đi tới đăng nhập</button>
+              <button>Đăng nhập</button>
             </Link>
           </div>
         </div>

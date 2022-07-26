@@ -12,7 +12,6 @@
     animation: showAddStudent 0.3s ease-in;
 }
 
-
 @keyframes showAddStudent {
     from {
         opacity: 0;
@@ -33,7 +32,7 @@
     width: 100%;
     margin: auto;
     border-radius: 10px;
-    padding: 20px 10px;
+    padding: 2% 1%;
     text-align: center;
 }
 
@@ -89,4 +88,8 @@
     .login{
         width: 90%;
     }
+    .login .imageLogin img {
+        display: none;
+    }
+
 }
