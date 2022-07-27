@@ -20,19 +20,19 @@ function SignUpInforUser(props) {
   const events = db.collection("user");
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
-  const getData = () => {
-    events.get().then((querySnapshot) => {
-      const tempDoc = [];
-      querySnapshot.forEach((doc) => {
-        tempDoc.push({ id: doc.id, ...doc.data() });
-        setUserSignUp(tempDoc);
-      });
-    });
-  };
+  // const getData = () => {
+  //   events.get().then((querySnapshot) => {
+  //     const tempDoc = [];
+  //     querySnapshot.forEach((doc) => {
+  //       tempDoc.push({ id: doc.id, ...doc.data() });
+  //       setUserSignUp(tempDoc);
+  //     });
+  //   });
+  // };
 
   const userAccount = userSignUp.filter((element) => {
     return element.id === cookie.id;
@@ -67,7 +67,7 @@ function SignUpInforUser(props) {
     let result = /^[a-zA-Z ]+$/.test(userName);
     if (userName === "") {
       seterrorUserName("Không được để trống");
-    } else if (!result) {
+    } else if (!result || userName.length <= 1) {
       seterrorUserName("Tên người dùng không hợp lệ");
     } else {
       seterrorUserName("");
@@ -97,7 +97,7 @@ function SignUpInforUser(props) {
       );
     if (userPhoneNumber === "") {
       seterrorUserPhoneNumber("Không được để trống");
-    } else if (!regexPhoneNumber) {
+    } else if (!regexPhoneNumber || userPhoneNumber.length < 10 || userPhoneNumber.length > 12) {
       seterrorUserPhoneNumber("Số điện thoại không hợp lệ");
     } else {
       seterrorUserPhoneNumber("");
@@ -150,7 +150,7 @@ function SignUpInforUser(props) {
           <small>{erroUserGender}</small>
 
           <input
-            type="text"
+            type="number"
             className="userName_signUp"
             placeholder="Nhập số điện thoại"
             value={userPhoneNumber}

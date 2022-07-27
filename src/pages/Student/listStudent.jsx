@@ -63,6 +63,7 @@ function ListStudent(props) {
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+
   const showModalUpdate = (element) => {
     setInforStudent(false);
     setcurrentIdUpdate(element.id);
@@ -87,19 +88,19 @@ function ListStudent(props) {
     setDisplayModalDelete(!displayModalDelete);
   };
 
-  const getData = () => {
-    events.get().then((querySnapshot) => {
-      const tempDoc = [];
-      querySnapshot.forEach((doc) => {
-        tempDoc.push({ id: doc.id, ...doc.data() });
-      });
-      setstudent(tempDoc);
-    });
-  };
+  // const getData = () => {
+  //   events.get().then((querySnapshot) => {
+  //     const tempDoc = [];
+  //     querySnapshot.forEach((doc) => {
+  //       tempDoc.push({ id: doc.id, ...doc.data() });
+  //     });
+  //     setstudent(tempDoc);
+  //   });
+  // };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // });
 
   // Submit form
   const updateData = (id) => {
@@ -137,7 +138,7 @@ function ListStudent(props) {
         name: studentNameUpdate,
         phoneNumber: phoneNumberUpdate,
       });
-      getData();
+      // getData();
       setdisplayUpdateSuccess(true);
       setDisplayModalUpdate(false);
     }
@@ -158,14 +159,17 @@ function ListStudent(props) {
   const deleteStudent = async (id) => {
     await db.collection("student").doc(id).delete();
     showModalDelete();
-    getData();
+    // getData();
   };
 
   //  Check Emty Input
   const checkID = () => {
-    if (studentIDUpdate.length === 0) {
+    if (studentIDUpdate.length === 0 ) {
       seterrorIDUpdate("Không được để trống");
-    } else {
+    }else if (studentIDUpdate.length < 4 || studentIDUpdate.length > 8) {
+      seterrorIDUpdate("Nhập từ 4-8 kí tự")
+    }
+     else {
       seterrorIDUpdate("");
     }
   };
@@ -173,8 +177,8 @@ function ListStudent(props) {
   const checkName = () => {
     if (studentNameUpdate.length === 0) {
       seterrorNameUpdate("Không được để trống");
-    } else if (studentNameUpdate.length > 40) {
-      seterrorNameUpdate("Vượt quá kí tự cho phép");
+    } else if (studentNameUpdate.length > 40 || studentNameUpdate.length <=1) {
+      seterrorNameUpdate("Tên không hợp lệ");
     } else {
       seterrorNameUpdate("");
     }
@@ -196,9 +200,13 @@ function ListStudent(props) {
     }
   };
   const checkPhoneNumberUpdate = () => {
-    if (phoneNumberUpdate.length === 0) {
+    const regexPhoneNumber =
+      /^(\+?[01])?[-.\s]?\(?[1-9]\d{2}\)?[-.\s]?\d{3}[-.\s]?\d{4}/.test(
+        phoneNumberUpdate
+      );
+    if (phoneNumberUpdate === "") {
       seterrorPhoneNumberUpdate("Không được để trống");
-    } else if (phoneNumberUpdate.length < 10 || phoneNumberUpdate.length > 11) {
+    } else if (!regexPhoneNumber || phoneNumberUpdate.length < 10 || phoneNumberUpdate.length >12) {
       seterrorPhoneNumberUpdate("Số điện thoại không hợp lệ");
     } else {
       seterrorPhoneNumberUpdate("");
@@ -282,10 +290,10 @@ function ListStudent(props) {
     const result = await fillterStudent("code", searchData);
     if (result.length === 0) {
       setdisplayDontFindStudent(true);
-      getData();
+      // getData();
     } else if (searchData === "") {
       setdisplayDontFindStudent(true);
-      getData();
+      // getData();
     } else {
       setstudent(result);
     }
@@ -302,7 +310,7 @@ function ListStudent(props) {
   };
 
   const reloadpage = () => {
-    getData();
+    // getData();
     setInforStudent(false);
   };
 
@@ -363,7 +371,7 @@ function ListStudent(props) {
           .then((url) => {
             // seturl(url)
             updateImage(url);
-            getData();
+            // getData();
           });
       }
     );
@@ -383,18 +391,22 @@ function ListStudent(props) {
       image: url,
     });
     setdisplayChangeImage(true);
-    getData();
+    // getData();
     setdisplayImage(false);
   };
 
   const toggleModalAdd = () => {
     setdisplayModalAdd(!displayModalAdd);
-    getData();
+    // getData();
   };
+
 
   return (
     <div className="container ">
       <div className="option flex">
+        <div className="user">
+
+        </div>
         <h1
           style={{
             marginBottom: "0",

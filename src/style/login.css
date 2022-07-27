@@ -90,6 +90,7 @@
 @media (max-width: 740px){
     .login{
         width: 90%;
+        display: block;
     }
     .login .imageLogin img {
         display: none;

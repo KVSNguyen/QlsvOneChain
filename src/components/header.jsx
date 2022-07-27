@@ -27,19 +27,19 @@ function Header(props) {
   const [displayUpdateError, setdisplayUpdateError] = useState(false);
   const [displayHeader, setdisplayHeader] = useState(true);
 
-  useEffect(() => {
-    getData();
-  });
+  // useEffect(() => {
+  //   getData();
+  // });
 
-  const getData = () => {
-    events.get().then((querySnapshot) => {
-      const tempDoc = [];
-      querySnapshot.forEach((doc) => {
-        tempDoc.push({ id: doc.id, ...doc.data() });
-      });
-      setAdmin(tempDoc);
-    });
-  };
+  // const getData = () => {
+  //   events.get().then((querySnapshot) => {
+  //     const tempDoc = [];
+  //     querySnapshot.forEach((doc) => {
+  //       tempDoc.push({ id: doc.id, ...doc.data() });
+  //     });
+  //     setAdmin(tempDoc);
+  //   });
+  // };
 
   const showProfileUser = (element) => {
     setDisplayProfile(!displayProfile);
@@ -75,7 +75,7 @@ function Header(props) {
         phoneNumber: phoneNumber,
         password: user[0].password,
       });
-      getData();
+      // getData();
       setdisplayUpdateSuccess(true);
       showProfileUser();
       setEmtyValue();
@@ -166,7 +166,7 @@ function Header(props) {
     await db.collection("user").doc(user[0].id).update({
       image: url,
     });
-    getData();
+    // getData();
     setdisplayChangeImage(true);
     setdisplayImage(false);
   };
@@ -188,6 +188,14 @@ function Header(props) {
       <div className="showUserInfo_Mobile" onClick={showHeader}>
         <BarsOutlined />
       </div>
+      <div className="showUserInfo_PC" onClick={showHeader}>
+        <img style={{
+          width: '40px',
+          height: '40px',
+          borderRadius: '50%'
+        }} src= 'https://cdn-icons-png.flaticon.com/512/149/149071.png' alt="" />
+      </div>
+      
       {displayModalLogOut && (
         <div className="modal_logOut">
           <div className="modal_content">

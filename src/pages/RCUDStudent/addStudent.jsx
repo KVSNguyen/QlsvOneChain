@@ -186,7 +186,7 @@ function AddStudent(props) {
       );
     if (phoneNumber === "") {
       seterrorPhoneNumber("Không được để trống");
-    } else if (!regexPhoneNumber) {
+    } else if (!regexPhoneNumber || phoneNumber.length < 10 || phoneNumber.length >12) {
       seterrorPhoneNumber("Số điện thoại không hợp lệ");
     } else {
       seterrorPhoneNumber("");
@@ -302,7 +302,7 @@ function AddStudent(props) {
           />{" "}
           <small>{errorEmail}</small>
           <input
-            type="text"
+            type="number"
             className="phoneNumber"
             onBlur={checkPhoneNumber}
             placeholder="Số điện thoại"
@@ -319,6 +319,8 @@ function AddStudent(props) {
             onChange={(e) => setstudentHomeTown(e.target.value)}
           />
           <small>{errorHomeTown}</small>
+
+          <div style={{textAlign: 'left'}}>Ngày nhập học</div>
           <input type="date" onChange={(e) => setDateJoin(e.target.value)} />
           <button onClick={submit}>Thêm</button>
           <button onClick={props.toggleModalAdd}>Thoát</button>

@@ -14,19 +14,19 @@ function SignUp(props) {
   const navigate = useNavigate();
   const [displaySiginEmailError, setDisplaySiginEmailError] = useState(false);
 
-  useEffect(() => {
-    getData();
-  }, []);
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
-  const getData = () => {
-    events.get().then((querySnapshot) => {
-      const tempDoc = [];
-      querySnapshot.forEach((doc) => {
-        tempDoc.push({ id: doc.id, ...doc.data() });
-        setuser(tempDoc);
-      });
-    });
-  };
+  // const getData = () => {
+  //   events.get().then((querySnapshot) => {
+  //     const tempDoc = [];
+  //     querySnapshot.forEach((doc) => {
+  //       tempDoc.push({ id: doc.id, ...doc.data() });
+  //       setuser(tempDoc);
+  //     });
+  //   });
+  // };
 
   //Check email invailid in database
   const submit = async (e) => {
@@ -47,7 +47,7 @@ function SignUp(props) {
     checkuserEmail();
   };
 
-  getData();
+  // getData();
   user.map((element) => {
     if (element.email === userEmail) {
       setCookies("id", element.id, 3);
