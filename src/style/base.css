@@ -2,6 +2,7 @@
     --primary-color: rgb(73, 121, 252);
     --white-color: #fff;
     --text-color: #333;
+    --background-color: rgb(225, 229, 245);
 }
 
 * {
@@ -11,7 +12,8 @@
 }
 
 body {
-    background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934') no-repeat center;
+    /* background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934') no-repeat; */
+    background: rgb(210, 240, 240);
     position: relative;
 }
 

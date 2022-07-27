@@ -11,6 +11,11 @@
     margin-bottom: 2%;
 }
 
+.home_page select, 
+.home_page option {
+    background-color: var(--white-color);
+}
+
 @keyframes moveRightIn {
     from {
         opacity: 0;
@@ -212,10 +217,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .home_page tr:hover {
     background-color: #fff;
+    box-shadow: 1px 1px 3px;
 }
 
-.home_page thead tr:first-child:hover {
-    background: rgb(117, 247, 252);
+.home_page thead tr:not(hover) {
+    box-shadow: 1px 1px 3px;
+}
+
+.home_page thead tr:hover {
+    background: rgb(117, 247, 252); 
 }
 
 .home_page tbody {

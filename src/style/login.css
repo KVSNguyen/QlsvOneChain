@@ -1,12 +1,12 @@
 .login {
     width: 600px;
     margin: auto;
-    background-color: #fff;
+    background-color: var(--background-color);
     margin-top: 100px;
     border: 1px solid gray;
     padding: 20px;
     position: relative;
-    box-shadow: 1px 1px 5px;
+    /* box-shadow: 1px 1px 5px; */
     text-align: center;
     border-radius: 5px;
     animation: showAddStudent 0.3s ease-in;
@@ -36,6 +36,9 @@
     text-align: center;
 }
 
+.login .imageLogin {
+    margin-right: 20px;
+}
 .login .imageLogin img {
     height: 100%;
     width: 250px;
@@ -90,6 +93,10 @@
     }
     .login .imageLogin img {
         display: none;
+    }
+
+    .modalLoginError .modal_content {
+        width: 250px;
     }
 
 }

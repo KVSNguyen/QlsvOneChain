@@ -1,14 +1,15 @@
 .sign_up {
-    width: 400px;
-    margin: 100px auto;
+    width: 600px;
+    margin: auto;
+    background-color: var(--background-color);
+    margin-top: 100px;
     border: 1px solid gray;
     padding: 20px;
-    background-color: #fff;
     position: relative;
+    /* box-shadow: 1px 1px 5px; */
     text-align: center;
     border-radius: 5px;
     animation: showAddStudent 0.3s ease-in;
-    box-shadow: 1px 1px 5px;
 }
 
 @keyframes showAddStudent {
@@ -115,4 +116,9 @@
     .sign_up h2 {
         width: auto;
     }
+
+    .modal_content {
+        width: 250px;
+    }
+
 }

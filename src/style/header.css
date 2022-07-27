@@ -8,19 +8,8 @@
     box-shadow: 1px 1px 5px;
     width: 200px;
     max-width: 100%;
-    animation: moveLeftIn 0.5s ease-in;
 }
-
-@keyframes  moveLeftIn {
-    from {
-        opacity: 0;
-        margin-left: -100%;
-    }
-    to{
-        opacity: 1;
-    }
     
-}
 .header h3 {
     margin-top: 10px;
     transition: 0.3s;
@@ -86,10 +75,14 @@ img {
     display: none;
 }
 
+.header .Out {
+    display: none;
+}
+
 /* Moblie */
 @media (max-width: 740px){
     .header {
-        height: 100%;
+        height: auto;
         box-shadow: unset;
         position: fixed;
         z-index: 2;
@@ -118,6 +111,10 @@ img {
     }
 
     .header .infor div:first-child {
+        display: block;
+    }
+
+    .header .Out {
         display: block;
     }
 } 
