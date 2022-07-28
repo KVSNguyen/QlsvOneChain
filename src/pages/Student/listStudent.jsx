@@ -11,6 +11,7 @@ import {
 import { storage } from "../../firebase/firebase";
 import { Pagination } from "antd";
 import TableStudent from "./TableStudent";
+import UpdateStudent from "../RCUDStudent/UpdateStudent";
 import GridStudent from "./GridStudent";
 import AddStudent from "../RCUDStudent/AddStudent";
 import TableMobile from "./TableMoble";
@@ -109,10 +110,6 @@ function ListStudent(props) {
 
   // Submit form
   const updateData = (id) => {
-    // const result = student.filter((element) => {
-    //   return element.code === studentIDUpdate;
-    // });
-
     if (
       errorIDUpdate === "" &&
       errorNameUpdate === "" &&

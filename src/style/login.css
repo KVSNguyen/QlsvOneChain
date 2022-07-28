@@ -54,6 +54,7 @@
     border:1px solid grey ;
 }
 
+
 .rightLogin input:focus {
     border: 1px solid var(--primary-color);
     box-shadow: 1px 1px 3px 1px;
@@ -78,6 +79,7 @@
 
 .rightLogin button:hover {
     color: var(--primary-color);
+    background-color: transparent;
 }
 
 .modal_content button {
