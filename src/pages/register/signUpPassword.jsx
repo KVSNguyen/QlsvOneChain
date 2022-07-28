@@ -16,19 +16,19 @@ function SignUpPassword(props) {
   const [showPassword, setShowPassword] = useState(false);
   const [displaySiginSuccess, setDisplaySiginSuccess] = useState(false);
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
+  useEffect(() => {
+    getData();
+  }, []);
 
-  // const getData = () => {
-  //   events.get().then((querySnapshot) => {
-  //     const tempDoc = [];
-  //     querySnapshot.forEach((doc) => {
-  //       tempDoc.push({ id: doc.id, ...doc.data() });
-  //       setUserSignUp(tempDoc);
-  //     });
-  //   });
-  // };
+  const getData = () => {
+    events.get().then((querySnapshot) => {
+      const tempDoc = [];
+      querySnapshot.forEach((doc) => {
+        tempDoc.push({ id: doc.id, ...doc.data() });
+        setUserSignUp(tempDoc);
+      });
+    });
+  };
 
   const userAccount = userSignUp.filter((element) => {
     return element.id === cookie.id;

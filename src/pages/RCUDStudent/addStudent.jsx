@@ -28,7 +28,7 @@ function AddStudent(props) {
 
   useEffect(() => {
     getData();
-  });
+  },[]);
 
   //Get Data from DB
   const getData = () => {
@@ -331,7 +331,7 @@ function AddStudent(props) {
           <div className="modalAddSuccess">
             <div className="modal_content">
               <h2>Thêm Sinh viên thành công</h2>
-              <button onClick={props.toggleModalAdd}>Đồng ý</button>
+              <button onClick={props.toggleModalAdd}>Thoát</button>
               <button onClick={() => setDisplayAddSuccess(false)}>Ở lại</button>
             </div>
           </div>

@@ -12,8 +12,7 @@
 }
 
 body {
-    /* background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934') no-repeat; */
-    background: rgb(210, 240, 240);
+    background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934') no-repeat;
     position: relative;
 }
 
@@ -93,4 +92,24 @@ button:hover {
     .modal_content {
         width: 90%;
     }
+}
+
+select,
+option {
+   width: 200px;
+   height: 30px;
+   outline: none;
+}
+
+input {
+    border: none;
+    border-bottom: 1px solid grey;
+    background-color: transparent;
+}
+
+small {
+    color: red;
+    display: block;
+    margin-bottom: 10px;
+    text-align: left;
 }

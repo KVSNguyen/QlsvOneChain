@@ -48,6 +48,7 @@ form {
 .home_page .option {
     height: 60px;
     margin-bottom: 20px;
+    position: fixed;
     border-bottom: 1px solid var(--primary-color);
     align-items: center;
 }
@@ -66,7 +67,6 @@ form {
 
 .home_page form {
     box-shadow: #fff 1px 1px 5px 2px;
-    position: relative;
     width: auto;
     max-width: 100%;
     height: 470px;
@@ -75,7 +75,7 @@ form {
 
 .home_page form nav {
     position: absolute;
-    bottom: 20px;
+    bottom: 40px;
     left: 50%;
     transform: translateX(-50%);
 }
@@ -124,19 +124,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 20px;
     height: 20px;
     border-width: thin;
-}
-
-.home_page select,
-.home_page option {
-    width: 200px;
-    height: 30px;
-    outline: none;
-}
-
-
-.home_page input {
-    border: none;
-    background-color: transparent;
 }
 
 .home_page h2 {
@@ -213,6 +200,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .home_page tr {
     transition: 0.3s;
+    border:1px solid grey ;
 }
 
 .home_page tr:hover {
@@ -265,6 +253,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
 .home_page .theme {
     display: flex;
+    margin-top: 80px;
     margin-bottom: 20px;
 }
 
@@ -320,6 +309,10 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     margin: 15px;
     transition: 0.3s;
     border: 1px solid var(--primary-color);
+}
+
+.gridStudent img {
+    border-radius: 50%;
 }
 
 .home_page .modalImage input {
@@ -409,14 +402,15 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 .modalSiginErrorEmail,
 .addStudent,
 .studentDetail,
-.modalUpdateSuccess {
+.modalUpdateSuccess,
+.overlay {
     position: fixed;
     display: flex;
     justify-content: center;
     top: 0;
-    z-index: 11;
     right: 0;
     left: 0;
+    z-index: 3;
     bottom: 0;
     width: 100%;
     height: 100vh;
@@ -425,6 +419,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.modal_logOut {
+    z-index: 4;
+}
 
 /* Modal Add Student */
 .addStudent .modal_content {
@@ -584,6 +581,11 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         display: none;
     }
 
+    .modal_logOut {
+        z-index: 4;
+    }
+
+
     .home_page form {
         padding: 10px 10px 30px 10px;
         height: 100%;
@@ -659,5 +661,9 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .gridStudent {
         justify-content: space-between;
+    }
+
+    .studentDetail .modal_content {
+        width: 250px;
     }
 }

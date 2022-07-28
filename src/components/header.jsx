@@ -6,8 +6,6 @@ import db from "../firebase/firebase";
 import "../style/header.css";
 
 function Header(props) {
-  const events = db.collection("user");
-  const [admin, setAdmin] = useState([]);
   const [displayProfile, setDisplayProfile] = useState(false);
   const [userName, setuserName] = useState("");
   const [userAge, setuserAge] = useState("");
@@ -25,21 +23,8 @@ function Header(props) {
   const [displayChangeImage, setdisplayChangeImage] = useState(false);
   const [displayUpdateSuccess, setdisplayUpdateSuccess] = useState(false);
   const [displayUpdateError, setdisplayUpdateError] = useState(false);
-  const [displayHeader, setdisplayHeader] = useState(true);
-
-  // useEffect(() => {
-  //   getData();
-  // });
-
-  // const getData = () => {
-  //   events.get().then((querySnapshot) => {
-  //     const tempDoc = [];
-  //     querySnapshot.forEach((doc) => {
-  //       tempDoc.push({ id: doc.id, ...doc.data() });
-  //     });
-  //     setAdmin(tempDoc);
-  //   });
-  // };
+  const [displayHeader, setdisplayHeader] = useState(false);
+  const [displayOverlay, setdisplayOverlay] = useState(false);
 
   const showProfileUser = (element) => {
     setDisplayProfile(!displayProfile);
@@ -50,7 +35,7 @@ function Header(props) {
     setEmtyValue();
   };
 
-  const user = admin.filter((element) => {
+  const user = props.admin.filter((element) => {
     return element.id === localStorage.getItem("id");
   });
 
@@ -75,7 +60,7 @@ function Header(props) {
         phoneNumber: phoneNumber,
         password: user[0].password,
       });
-      // getData();
+      props.getData();
       setdisplayUpdateSuccess(true);
       showProfileUser();
       setEmtyValue();
@@ -110,9 +95,9 @@ function Header(props) {
 
   const checkUserGender = () => {
     if (userGender === "") {
-      seterrorUserName("Không được để trống");
+      seterrorGender("Không được để trống");
     } else {
-      seterrorUserName("");
+      seterrorGender("");
     }
   };
 
@@ -166,7 +151,7 @@ function Header(props) {
     await db.collection("user").doc(user[0].id).update({
       image: url,
     });
-    // getData();
+    props.getData();
     setdisplayChangeImage(true);
     setdisplayImage(false);
   };
@@ -181,21 +166,27 @@ function Header(props) {
 
   const showHeader = () => {
     setdisplayHeader(!displayHeader);
+    setdisplayOverlay(!displayOverlay);
   };
 
   return (
     <div>
+      {displayOverlay && <div onClick={showHeader} className="overlay"></div>}
       <div className="showUserInfo_Mobile" onClick={showHeader}>
         <BarsOutlined />
       </div>
       <div className="showUserInfo_PC" onClick={showHeader}>
-        <img style={{
-          width: '40px',
-          height: '40px',
-          borderRadius: '50%'
-        }} src= 'https://cdn-icons-png.flaticon.com/512/149/149071.png' alt="" />
+        <img
+          style={{
+            width: "40px",
+            height: "40px",
+            borderRadius: "50%",
+          }}
+          src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+          alt=""
+        />
       </div>
-      
+
       {displayModalLogOut && (
         <div className="modal_logOut">
           <div className="modal_content">
@@ -216,16 +207,9 @@ function Header(props) {
                 {user.map((element, index) => {
                   return (
                     <div key={index} className="infor center">
-                      <div>
+                      <div className="close_header">
                         <CloseOutlined
                           onClick={showHeader}
-                          style={{
-                            position: "absolute",
-                            top: "5px",
-                            left: "5px",
-                            color: "blue",
-                            background: "unset",
-                          }}
                         />
                       </div>
 
@@ -312,58 +296,63 @@ function Header(props) {
                 <>
                   <div className="updateUser">
                     <div className="modal_content">
-                      <div className="p_20">
-                        <div className="userImage">
+                      <div className="userImage">
+                        {user[0].image ? (
                           <img src={user[0].image} alt="" />
-                        </div>
-                        <div className="flex">
-                          <div>
-                            <input
-                              type="text"
-                              className="userName"
-                              placeholder="Tên người dùng"
-                              value={userName}
-                              onBlur={checkUserName}
-                              onChange={(e) => setuserName(e.target.value)}
-                            />{" "}
-                            <small>{errorUserName}</small>
-                            <input
-                              type="text"
-                              className="userAge"
-                              placeholder="Tuổi"
-                              value={userAge}
-                              onBlur={checkUserAge}
-                              onChange={(e) => setuserAge(e.target.value)}
-                            />{" "}
-                            <small>{errorUserAge}</small>
-                          </div>
-
-                          <div>
-                            <select
-                              value={userGender}
-                              onBlur={checkUserGender}
-                              onChange={(e) => handleChangeGender(e)}
-                            >
-                              <option value="">Chọn giới tính</option>
-                              <option value="Nam">Nam</option>
-                              <option value="Nữ">Nữ</option>
-                            </select>{" "}
-                            <small>{errorGender}</small>
-                          </div>
-                        </div>
-                        <input
-                          type="text"
-                          className="phoneNumber"
-                          onBlur={checkPhoneNumber}
-                          placeholder="Số điện thoại"
-                          value={phoneNumber}
-                          onChange={(e) => setphoneNumber(e.target.value)}
-                        />
-                        <small>{errorPhoneNumber}</small>
-
-                        <button onClick={submit}>Cập nhật</button>
-                        <button onClick={showProfileUser}>Thoát</button>
+                        ) : (
+                          <img
+                            src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+                            alt=""
+                          />
+                        )}
                       </div>
+                      <div className="flex">
+                        <div>
+                          <input
+                            type="text"
+                            className="userName"
+                            placeholder="Tên người dùng"
+                            value={userName}
+                            onBlur={checkUserName}
+                            onChange={(e) => setuserName(e.target.value)}
+                          />{" "}
+                          <small>{errorUserName}</small>
+                          <input
+                            type="text"
+                            className="userAge"
+                            placeholder="Tuổi"
+                            value={userAge}
+                            onBlur={checkUserAge}
+                            onChange={(e) => setuserAge(e.target.value)}
+                          />{" "}
+                          <small>{errorUserAge}</small>
+                        </div>
+
+                        <div>
+                          <select
+                            value={userGender}
+                            onBlur={checkUserGender}
+                            onChange={(e) => handleChangeGender(e)}
+                          >
+                            <option value="">Chọn giới tính</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
+                          </select>{" "}
+                          <small>{errorGender}</small>
+                        </div>
+                      </div>
+                      <input
+                        type="number"
+                        className="phoneNumber"
+                        onBlur={checkPhoneNumber}
+                        placeholder="Số điện thoại"
+                        value={phoneNumber}
+                        onChange={(e) => setphoneNumber(e.target.value)}
+                      />
+                      <small>{errorPhoneNumber}</small>
+
+                      <button onClick={submit}>Cập nhật</button>
+                      <button onClick={showProfileUser}>Thoát</button>
                     </div>
                   </div>
                 </>

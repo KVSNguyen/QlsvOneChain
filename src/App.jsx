@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import Home from "./pages/Home/home";
-import SignUp from "./pages/register/signupEmail";
-import Login from "./pages/Login/login";
-import SignUpPassword from "./pages/register/signUpPassword";
-import SignUpInforUser from "./pages/register/SignUpInforUser";
+import Home from "./pages/Home/Index";
+import SignUp from "./pages/Register/SignUpEmail";
+import Login from "./pages/Login/Login";
+import SignUpPassword from "./pages/Register/SignUpPassword";
+import SignUpInforUser from "./pages/Register/SignUpInforUser";
 
 function App() {
   return (

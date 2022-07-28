@@ -1,7 +1,7 @@
 .header {
     height: 700px;
     position: fixed;
-    z-index: 2;
+    z-index: 3;
     top: 0;
     align-items: center;
     padding: 20px 2%;
@@ -11,7 +11,7 @@
     box-shadow: 1px 1px 5px;
     width: 200px;
     max-width: 100%;
-    animation: showHeader_PC 0.5s ease-in;
+    animation: showHeader_PC 0.7s ease-in;
 }
     
 .header h3 {
@@ -24,7 +24,7 @@
     margin: auto;
 }
 
-img {
+.header img {
     width: 100px;
     border-radius: 50%;
     height: 100px;
@@ -66,6 +66,14 @@ img {
     }
 }
 
+.header .close_header {
+    position: absolute;
+    top: -7px;
+    right: 2px;
+    background-color: transparent;
+    color: #333;
+}
+
 .showUserInfo_PC {
     position: fixed;
     top: 4px;
@@ -78,28 +86,46 @@ img {
     transition: 0.3s;
 }
 
-.showUserInfo_PC img:hover {
-    border: 5px solid var(--primary-color);
+.showUserInfo_PC img:active {
+    border: 3px solid var(--primary-color);
 }
 
 @keyframes showHeader_PC {
     from {
         opacity: 0;
-        left: -50%;
+        left: -30%;
     }
     to {
         opacity: 1;
         left: 0;
     }
 }
-/* 
-.header .infor div:first-child {
-    display: none;
-} */
+
+/* updateUser */
+.updateUser .userImage {
+    margin-bottom: 20px;
+}
+
+.updateUser input,
+.updateUser select, 
+.updateUser option{
+    padding: 3px 7px;
+    width: 100%;
+    margin-bottom: 0;
+    outline: none;
+    border-radius: 5px;
+}
+
+.updateUser select,
+.updateUser option {
+    width: 120px;
+    margin-left: 5px;
+}
 
 .showUserInfo_Mobile {
     display: none;
 }
+
 
 .header .Out {
     display: none;
@@ -111,7 +137,6 @@ img {
         height: auto;
         box-shadow: unset;
         position: fixed;
-        z-index: 2;
         top: 0;
         right: 0;
         animation: showHeader 0.5s ease-in-out;
@@ -141,16 +166,26 @@ img {
         }
     }
 
-
     .header h2 {
         margin-top: 20px;
     }
 
     .header .infor div:first-child {
         display: block;
+        position: absolute;
+        top: 7px;
+        transform: translateY(-50%);
+        left: -170px; 
+        align-items: center;
+    }
+
+    .header .infor div:first-child span {
+       height: 100%;
+       border-radius: unset;
     }
 
     .header .Out {
         display: block;
     }
+
 } 

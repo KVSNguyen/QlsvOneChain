@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import db from "../../firebase/firebase";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { CloseOutlined, LogoutOutlined,LeftCircleOutlined, SearchOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  LogoutOutlined,
+  LeftCircleOutlined,
+  SearchOutlined,
+} from "@ant-design/icons";
 import { storage } from "../../firebase/firebase";
 import Paginaton from "../../components/Pagination";
 import TableStudent from "./TableStudent";
 import GridStudent from "./GridStudent";
-import AddStudent from "../RCUDStudent/addStudent";
+import AddStudent from "../RCUDStudent/AddStudent";
 import TableMobile from "./TableMoble";
 
 function ListStudent(props) {
@@ -88,25 +93,25 @@ function ListStudent(props) {
     setDisplayModalDelete(!displayModalDelete);
   };
 
-  // const getData = () => {
-  //   events.get().then((querySnapshot) => {
-  //     const tempDoc = [];
-  //     querySnapshot.forEach((doc) => {
-  //       tempDoc.push({ id: doc.id, ...doc.data() });
-  //     });
-  //     setstudent(tempDoc);
-  //   });
-  // };
+  useEffect(() => {
+    getData();
+  }, []);
 
-  // useEffect(() => {
-  //   getData();
-  // });
+  const getData = () => {
+    events.get().then((querySnapshot) => {
+      const tempDoc = [];
+      querySnapshot.forEach((doc) => {
+        tempDoc.push({ id: doc.id, ...doc.data() });
+      });
+      setstudent(tempDoc);
+    });
+  };
 
   // Submit form
   const updateData = (id) => {
-    const result = student.filter((element) => {
-      return element.code === studentIDUpdate;
-    });
+    // const result = student.filter((element) => {
+    //   return element.code === studentIDUpdate;
+    // });
 
     if (
       errorIDUpdate === "" &&
@@ -138,7 +143,7 @@ function ListStudent(props) {
         name: studentNameUpdate,
         phoneNumber: phoneNumberUpdate,
       });
-      // getData();
+      getData();
       setdisplayUpdateSuccess(true);
       setDisplayModalUpdate(false);
     }
@@ -159,17 +164,16 @@ function ListStudent(props) {
   const deleteStudent = async (id) => {
     await db.collection("student").doc(id).delete();
     showModalDelete();
-    // getData();
+    getData();
   };
 
   //  Check Emty Input
   const checkID = () => {
-    if (studentIDUpdate.length === 0 ) {
+    if (studentIDUpdate.length === 0) {
       seterrorIDUpdate("Không được để trống");
-    }else if (studentIDUpdate.length < 4 || studentIDUpdate.length > 8) {
-      seterrorIDUpdate("Nhập từ 4-8 kí tự")
-    }
-     else {
+    } else if (studentIDUpdate.length < 4 || studentIDUpdate.length > 8) {
+      seterrorIDUpdate("Nhập từ 4-8 kí tự");
+    } else {
       seterrorIDUpdate("");
     }
   };
@@ -177,7 +181,7 @@ function ListStudent(props) {
   const checkName = () => {
     if (studentNameUpdate.length === 0) {
       seterrorNameUpdate("Không được để trống");
-    } else if (studentNameUpdate.length > 40 || studentNameUpdate.length <=1) {
+    } else if (studentNameUpdate.length > 40 || studentNameUpdate.length <= 1) {
       seterrorNameUpdate("Tên không hợp lệ");
     } else {
       seterrorNameUpdate("");
@@ -206,7 +210,11 @@ function ListStudent(props) {
       );
     if (phoneNumberUpdate === "") {
       seterrorPhoneNumberUpdate("Không được để trống");
-    } else if (!regexPhoneNumber || phoneNumberUpdate.length < 10 || phoneNumberUpdate.length >12) {
+    } else if (
+      !regexPhoneNumber ||
+      phoneNumberUpdate.length < 10 ||
+      phoneNumberUpdate.length > 12
+    ) {
       seterrorPhoneNumberUpdate("Số điện thoại không hợp lệ");
     } else {
       seterrorPhoneNumberUpdate("");
@@ -290,10 +298,10 @@ function ListStudent(props) {
     const result = await fillterStudent("code", searchData);
     if (result.length === 0) {
       setdisplayDontFindStudent(true);
-      // getData();
+      getData();
     } else if (searchData === "") {
       setdisplayDontFindStudent(true);
-      // getData();
+      getData();
     } else {
       setstudent(result);
     }
@@ -310,7 +318,7 @@ function ListStudent(props) {
   };
 
   const reloadpage = () => {
-    // getData();
+    getData();
     setInforStudent(false);
   };
 
@@ -371,7 +379,7 @@ function ListStudent(props) {
           .then((url) => {
             // seturl(url)
             updateImage(url);
-            // getData();
+            getData();
           });
       }
     );
@@ -391,22 +399,19 @@ function ListStudent(props) {
       image: url,
     });
     setdisplayChangeImage(true);
-    // getData();
+    getData();
     setdisplayImage(false);
   };
 
   const toggleModalAdd = () => {
     setdisplayModalAdd(!displayModalAdd);
-    // getData();
+    getData();
   };
-
 
   return (
     <div className="container ">
       <div className="option flex">
-        <div className="user">
-
-        </div>
+        <div className="user"></div>
         <h1
           style={{
             marginBottom: "0",
@@ -639,22 +644,20 @@ function ListStudent(props) {
 
           {displayTable && (
             <>
-             <TableStudent
-              studentTable={currentStudent}
-              showInforStudent={showInforStudent}
-              showModalUpdate={showModalUpdate}
-              showModalDelete={showModalDelete}
-            />
+              <TableStudent
+                studentTable={currentStudent}
+                showInforStudent={showInforStudent}
+                showModalUpdate={showModalUpdate}
+                showModalDelete={showModalDelete}
+              />
 
-            <TableMobile  
-              studentTable={currentStudent}
-              showInforStudent={showInforStudent}
-              showModalUpdate={showModalUpdate}
-              showModalDelete={showModalDelete} 
+              <TableMobile
+                studentTable={currentStudent}
+                showInforStudent={showInforStudent}
+                showModalUpdate={showModalUpdate}
+                showModalDelete={showModalDelete}
               />
             </>
-           
-
           )}
 
           {displayGrid && (
@@ -676,7 +679,7 @@ function ListStudent(props) {
           </div>
         </form>
       </div>
-      
+
       {/* Modal Add */}
       {displayModalAdd && <AddStudent toggleModalAdd={toggleModalAdd} />}
 
@@ -825,7 +828,6 @@ function ListStudent(props) {
             >
               Sửa
             </button>
-            <button onClick={() => setDisplayModalUpdate(false)}>Thoát</button>
           </div>
         </div>
       )}
