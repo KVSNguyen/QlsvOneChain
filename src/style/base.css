@@ -1,5 +1,5 @@
 :root {
-    --primary-color: rgb(73, 121, 252);
+    --primary-color: #375E97;
     --white-color: #fff;
     --text-color: #333;
     --background-color: rgb(225, 229, 245);
@@ -12,7 +12,8 @@
 }
 
 body {
-    background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934') no-repeat;
+    /* background: url('https://hcmussh.edu.vn/img/news/27366933.jpg?t=27366934') no-repeat; */
+    background: var(--background-color);
     position: relative;
 }
 

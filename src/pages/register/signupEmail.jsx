@@ -79,10 +79,12 @@ function SignUp(props) {
           {" "}
           <UserOutlined style={{ display: "block" }} /> Đăng Ký{" "}
         </h2>
+        <p style={{
+          textAlign: 'left'
+        }}>Nhập Email đăng ký</p>
         <input
           type="text"
           className="userName_signUp"
-          placeholder="Nhập email của bạn"
           value={userEmail}
           onChange={(e) => setuserEmail(e.target.value)}
         />

@@ -119,6 +119,7 @@ function SignUpInforUser(props) {
             {" "}
             <UserOutlined style={{ display: "block" }} /> Đăng Ký{" "}
           </h2>
+          <p>Nhập tên</p>
           <input
             type="text"
             className="userName_signUp"
@@ -128,6 +129,7 @@ function SignUpInforUser(props) {
             onChange={(e) => setUserName(e.target.value)}
           />
           <small>{errorUserName}</small>
+          <p>Nhập tuổi</p>
           <input
             type="text"
             className="userName_signUp"
@@ -149,6 +151,7 @@ function SignUpInforUser(props) {
           </select>
           <small>{erroUserGender}</small>
 
+            <p>Số điện thoại</p>
           <input
             type="number"
             className="userName_signUp"

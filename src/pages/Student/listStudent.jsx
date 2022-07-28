@@ -1,15 +1,15 @@
 import React, { useState } from "react";
+import { Button, Checkbox, Form, Input } from 'antd';
 import db from "../../firebase/firebase";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   CloseOutlined,
   LogoutOutlined,
-  LeftCircleOutlined,
   SearchOutlined,
 } from "@ant-design/icons";
 import { storage } from "../../firebase/firebase";
-import Paginaton from "../../components/Pagination";
+import { Pagination } from "antd";
 import TableStudent from "./TableStudent";
 import GridStudent from "./GridStudent";
 import AddStudent from "../RCUDStudent/AddStudent";
@@ -59,14 +59,14 @@ function ListStudent(props) {
   const [proccess, setProccess] = useState(0);
   const [dateJoinUpdate, setDateJoinUpdate] = useState();
   const [currentPage, setCurrentPage] = useState(1);
-  const [studentPerPage] = useState(5);
+  const studentPerPage = 5
 
   const indexOfLastStudent = currentPage * studentPerPage;
   const indexOfFirstStudent = indexOfLastStudent - studentPerPage;
   const currentStudent = student.slice(indexOfFirstStudent, indexOfLastStudent);
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const onChangePage = (page) => {
+    setCurrentPage(page);
   };
 
   const showModalUpdate = (element) => {
@@ -671,11 +671,13 @@ function ListStudent(props) {
             </div>
           )}
           <div style={{ marginBottom: "10px" }}>
-            <Paginaton
-              studentsPerPage={studentPerPage}
-              totalStudents={student.length}
-              paginate={paginate}
+            <Pagination className="pagination"
+              defaultCurrent={currentPage}
+              total={student.length}
+              onChange={onChangePage}
+              pageSize={5}
             />
+            ;
           </div>
         </form>
       </div>

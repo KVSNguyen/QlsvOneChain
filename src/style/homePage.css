@@ -73,11 +73,16 @@ form {
     padding: 20px;
 }
 
-.home_page form nav {
+.home_page form .pagination {
     position: absolute;
-    bottom: 40px;
+    bottom: 50px;
     left: 50%;
+    color: #333;
     transform: translateX(-50%);
+}
+
+.home_page form .pagination button {
+    color:  #333;
 }
 
 .home_page .btnSearchByCode {
@@ -180,10 +185,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     animation: showTable 0.3s ease-in;
 }
 
-.home_page .pagination span:active {
-    background-color: var(--primary-color);
-    color: white;
-}
 
 @keyframes showTable {
     from {
@@ -311,15 +312,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     border: 1px solid var(--primary-color);
 }
 
-.gridStudent img {
+ img {
     border-radius: 50%;
 }
 
 .home_page .modalImage input {
     width: 100%;
 }
-
-
 
 [type='number']::-webkit-inner-spin-button,
 [type='number']::-webkit-outer-spin-button {
@@ -585,14 +584,13 @@ input[type="date"]::-webkit-calendar-picker-indicator {
         z-index: 4;
     }
 
+    .modal_logOut .modal_content {
+        width: 250px;
+    }
 
     .home_page form {
         padding: 10px 10px 30px 10px;
         height: 100%;
-    }
-
-    .home_page .pagination{
-        margin-bottom: 0;
     }
 
     .tableMobile {
@@ -605,6 +603,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
 
     .home_page .option {
         position: fixed;
+        padding: 10px;
         z-index: 1;
         display: block;
     }
