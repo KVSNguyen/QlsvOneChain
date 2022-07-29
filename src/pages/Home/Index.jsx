@@ -5,7 +5,7 @@ import { UpCircleOutlined } from "@ant-design/icons";
 import Footer from "../../components/Footer";
 import "../../style/homePage.css";
 import db from "../../firebase/firebase";
-import ListStudent from "../Student/ListStudent";
+import ListStudent from "../student/ListStudent";
 
 function Home(props) {
   const events = db.collection("user");
