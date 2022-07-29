@@ -49,6 +49,7 @@ form {
     height: 60px;
     margin-bottom: 20px;
     position: fixed;
+    background-color: white;
     border-bottom: 1px solid var(--primary-color);
     align-items: center;
 }

@@ -79,9 +79,13 @@ function SignUp(props) {
           {" "}
           <UserOutlined style={{ display: "block" }} /> Đăng Ký{" "}
         </h2>
-        <p style={{
-          textAlign: 'left'
-        }}>Nhập Email đăng ký</p>
+        <p
+          style={{
+            textAlign: "left",
+          }}
+        >
+          Nhập Email đăng ký
+        </p>
         <input
           type="text"
           className="userName_signUp"
@@ -92,12 +96,12 @@ function SignUp(props) {
 
         <button onClick={submit}>Tiếp tục </button>
 
-        <p>
+        <div>
           Bạn đã có tài khoản?
           <Link className="no_underline" to="/">
-            <p> Đăng nhập tại đây </p>
+            <div> Đăng nhập tại đây </div>
           </Link>
-        </p>
+        </div>
       </div>
       {displaySiginEmailError && (
         <div className="modalSiginErrorEmail">

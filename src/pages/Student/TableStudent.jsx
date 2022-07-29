@@ -18,7 +18,7 @@ function TableStudent(props) {
       <tbody className="list_student">
         {props.studentTable.map((element, index) => {
           return (
-            <tr key={index}>
+            <tr key={element.id}>
               <td>{index + 1}</td>
               <td>{element.code}</td>
               <td>{element.name}</td>

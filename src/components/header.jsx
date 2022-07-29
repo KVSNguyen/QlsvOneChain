@@ -14,7 +14,6 @@ function Header(props) {
   const [errorUserAge, seterrorUserAge] = useState("");
   const [errorUserName, seterrorUserName] = useState("");
   const [errorGender, seterrorGender] = useState("");
-  const [errorHomeTown, seterrorHomeTown] = useState("");
   const [errorPhoneNumber, seterrorPhoneNumber] = useState("");
   const [image, setImage] = useState(null);
   const [progress, setprogress] = useState(0);
@@ -32,7 +31,7 @@ function Header(props) {
     setuserAge(element.age);
     setuserGender(element.gender);
     setphoneNumber(element.phoneNumber);
-    setEmtyValue();
+    // setEmtyValue();
   };
 
   const user = props.admin.filter((element) => {
@@ -43,14 +42,12 @@ function Header(props) {
     if (
       errorUserName !== "" ||
       errorUserAge !== "" ||
-      errorPhoneNumber !== "" ||
-      errorHomeTown !== ""
+      errorPhoneNumber !== ""
     ) {
       setdisplayUpdateError(true);
-    }
-    if (userName === "" || userAge === "" || phoneNumber === "") {
-      setdisplayUpdateError(true);
-    } else {
+    } else if ( errorUserName === "" ||
+    errorUserAge === "" ||
+    errorPhoneNumber === "" || userName !== "" || userAge !== "" || phoneNumber !== "") {
       db.collection("user").doc(user[0].id).set({
         image: user[0].image,
         name: userName,
@@ -62,19 +59,12 @@ function Header(props) {
       });
       props.getData();
       setdisplayUpdateSuccess(true);
-      showProfileUser();
-      setEmtyValue();
-    }
+      setDisplayProfile(false);
+    } else {
+        setdisplayUpdateError(true);
+      }
   };
 
-  const setEmtyValue = () => {
-    seterrorGender("");
-    seterrorHomeTown("");
-    seterrorUserAge("");
-    seterrorUserName("");
-    seterrorPhoneNumber("");
-    showProfileUser();
-  };
   const checkUserName = () => {
     if (userName === "") {
       seterrorUserName("Không được để trống");
@@ -208,9 +198,7 @@ function Header(props) {
                   return (
                     <div key={index} className="infor center">
                       <div className="close_header">
-                        <CloseOutlined
-                          onClick={showHeader}
-                        />
+                        <CloseOutlined onClick={showHeader} />
                       </div>
 
                       <div className="userImage ">
@@ -352,12 +340,41 @@ function Header(props) {
                       <small>{errorPhoneNumber}</small>
 
                       <button onClick={submit}>Cập nhật</button>
-                      <button onClick={showProfileUser}>Thoát</button>
+                      <button onClick={() => setDisplayProfile(false)}>
+                        Thoát
+                      </button>
                     </div>
                   </div>
                 </>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {displayUpdateSuccess && (
+        <div className="modalUpdateSuccess">
+          <div className="modal_content">
+            <h2>Sửa thành công</h2>
+            <button onClick={() => setdisplayUpdateSuccess(false)}>
+              Đồng ý
+            </button>
+          </div>
+        </div>
+      )}
+      {displayUpdateError && (
+        <div className="modalUpdateSuccess">
+          <div className="modal_content">
+            <h2>Vui lòng kiểm tra lại thông tin</h2>
+            <button onClick={() => setdisplayUpdateError(false)}>Đồng ý</button>
+          </div>
+        </div>
+      )}
+       {displayChangeImage && (
+        <div className="modalUpdateSuccess">
+          <div className="modal_content">
+            <h2>Thay đổi ảnh thành công</h2>
+            <button onClick={() => setdisplayChangeImage(false)}>Đồng ý</button>
           </div>
         </div>
       )}

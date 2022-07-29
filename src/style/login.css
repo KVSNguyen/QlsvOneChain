@@ -37,7 +37,7 @@
 }
 
 .rightLogin h2 {
-    margin: 20px 0;
+    margin: 0;
 }
 
 .rightLogin input, .rightLogin button {
@@ -101,9 +101,6 @@
         text-align: center;
     }
 
-    .rightLogin h2 {
-        margin-top: 0;
-    }
 
     .rightLogin span {
         text-align: left;

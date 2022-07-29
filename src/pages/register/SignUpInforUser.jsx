@@ -167,12 +167,12 @@ function SignUpInforUser(props) {
           </Link>
           <button onClick={submit}>Tiếp tục </button>
 
-          <p>
+          <div>
             Bạn đã có tài khoản?
             <Link className="no_underline" to="/">
-              <p> Đăng nhập tại đây </p>
+              <div> Đăng nhập tại đây </div>
             </Link>
-          </p>
+          </div>
         </div>
         {displayErrorInput && (
           <div className="modalSiginErrorEmail">

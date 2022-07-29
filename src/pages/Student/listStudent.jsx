@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { Button, Checkbox, Form, Input } from 'antd';
 import db from "../../firebase/firebase";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
@@ -11,7 +10,6 @@ import {
 import { storage } from "../../firebase/firebase";
 import { Pagination } from "antd";
 import TableStudent from "./TableStudent";
-import UpdateStudent from "../RCUDStudent/UpdateStudent";
 import GridStudent from "./GridStudent";
 import AddStudent from "../RCUDStudent/AddStudent";
 import TableMobile from "./TableMoble";
@@ -66,6 +64,7 @@ function ListStudent(props) {
   const indexOfFirstStudent = indexOfLastStudent - studentPerPage;
   const currentStudent = student.slice(indexOfFirstStudent, indexOfLastStudent);
 
+  //Chuyển trang - Paginaion
   const onChangePage = (page) => {
     setCurrentPage(page);
   };
@@ -77,7 +76,7 @@ function ListStudent(props) {
     setStudentNameUpdate(element.name);
     setstudentStatusUpdate(element.status);
     setstudentAgeUpdate(element.age);
-    setstudentStatusUpdate(element.class);
+    setstudentStatusUpdate(element.status);
     setstudentMajorUpdate(element.major);
     setDateJoinUpdate(element.dateJoin);
     setstudentEmailUpdate(element.email);
@@ -298,7 +297,6 @@ function ListStudent(props) {
       getData();
     } else if (searchData === "") {
       setdisplayDontFindStudent(true);
-      getData();
     } else {
       setstudent(result);
     }
@@ -354,6 +352,7 @@ function ListStudent(props) {
     }
   };
 
+  //Up Load Image
   const handleUpload = () => {
     console.log(currentIdImage);
     const upLoadTask = storage.ref(`images/${image.name}`).put(image);
@@ -530,8 +529,8 @@ function ListStudent(props) {
           {inforStudent &&
             detailStudent.map((element, index) => {
               return (
-                <>
-                  <div className="studentDetail userImage" key={index}>
+                <div key={index} className="studentDetail userImage">
+                   
                     <div
                       className="modal_content "
                       style={{ position: "relative" }}
@@ -597,7 +596,7 @@ function ListStudent(props) {
                       </button>
                     </div>
                   </div>
-                </>
+                
               );
             })}
           {displayImage && (

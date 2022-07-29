@@ -14,7 +14,7 @@ function GridStudent({studentGrid, toggleModalImage, showInforStudent, showModal
                   // backgroundSize: 'contain'
                 }
               }
-              key={index}
+              key={element.id}
             >
               {element.image ? (
                 <img src={element.image} alt="" />

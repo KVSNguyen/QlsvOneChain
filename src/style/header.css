@@ -170,7 +170,7 @@
         margin-top: 20px;
     }
 
-    .header .infor div:first-child {
+    .header .infor .close_header {
         display: block;
         position: absolute;
         top: 7px;
@@ -186,6 +186,11 @@
 
     .header .Out {
         display: block;
+    }
+
+    .header .modalImage .modal_content {
+        top: unset;
+        left: unset;
     }
 
 } 

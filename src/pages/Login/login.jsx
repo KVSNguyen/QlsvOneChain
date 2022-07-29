@@ -54,7 +54,7 @@ function Login(props) {
     <div className="login flex">
       <div className="leftLogin">
         <h1>KVS School</h1>
-        <p>Chào mừng bạn đến mới KVS School - Phần mềm quản lý sinh viên mới nhất hiện nay</p>
+        <p>Chào mừng bạn đến với KVS School - Phần mềm quản lý sinh viên mới nhất hiện nay</p>
       </div>
       <div className="rightLogin">
         <h2>
@@ -65,7 +65,6 @@ function Login(props) {
         <input style={{
           marginBottom: '10px'
         }}
-          role={alert}
           type="email"
           className="userName_Login"
           value={userNameEmail}
